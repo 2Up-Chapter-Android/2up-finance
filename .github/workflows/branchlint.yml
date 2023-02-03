@@ -10,4 +10,4 @@ jobs:
         with:
           allowed: |
             develop
-            /(feature|bugfix|hotfix)/PF-[0-9]+-/i
+            /(feature|bugfix|hotfix)/PFA-[0-9]+-/i
