@@ -1,0 +1,10 @@
+name: Lint PR titles
+on: [pull_request]
+
+jobs:
+  prlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Slashgear/action-check-pr-title@v4.3.0
+        with:
+          regexp: "^PFA-[0-9]+: "
