@@ -8,7 +8,7 @@ Personal finance app
 - Jetpack Compose + XML
 - Kotlin Flow + LiveData
 - ktlint
-- Github Actions (CI/CD)
+
 
 ## Conventions
 - Commit: `feat|fix|chore: [PFA-123] commit name`
