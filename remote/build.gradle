@@ -38,4 +38,6 @@ dependencies {
     testImplementation TestLibraries.junit
     androidTestImplementation TestLibraries.ext
     androidTestImplementation TestLibraries.espresso
+
+    implementation Libraries.Timber
 }

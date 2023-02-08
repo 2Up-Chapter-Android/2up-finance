@@ -31,6 +31,9 @@ object Versions {
     const val lifecycleRuntime = "2.5.1"
 
     const val activityCompose = "1.6.1"
+
+    const val timber = "4.7.1"
+    const val hyperion = "0.9.34"
 }
 
 object TestLibraries{
@@ -52,6 +55,16 @@ object AndroidLibraries {
     const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntime}"
     const val materialDesign = "com.google.android.material:material:${Versions.material}"
 
+}
+
+object Libraries {
+    // TIMBER
+    val timber = "com.jakewharton.timber:timber:${Versions.timber}"
+
+    // Hyperion
+    val hyperionCore = "com.willowtreeapps.hyperion:hyperion-core:${Versions.hyperion}"
+    val hyperionCrash = "com.willowtreeapps.hyperion:hyperion-crash:${Versions.hyperion}"
+    val hyperionMeasurement = "com.willowtreeapps.hyperion:hyperion-measurement:${Versions.hyperion}"
 }
 
 object Compose{
