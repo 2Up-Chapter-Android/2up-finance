@@ -8,6 +8,9 @@ object SdkVersions {
 
     val javaVersion = JavaVersion.VERSION_1_8
     const val jvmTarget = "1.8"
+
+
+    const val kotlinCompilerVersion = "1.4.0"
 }
 
 object Versions {
@@ -23,6 +26,7 @@ object Versions {
     const val espresso = "3.4.0"
 
     const val compose = "1.3.3"
+    const val material3 = "1.1.0-alpha05"
 
     const val lifecycleRuntime = "2.5.1"
 
@@ -55,4 +59,12 @@ object Compose{
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     const val composeUiPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
+    const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.material3}"
+}
+
+object Modules {
+    const val common = ":common"
+    const val navigation = ":navigation"
+    const val remote = ":remote"
+    const val finance2up = ":feature:finance2up"
 }
