@@ -1,3 +1,5 @@
+import Versions.firebaseBom
+import Versions.googleService
 import org.gradle.api.JavaVersion
 
 object SdkVersions {
@@ -34,6 +36,11 @@ object Versions {
 
     const val timber = "4.7.1"
     const val hyperion = "0.9.34"
+
+    const val firebaseBom= "31.2.0"
+
+    const val googleService = "4.3.15"
+    const val crashlyticsGradle ="2.9.3"
 }
 
 object TestLibraries{
@@ -65,6 +72,13 @@ object Libraries {
     val hyperionCore = "com.willowtreeapps.hyperion:hyperion-core:${Versions.hyperion}"
     val hyperionCrash = "com.willowtreeapps.hyperion:hyperion-crash:${Versions.hyperion}"
     val hyperionMeasurement = "com.willowtreeapps.hyperion:hyperion-measurement:${Versions.hyperion}"
+
+    //Firebase
+    const val platform = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    const val analytics = "com.google.firebase:firebase-analytics-ktx"
+    const val crashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    const val googleService = "com.google.gms:google-services:${Versions.googleService}"
+    const val crashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlyticsGradle}"
 }
 
 object Compose{

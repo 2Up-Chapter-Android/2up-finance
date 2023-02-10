@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.track.finance2up'
-    compileSdk 33
+    compileSdk SdkVersions.compileSdkVersion
 
     defaultConfig {
         applicationId "com.track.finance2up"
@@ -61,6 +61,9 @@ dependencies {
     implementation project(Modules.finance2up)
     implementation project(Modules.navigation)
     implementation project(Modules.remote)
+    implementation Libraries.platform
+    implementation Libraries.analytics
+    implementation Libraries.crashlytics
 
     testImplementation TestLibraries.junit
     androidTestImplementation TestLibraries.ext
@@ -74,9 +77,4 @@ dependencies {
     debugImplementation Libraries.hyperionMeasurement
 
     implementation Libraries.Timber
-
-    // Import the Firebase BoM
-    implementation platform('com.google.firebase:firebase-bom:31.2.0')
-    implementation 'com.google.firebase:firebase-analytics-ktx'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 }
