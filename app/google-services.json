@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "816534276143",
+    "project_id": "up-personal-finance",
+    "storage_bucket": "up-personal-finance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816534276143:android:98b92e49fd4fefa9f99eda",
+        "android_client_info": {
+          "package_name": "com.track.finance2up"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "816534276143-iouplq9osc48fqpbfdab33u292d6715d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.track.finance2up",
+            "certificate_hash": "37e752f9216766ea4f58d1fc73ef20f3ff433749"
+          }
+        },
+        {
+          "client_id": "816534276143-7lsoml1sho5le8u6qhian4e4of5tocsu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3HE6JOwkojWe-ausi776PLViGxOvz8hE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "816534276143-7lsoml1sho5le8u6qhian4e4of5tocsu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
