@@ -34,6 +34,11 @@ object Versions {
 
     const val timber = "4.7.1"
     const val hyperion = "0.9.34"
+
+    const val firebaseBom = "31.2.1"
+    const val toolBuild = "7.2.2"
+    const val googleServices = "4.3.15"
+    const val firebaseCrashlyticsGradle = "2.9.4"
 }
 
 object TestLibraries{
@@ -65,6 +70,13 @@ object Libraries {
     val hyperionCore = "com.willowtreeapps.hyperion:hyperion-core:${Versions.hyperion}"
     val hyperionCrash = "com.willowtreeapps.hyperion:hyperion-crash:${Versions.hyperion}"
     val hyperionMeasurement = "com.willowtreeapps.hyperion:hyperion-measurement:${Versions.hyperion}"
+
+    val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
+    val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ndk"
+    val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
+    val toolBuild = "com.android.tools.build:gradle:${Versions.toolBuild}"
+    val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
+    val firebaseCrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.firebaseCrashlyticsGradle}"
 }
 
 object Compose{

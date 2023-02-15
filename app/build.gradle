@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -71,5 +73,9 @@ dependencies {
     debugImplementation Libraries.hyperionCrash
     debugImplementation Libraries.hyperionMeasurement
 
-    implementation Libraries.Timber
+    implementation Libraries.timber
+
+    implementation platform(Libraries.firebaseBom)
+    implementation Libraries.firebaseCrashlytics
+    implementation Libraries.firebaseAnalytics
 }

@@ -7,7 +7,7 @@ Personal finance app
 - Dependency injection: Hilt
 - Jetpack Compose + XML
 - Kotlin Flow + LiveData
-- ktlint
+- kotlin
 - Github Actions (CI/CD)
 
 ## Conventions
