@@ -7,4 +7,4 @@ jobs:
     steps:
       - uses: Slashgear/action-check-pr-title@v4.3.0
         with:
-          regexp: "^PFA-[0-9]+: "
+          regexp: "^TG-[0-9]+: "
