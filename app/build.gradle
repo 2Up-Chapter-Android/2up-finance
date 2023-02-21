@@ -78,4 +78,15 @@ dependencies {
     implementation platform(Libraries.firebaseBom)
     implementation Libraries.firebaseCrashlytics
     implementation Libraries.firebaseAnalytics
+
+    implementation Libraries.material
+
+    implementation Libraries.navigation
+
+    implementation project(":feature:trans")
+    implementation project(":feature:stats")
+    implementation project(":feature:account")
+    implementation project(":feature:more")
+
+
 }

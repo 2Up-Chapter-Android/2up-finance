@@ -3,7 +3,7 @@ import org.gradle.api.JavaVersion
 object SdkVersions {
     const val compileSdkVersion = 33
     const val buildToolsVersion = "31.0.0"
-    const val minSdkVersion = 23
+    const val minSdkVersion = 24
     const val targetSdkVersion = 33
 
     val javaVersion = JavaVersion.VERSION_1_8
@@ -45,7 +45,6 @@ object TestLibraries{
     const val junit = "junit:junit:${Versions.junit}"
     const val ext = "androidx.test.ext:junit:${Versions.ext}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
-
 }
 
 object AndroidLibraries {
@@ -77,6 +76,12 @@ object Libraries {
     val toolBuild = "com.android.tools.build:gradle:${Versions.toolBuild}"
     val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
     val firebaseCrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.firebaseCrashlyticsGradle}"
+
+    // Material
+    val material = "androidx.compose.material:material:1.3.1"
+
+    // Navigation
+    val navigation = "androidx.navigation:navigation-compose:2.6.0-alpha05"
 }
 
 object Compose{
