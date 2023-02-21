@@ -11,6 +11,6 @@ Personal finance app
 - Github Actions (CI/CD)
 
 ## Conventions
-- Commit: `feat|fix|chore: [PFA-123] commit name`
-- Branch: `feature/PFA-123-branch-name`, `bugfix/PFA-123-branch-name`, `hotfix/PFA-123-branch-name`
-- PR title: `PFA-123: Pull request title`
+- Commit: `feat|fix|chore: [TG-123] commit name`
+- Branch: `feature/TG-123-branch-name`, `bugfix/TG-123-branch-name`, `hotfix/TG-123-branch-name`
+- PR title: `TG-123: Pull request title`
