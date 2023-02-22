@@ -23,6 +23,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = SdkVersions.javaVersion
         targetCompatibility = SdkVersions.javaVersion
