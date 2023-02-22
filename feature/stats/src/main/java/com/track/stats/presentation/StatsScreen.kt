@@ -1,4 +1,4 @@
-package com.track.more
+package com.track.stats.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,13 +12,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MoreScreen() {
+fun StatsScreen(){
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.LightGray),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "more", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 30.sp)
+        Text(text = "stats", fontWeight = FontWeight.Bold, color = Color.Black, fontSize = 30.sp)
     }
 }

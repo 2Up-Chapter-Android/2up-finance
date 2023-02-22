@@ -1,10 +1,13 @@
 package com.track.finance2up
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.ui.graphics.vector.ImageVector
 
-open class BottomBarScreen(
+sealed class BottomBarScreen(
     val route : String,
     val title : String,
     val icon : ImageVector
@@ -12,21 +15,21 @@ open class BottomBarScreen(
     object Trans: BottomBarScreen(
         route = "Trans",
         title = "Trans",
-        icon = Icons.Default.Add
+        icon = Icons.Filled.Add
     )
     object Stats: BottomBarScreen(
         route = "Stats",
         title = "Stats",
-        icon = Icons.Default.Build
+        icon = Icons.Filled.Build
     )
     object Account : BottomBarScreen(
         route = "Account",
         title = "Account",
-        icon = Icons.Default.AccountBox
+        icon = Icons.Filled.AccountBox
     )
     object More: BottomBarScreen(
         route = "More",
         title = "More",
-        icon = Icons.Default.MoreVert
+        icon = Icons.Filled.MoreVert
     )
 }

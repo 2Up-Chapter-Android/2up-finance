@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.track.account.AccountScreen
-import com.track.more.MoreScreen
-import com.track.stats.StatsScreen
-import com.track.trans.TransScreen
+import com.track.account.presentation.AccountScreen
+import com.track.more.presentation.MoreScreen
+import com.track.stats.presentation.StatsScreen
+import com.track.trans.presentation.TransScreen
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
