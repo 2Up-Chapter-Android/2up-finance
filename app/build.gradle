@@ -83,10 +83,9 @@ dependencies {
 
     implementation Libraries.navigation
 
-    implementation project(":feature:trans")
-    implementation project(":feature:stats")
-    implementation project(":feature:account")
-    implementation project(":feature:more")
-
+    implementation project(Route.trans)
+    implementation project(Route.stats)
+    implementation project(Route.account)
+    implementation project(Route.more)
 
 }
