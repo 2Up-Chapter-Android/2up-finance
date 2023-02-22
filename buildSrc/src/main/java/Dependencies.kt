@@ -39,25 +39,28 @@ object Versions {
     const val toolBuild = "7.2.2"
     const val googleServices = "4.3.15"
     const val firebaseCrashlyticsGradle = "2.9.4"
+
+    const val materials = "1.3.1"
 }
 
-object TestLibraries{
+object TestLibraries {
     const val junit = "junit:junit:${Versions.junit}"
     const val ext = "androidx.test.ext:junit:${Versions.ext}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
-
 }
 
 object AndroidLibraries {
     // ANDROID
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+    const val constraintLayout =
+        "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val material = "com.google.android.material:material:${Versions.material}"
     const val annotation = "androidx.annotation:annotation:${Versions.annotation}"
     const val legacy = "androidx.legacy:legacy-support-v4:${Versions.legacy}"
 
-    const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntime}"
+    const val lifecycleRuntime =
+        "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntime}"
     const val materialDesign = "com.google.android.material:material:${Versions.material}"
 
 }
@@ -69,17 +72,25 @@ object Libraries {
     // Hyperion
     val hyperionCore = "com.willowtreeapps.hyperion:hyperion-core:${Versions.hyperion}"
     val hyperionCrash = "com.willowtreeapps.hyperion:hyperion-crash:${Versions.hyperion}"
-    val hyperionMeasurement = "com.willowtreeapps.hyperion:hyperion-measurement:${Versions.hyperion}"
+    val hyperionMeasurement =
+        "com.willowtreeapps.hyperion:hyperion-measurement:${Versions.hyperion}"
 
     val firebaseBom = "com.google.firebase:firebase-bom:${Versions.firebaseBom}"
     val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ndk"
     val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     val toolBuild = "com.android.tools.build:gradle:${Versions.toolBuild}"
     val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
-    val firebaseCrashlyticsGradle = "com.google.firebase:firebase-crashlytics-gradle:${Versions.firebaseCrashlyticsGradle}"
+    val firebaseCrashlyticsGradle =
+        "com.google.firebase:firebase-crashlytics-gradle:${Versions.firebaseCrashlyticsGradle}"
+
+    // Material
+    val material = "androidx.compose.material:material:${Versions.materials}"
+
+    // Navigation
+    val navigation = "androidx.navigation:navigation-compose:2.6.0-alpha05"
 }
 
-object Compose{
+object Compose {
     const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
     const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
     const val composeUiPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
@@ -92,4 +103,11 @@ object Modules {
     const val navigation = ":navigation"
     const val remote = ":remote"
     const val finance2up = ":feature:finance2up"
+}
+
+object Route {
+    const val trans = ":feature:trans"
+    const val stats = ":feature:stats"
+    const val account = ":feature:account"
+    const val more = ":feature:more"
 }

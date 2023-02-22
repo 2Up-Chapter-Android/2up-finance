@@ -15,7 +15,11 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/account" />
             <option value="$PROJECT_DIR$/feature/finance2up" />
+            <option value="$PROJECT_DIR$/feature/more" />
+            <option value="$PROJECT_DIR$/feature/stats" />
+            <option value="$PROJECT_DIR$/feature/trans" />
             <option value="$PROJECT_DIR$/navigation" />
             <option value="$PROJECT_DIR$/remote" />
           </set>
