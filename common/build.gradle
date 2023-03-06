@@ -39,5 +39,15 @@ dependencies {
     androidTestImplementation TestLibraries.ext
     androidTestImplementation TestLibraries.espresso
 
+    implementation Libraries.daggerHilt
+    implementation Libraries.hiltCompiler
+
+    implementation AndroidLibraries.hawk
+
+    implementation AndroidLibraries.retrofit
+    implementation AndroidLibraries.retrofitConverter
+    implementation AndroidLibraries.gson
+    implementation AndroidLibraries.loggingIntercepter
+
     implementation Libraries.Timber
 }

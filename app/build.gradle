@@ -3,6 +3,8 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -44,6 +46,7 @@ android {
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += 'META-INF/gradle/incremental.annotation.processors'
         }
     }
 }
@@ -57,8 +60,12 @@ dependencies {
     implementation Compose.composeUiPreview
     implementation Compose.composeMaterial3
 
+    implementation Libraries.daggerHilt
+    kapt Libraries.hiltCompiler
+
+    implementation AndroidLibraries.hawk
+
     implementation project(Modules.common)
-    implementation project(Modules.finance2up)
     implementation project(Modules.navigation)
     implementation project(Modules.remote)
 
@@ -88,4 +95,8 @@ dependencies {
     implementation project(Route.account)
     implementation project(Route.more)
 
+}
+
+kapt {
+    correctErrorTypes true
 }
