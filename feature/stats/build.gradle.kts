@@ -54,9 +54,10 @@ dependencies {
 
     implementation(Libraries.daggerHilt)
     implementation(Libraries.hiltCompiler)
+    implementation(Libraries.hiltNavigationCompose)
 
     implementation(AndroidLibraries.retrofit)
-    implementation(AndroidLibraries.retrofitConverter)
+    implementation(AndroidLibraries.retrofitGsonConverter)
     implementation(AndroidLibraries.gson)
-    implementation(AndroidLibraries.loggingIntercepter)
+    implementation(AndroidLibraries.loggingInterceptor)
 }

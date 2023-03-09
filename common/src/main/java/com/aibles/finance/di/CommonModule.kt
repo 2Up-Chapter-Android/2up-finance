@@ -5,6 +5,7 @@ import com.aibles.finance.AppDispatchers
 import com.aibles.finance.data.remote.services.CommonService
 import com.aibles.finance.data.remote.util.CallAdapterFactory
 import com.aibles.finance.data.remote.util.HeaderAuthorizationInterceptor
+import com.track.common.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object CommonModule {
-    private const val BASE_URL = "Your api endpoint"
+    private const val BASE_URL = BuildConfig.BASE_URL
 
     @Provides
     fun provideAppDispatchers() = AppDispatchers(Dispatchers.Main, Dispatchers.IO, Dispatchers.Default)

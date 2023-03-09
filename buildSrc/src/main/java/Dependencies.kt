@@ -36,12 +36,13 @@ object Versions {
     const val hyperion = "0.9.34"
 
     const val hilt = "2.44"
+    const val hiltNavigationCompose = "1.0.0"
 
     const val hawk = "2.0.1"
 
     const val gson = "2.8.6"
     const val retrofit = "2.9.0"
-    const val loggingIntercepter = "4.10.0"
+    const val loggingInterceptor = "4.10.0"
 
     const val firebaseBom = "31.2.1"
     const val toolBuild = "7.2.2"
@@ -76,11 +77,11 @@ object AndroidLibraries {
 
     //RETROFIT
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val retrofitConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
 
     //OKHTTP3
-    const val loggingIntercepter = "com.squareup.okhttp3:logging-interceptor:${Versions.loggingIntercepter}"
+    const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.loggingInterceptor}"
 
 }
 
@@ -92,6 +93,7 @@ object Libraries {
     const val daggerHilt = "com.google.dagger:hilt-android:${Versions.hilt}"
     const val hiltGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
+    const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:${Versions.hiltNavigationCompose}"
 
     // Hyperion
     val hyperionCore = "com.willowtreeapps.hyperion:hyperion-core:${Versions.hyperion}"

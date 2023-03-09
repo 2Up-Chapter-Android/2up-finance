@@ -55,4 +55,6 @@ dependencies {
 
     implementation(Libraries.daggerHilt)
     implementation(Libraries.hiltCompiler)
+    implementation(Libraries.hiltNavigationCompose)
+
 }

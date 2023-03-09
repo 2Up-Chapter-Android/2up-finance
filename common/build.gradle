@@ -16,11 +16,18 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"Your dev api endpoint\"")
+        }
+
         release {
+            buildConfigField("String", "BASE_URL", "\"Your prod api endpoint\"")
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility SdkVersions.javaVersion
         targetCompatibility SdkVersions.javaVersion
@@ -45,9 +52,9 @@ dependencies {
     implementation AndroidLibraries.hawk
 
     implementation AndroidLibraries.retrofit
-    implementation AndroidLibraries.retrofitConverter
+    implementation AndroidLibraries.retrofitGsonConverter
     implementation AndroidLibraries.gson
-    implementation AndroidLibraries.loggingIntercepter
+    implementation AndroidLibraries.loggingInterceptor
 
     implementation Libraries.Timber
 }

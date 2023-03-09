@@ -11,8 +11,12 @@ class Finance2UpApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Hawk.init(applicationContext).build()
+        setupHawk()
         setupTimber()
+    }
+
+    private fun setupHawk() {
+        Hawk.init(applicationContext).build()
     }
 
     private fun setupTimber() {

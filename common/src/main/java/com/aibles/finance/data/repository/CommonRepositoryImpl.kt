@@ -1,7 +1,6 @@
 package com.aibles.finance.data.repository
 
-import com.orhanobut.hawk.Hawk
-import com.aibles.finance.constpackage.HawkKey
+import com.aibles.finance.data.local.HawkDataSource
 import com.aibles.finance.data.remote.dto.RefreshTokenRequest
 import com.aibles.finance.data.remote.services.CommonDataSource
 import com.aibles.finance.data.remote.util.Resource
@@ -12,10 +11,10 @@ class CommonRepositoryImpl @Inject constructor(private val dataSource: CommonDat
     CommonRepository {
 
     override suspend fun refreshToken(): Resource<String> {
-        val refreshToken = Hawk.get(HawkKey.REFRESH_TOKEN, "null")
+        val refreshToken = HawkDataSource.getRefreshToken()
         val refreshTokenRequest = RefreshTokenRequest(refreshToken)
         val refreshTokenResponse = dataSource.refreshToken(refreshTokenRequest)
-        if (refreshTokenResponse.isSuccessful()) Hawk.put(HawkKey.ACCESS_TOKEN, refreshTokenResponse.data)
+        if (refreshTokenResponse.isSuccessful()) HawkDataSource.saveAccessToken(refreshTokenResponse.data ?: "null")
         return refreshTokenResponse
     }
 }
