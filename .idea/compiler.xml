@@ -4,6 +4,7 @@
     <bytecodeTargetLevel target="1.7">
       <module name="Finance2Up.buildSource.main" target="11" />
       <module name="Finance2Up.buildSource.test" target="11" />
+      <module name="Finance2Up.feature.finance2up" target="11" />
       <module name="Finance2Up.trans" target="11" />
     </bytecodeTargetLevel>
   </component>

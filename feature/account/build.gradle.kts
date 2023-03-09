@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -49,6 +50,16 @@ dependencies {
     implementation(Compose.composeMaterial3)
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.material)
+
+    implementation(Libraries.daggerHilt)
+    implementation(Libraries.hiltCompiler)
+    implementation(Libraries.hiltNavigationCompose)
+
+    implementation(AndroidLibraries.retrofit)
+    implementation(AndroidLibraries.retrofitGsonConverter)
+    implementation(AndroidLibraries.gson)
+    implementation(AndroidLibraries.loggingInterceptor)
+
     testImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.ext)
     androidTestImplementation(TestLibraries.espresso)

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id ("com.google.dagger.hilt.android")
 }
 
 android {
@@ -51,4 +52,9 @@ dependencies {
     testImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.ext)
     androidTestImplementation(TestLibraries.espresso)
+
+    implementation(Libraries.daggerHilt)
+    implementation(Libraries.hiltCompiler)
+    implementation(Libraries.hiltNavigationCompose)
+
 }
