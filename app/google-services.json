@@ -41,6 +41,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816534276143:android:e127367d60d470cef99eda",
+        "android_client_info": {
+          "package_name": "com.track.finance2up.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "816534276143-7lsoml1sho5le8u6qhian4e4of5tocsu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3HE6JOwkojWe-ausi776PLViGxOvz8hE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "816534276143-7lsoml1sho5le8u6qhian4e4of5tocsu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

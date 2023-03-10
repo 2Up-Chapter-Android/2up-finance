@@ -1,0 +1,36 @@
+name: Build debug
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build-test-develop-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛒 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: temurin
+
+      - name: 📝 Create keystore file from base64 string
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'keystore'
+          fileDir: '.'
+          encodedString: ${{ secrets.KEYSTORE }}
+
+      - name: 📝 Create signing config secrets file
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'keystore.properties'
+          fileDir: '.'
+          encodedString: ${{ secrets.KEYSTORE_PROPERTIES }}
+
+      - name: 🐘 Execute Gradle APK build debug
+        run: ./gradlew app:assembleDebug
