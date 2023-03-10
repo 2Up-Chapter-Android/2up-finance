@@ -2,6 +2,19 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
+      <module name="2up-finance.Finance2Up.app" target="11" />
+      <module name="2up-finance.Finance2Up.buildSrc" target="11" />
+      <module name="2up-finance.Finance2Up.buildSrc.main" target="11" />
+      <module name="2up-finance.Finance2Up.buildSrc.main~1" target="11" />
+      <module name="2up-finance.Finance2Up.buildSrc.test" target="11" />
+      <module name="2up-finance.Finance2Up.buildSrc.test~1" target="11" />
+      <module name="2up-finance.Finance2Up.common" target="11" />
+      <module name="2up-finance.Finance2Up.feature.account" target="11" />
+      <module name="2up-finance.Finance2Up.feature.more" target="11" />
+      <module name="2up-finance.Finance2Up.feature.stats" target="11" />
+      <module name="2up-finance.Finance2Up.feature.trans" target="11" />
+      <module name="2up-finance.Finance2Up.navigation" target="11" />
+      <module name="2up-finance.Finance2Up.remote" target="11" />
       <module name="Finance2Up.buildSource.main" target="11" />
       <module name="Finance2Up.buildSource.test" target="11" />
       <module name="Finance2Up.feature.finance2up" target="11" />
