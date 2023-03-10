@@ -1,0 +1,45 @@
+name: Build release and publish to Firebase App Distribution
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-publish-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛒 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: temurin
+
+      - name: 📝 Create keystore file from base64 string
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'keystore'
+          fileDir: '.'
+          encodedString: ${{ secrets.KEYSTORE }}
+
+      - name: 📝 Create signing config secrets file
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'keystore.properties'
+          fileDir: '.'
+          encodedString: ${{ secrets.KEYSTORE_PROPERTIES }}
+
+      - name: 🐘 Execute Gradle APK build
+        run: ./gradlew app:assembleRelease
+
+      - name: 🔥 Release on Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.4.0
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
+          file: app/build/outputs/apk/release/app-release.apk
+          debug: true
