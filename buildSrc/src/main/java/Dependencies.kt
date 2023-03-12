@@ -128,6 +128,7 @@ object Modules {
     const val common = ":common"
     const val navigation = ":navigation"
     const val remote = ":remote"
+    const val authentication = ":feature:authentication"
 }
 
 object Route {

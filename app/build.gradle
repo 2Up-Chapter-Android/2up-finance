@@ -86,6 +86,7 @@ dependencies {
     implementation project(Modules.common)
     implementation project(Modules.navigation)
     implementation project(Modules.remote)
+    implementation project(Modules.authentication)
 
     testImplementation TestLibraries.junit
     androidTestImplementation TestLibraries.ext
