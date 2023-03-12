@@ -59,8 +59,6 @@ dependencies {
     implementation(AndroidLibraries.retrofitGsonConverter)
     implementation(AndroidLibraries.gson)
     implementation(AndroidLibraries.loggingInterceptor)
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.4.0")
 
     testImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.ext)
