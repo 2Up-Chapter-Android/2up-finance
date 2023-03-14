@@ -14,7 +14,7 @@ object SdkVersions {
 }
 
 object Versions {
-    const val appCompat = "1.3.0-alpha01"
+    const val appCompat = "1.6.1"
     const val coreKtx = "1.5.0-alpha01"
     const val constraintLayout = "2.0.0-rc1"
     const val material = "1.8.0"
@@ -108,20 +108,17 @@ object Libraries {
     val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
     val firebaseCrashlyticsGradle =
         "com.google.firebase:firebase-crashlytics-gradle:${Versions.firebaseCrashlyticsGradle}"
-
-    // Material
-    val material = "androidx.compose.material:material:${Versions.materials}"
-
-    // Navigation
-    val navigation = "androidx.navigation:navigation-compose:2.6.0-alpha05"
 }
 
 object Compose {
     const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
-    const val composeMaterial = "androidx.compose.material:material:${Versions.compose}"
+    const val composeMaterial = "androidx.compose.material:material:${Versions.materials}"
     const val composeUiPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.material3}"
+
+    // Navigation
+    const val navigation = "androidx.navigation:navigation-compose:2.6.0-alpha05"
 }
 
 object Modules {

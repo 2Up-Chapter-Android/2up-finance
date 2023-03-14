@@ -47,7 +47,8 @@ dependencies {
     implementation(Compose.activityCompose)
     implementation(Compose.composeUi)
     implementation(Compose.composeUiPreview)
-    implementation(Compose.composeMaterial3)
+//    implementation(Compose.composeMaterial3)
+    implementation(Compose.composeMaterial)
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.material)
 
