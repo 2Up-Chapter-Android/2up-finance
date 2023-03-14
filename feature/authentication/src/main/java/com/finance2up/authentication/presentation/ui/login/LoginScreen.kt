@@ -1,4 +1,4 @@
-package com.finance2up.authentication.presentation.login
+package com.finance2up.authentication.presentation.ui.login
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
@@ -18,7 +18,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -29,22 +32,19 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.finance2up.authentication.R
+import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
 @Composable
 fun LoginScreen() {
     val focusManager = LocalFocusManager.current
     val interactionSource = remember { MutableInteractionSource() }
-    val temp = remember {
-        mutableStateOf(false)
-    }
+    val temp = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 28.dp)
+            .padding(horizontal = dimensionResource(id = R.dimen.paddingHorizontal_login_parentView))
             .clickable(
                 interactionSource = interactionSource,
                 indication = null
@@ -52,19 +52,25 @@ fun LoginScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Image(
                 painter = painterResource(id = R.drawable.image_welcome_login),
                 contentDescription = "",
                 modifier = Modifier
-                    .width(200.dp)
-                    .height(221.dp)
-                    .padding(vertical = 18.dp),
+                    .width(dimensionResource(id = R.dimen.width_login_welcomeImage))
+                    .height(dimensionResource(id = R.dimen.height_login_welcomeImage))
+                    .padding(vertical = dimensionResource(id = R.dimen.paddingVertical_login_welcomeImage)),
             )
 
-            Text(text = "Welcome to 2upFinance", fontSize = 24.sp)
+            Text(
+                text = stringResource(id = R.string.login_welcomeTitle),
+                fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_welcomeTitle)
+            )
 
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_usernameTextField)))
             LoginEditText(
                 text = "kakrfa;lkwr",
                 onTextChange = { },
@@ -78,54 +84,53 @@ fun LoginScreen() {
                         )
                     }
                 },
-                hint = "Username"
+                hint = stringResource(id = R.string.login_hint_username)
             )
-            AnimatedVisibility(visible = true){ LoginErrorText(text = "Tài khoản không tồn tại") }
-            
-            Spacer(modifier = Modifier.height(15.dp))
+            AnimatedVisibility(visible = true) { LoginErrorText(text = stringResource(id = R.string.login_error_notExistAccount)) }
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_passwordTextField)))
             LoginPasswordEditText(
                 text = "",
                 onTextChange = {},
-                imeAction = ImeAction.Done,
-                hint = "Password"
+                imeAction = ImeAction.Done
             )
-            AnimatedVisibility(visible = true){ LoginErrorText(text = "Mật khẩu không chính xác") }
+            AnimatedVisibility(visible = true) { LoginErrorText(text = stringResource(id = R.string.login_error_incorrectPassword)) }
 
-            Spacer(modifier = Modifier.height(7.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_forgotPassTextButton)))
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
                 Text(
                     modifier = Modifier
                         .clickable(interactionSource = interactionSource, indication = null) { },
-                    text = "Forgot Password?",
-                    fontSize = 14.sp,
-                    color = Color(0xFF007AFF),
+                    text = stringResource(id = R.string.login_forgotPassword),
+                    fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_forgotPasswordTextButton),
+                    color = colorResource(id = R.color.login_textButton),
                     textAlign = TextAlign.End
                 )
             }
 
-            Spacer(modifier = Modifier.height(38.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_loginButton)))
             Button(
                 onClick = { temp.value = true },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(48.dp),
-                shape = RoundedCornerShape(24.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFFF5B5E))
+                    .height(dimensionResource(id = R.dimen.height_login_loginButton)),
+                shape = RoundedCornerShape(dimensionResource(id = R.dimen.cornerRadius_login_loginButton)),
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.login_loginButton))
             ) {
                 Text(
-                    text = "Đăng nhập",
-                    fontSize = 16.sp,
+                    text = stringResource(id = R.string.all_login),
+                    fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_loginButton),
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
             }
-            
-            Spacer(modifier = Modifier.height(40.dp))
-            AnimatedVisibility(visible = temp.value){
+
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_progressBar)))
+            AnimatedVisibility(visible = temp.value) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(50.dp),
-                    color = Color(0xFFFF0000),
-                    strokeWidth = 5.dp
+                    modifier = Modifier.size(dimensionResource(id = R.dimen.size_login_progressBar)),
+                    color = colorResource(id = R.color.login_progressBar),
+                    strokeWidth = dimensionResource(id = R.dimen.progressBarStrokeWidth_login)
                 )
             }
         }
@@ -133,16 +138,22 @@ fun LoginScreen() {
         Column {
             Text(
                 text = buildAnnotatedString {
-                    append("Don’t have an account? ")
-                    withStyle(SpanStyle(color = Color(0xFF007AFF))) { append("Sign up") }
+                    append(stringResource(id = R.string.login_dontHaveAccount))
+                    append(" ")
+                    withStyle(SpanStyle(color = colorResource(id = R.color.login_textButton))) {
+                        append(
+                            stringResource(id = R.string.all_signup)
+                        )
+                    }
                 },
+                fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_registerTextButton),
                 modifier = Modifier
                     .clickable(
                         interactionSource = interactionSource,
                         indication = null
                     ) { }
             )
-            Spacer(modifier = Modifier.height(37.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginBottom_login_registerTextButton)))
         }
     }
 }
@@ -159,9 +170,13 @@ fun LoginEditText(
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .border(width = 1.dp, color = Color.Black, RoundedCornerShape(28.dp))
-            .padding(end = 15.dp),
+            .height(dimensionResource(id = R.dimen.height_login_loginTextField))
+            .border(
+                width = 1.dp,
+                color = Color.Black,
+                RoundedCornerShape(dimensionResource(id = R.dimen.cornerRadius_login_loginTextField))
+            )
+            .padding(end = dimensionResource(id = R.dimen.paddingEnd_login_loginTextField)),
         value = textValue.value,
         onValueChange = {
 //            onTextChange(it)
@@ -173,11 +188,11 @@ fun LoginEditText(
                     .alpha(ContentAlpha.medium),
                 text = hint,
                 color = Color.Black,
-                fontSize = 13.sp
+                fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_loginTextField)
             )
         },
         textStyle = TextStyle(
-            fontSize = 13.sp
+            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_loginTextField)
         ),
         singleLine = true,
         trailingIcon = {
@@ -200,7 +215,6 @@ fun LoginPasswordEditText(
     text: String,
     onTextChange: (String) -> Unit,
     imeAction: ImeAction,
-    hint: String
 ) {
     val password = rememberSaveable { mutableStateOf("") }
     val passwordVisibility = remember { mutableStateOf(false) }
@@ -213,9 +227,13 @@ fun LoginPasswordEditText(
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .border(width = 1.dp, color = Color.Black, RoundedCornerShape(28.dp))
-            .padding(end = 15.dp),
+            .height(dimensionResource(id = R.dimen.height_login_loginTextField))
+            .border(
+                width = 1.dp,
+                color = Color.Black,
+                RoundedCornerShape(dimensionResource(id = R.dimen.cornerRadius_login_loginTextField))
+            )
+            .padding(end = dimensionResource(id = R.dimen.paddingEnd_login_loginTextField)),
         value = password.value,
         onValueChange = {
 //            onTextChange(it)
@@ -225,13 +243,13 @@ fun LoginPasswordEditText(
             Text(
                 modifier = Modifier
                     .alpha(ContentAlpha.medium),
-                text = hint,
+                text = stringResource(id = R.string.login_hint_password),
                 color = Color.Black,
-                fontSize = 13.sp
+                fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_loginTextField)
             )
         },
         textStyle = TextStyle(
-            fontSize = 13.sp
+            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_loginTextField)
         ),
         singleLine = true,
         trailingIcon = {
@@ -264,9 +282,18 @@ fun LoginPasswordEditText(
 }
 
 @Composable
-fun LoginErrorText(text: String){
-    Column(modifier = Modifier.fillMaxWidth().padding(start = 10.dp)) {
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(text = text, fontWeight = FontWeight.Bold, fontSize = 9.sp, color = Color(0xFFFF5B5E))
+fun LoginErrorText(text: String) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = dimensionResource(id = R.dimen.paddingStart_login_loginErrorText))
+    ) {
+        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_loginErrorText)))
+        Text(
+            text = text,
+            fontWeight = FontWeight.Bold,
+            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_loginErrorText),
+            color = colorResource(id = R.color.login_errorText)
+        )
     }
 }

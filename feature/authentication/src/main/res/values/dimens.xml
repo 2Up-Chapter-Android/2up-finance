@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    Login-->
+    <dimen name="textSize_login_welcomeTitle">24dp</dimen>
+    <dimen name="textSize_login_forgotPasswordTextButton">14dp</dimen>
+    <dimen name="textSize_login_loginButton">16dp</dimen>
+    <dimen name="textSize_login_registerTextButton">16dp</dimen>
+    <dimen name="textSize_login_loginTextField">13dp</dimen>
+    <dimen name="textSize_login_loginErrorText">9dp</dimen>
+
+    <dimen name="height_login_welcomeImage">221dp</dimen>
+    <dimen name="width_login_welcomeImage">200dp</dimen>
+    <dimen name="height_login_loginButton">48dp</dimen>
+    <dimen name="height_login_loginTextField">56dp</dimen>
+    <dimen name="size_login_progressBar">50dp</dimen>
+
+    <dimen name="marginTop_login_usernameTextField">25dp</dimen>
+    <dimen name="marginTop_login_passwordTextField">15dp</dimen>
+    <dimen name="marginTop_login_forgotPassTextButton">7dp</dimen>
+    <dimen name="marginTop_login_loginButton">38dp</dimen>
+    <dimen name="marginTop_login_progressBar">40dp</dimen>
+    <dimen name="marginBottom_login_registerTextButton">37dp</dimen>
+    <dimen name="marginTop_login_loginErrorText">6dp</dimen>
+
+    <dimen name="paddingVertical_login_welcomeImage">18dp</dimen>
+    <dimen name="paddingHorizontal_login_parentView">28dp</dimen>
+    <dimen name="paddingEnd_login_loginTextField">15dp</dimen>
+    <dimen name="paddingStart_login_loginErrorText">10dp</dimen>
+
+    <dimen name="cornerRadius_login_loginButton">24dp</dimen>
+    <dimen name="cornerRadius_login_loginTextField">28dp</dimen>
+
+    <dimen name="progressBarStrokeWidth_login">5dp</dimen>
+</resources>
