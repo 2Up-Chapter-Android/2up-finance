@@ -1,1 +1,14 @@
-<resources></resources>
+<resources>
+<!--    All-->
+    <string name="all_login">Login</string>
+    <string name="all_signup">Register</string>
+
+    <!--    Login-->
+    <string name="login_welcomeTitle">"Welcome to 2upFinance"</string>
+    <string name="login_hint_username">Username</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_error_notExistAccount">Account does not exist</string>
+    <string name="login_error_incorrectPassword">Incorrect password</string>
+    <string name="login_forgotPassword">Forgot Password?</string>
+    <string name="login_dontHaveAccount">Don\'t have account?</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="login_textButton">#007AFF</color>
+    <color name="login_loginButton">#FF5B5E</color>
+    <color name="login_progressBar">#FF0000</color>
+    <color name="login_errorText">#FF5B5E</color>
+</resources>
