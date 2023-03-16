@@ -39,7 +39,8 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun Finance2UpTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+//    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
@@ -49,7 +50,7 @@ fun Finance2UpTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-//        darkTheme -> DarkColorScheme
+        darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
     val view = LocalView.current

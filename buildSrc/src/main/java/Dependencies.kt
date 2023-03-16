@@ -49,7 +49,7 @@ object Versions {
     const val googleServices = "4.3.15"
     const val firebaseCrashlyticsGradle = "2.9.4"
 
-    const val materials = "1.3.1"
+    const val materialCompose = "1.3.1"
 }
 
 object TestLibraries {
@@ -112,7 +112,7 @@ object Libraries {
 
 object Compose {
     const val composeUi = "androidx.compose.ui:ui:${Versions.compose}"
-    const val composeMaterial = "androidx.compose.material:material:${Versions.materials}"
+    const val composeMaterial = "androidx.compose.material:material:${Versions.materialCompose}"
     const val composeUiPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.material3}"

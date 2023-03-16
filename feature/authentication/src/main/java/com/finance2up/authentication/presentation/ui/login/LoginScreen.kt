@@ -174,7 +174,10 @@ fun LoginEditText(
             .border(
                 width = 1.dp,
                 color = Color.Black,
-                RoundedCornerShape(dimensionResource(id = R.dimen.cornerRadius_login_loginTextField))
+                RoundedCornerShape(
+                    topEnd = dimensionResource(id = R.dimen.cornerRadius_login_loginTextField),
+                    bottomStart = dimensionResource(id = R.dimen.cornerRadius_login_loginTextField)
+                )
             )
             .padding(end = dimensionResource(id = R.dimen.paddingEnd_login_loginTextField)),
         value = textValue.value,
@@ -182,7 +185,7 @@ fun LoginEditText(
 //            onTextChange(it)
             textValue.value = it
         },
-        placeholder = {
+        label = {
             Text(
                 modifier = Modifier
                     .alpha(ContentAlpha.medium),
@@ -231,7 +234,10 @@ fun LoginPasswordEditText(
             .border(
                 width = 1.dp,
                 color = Color.Black,
-                RoundedCornerShape(dimensionResource(id = R.dimen.cornerRadius_login_loginTextField))
+                RoundedCornerShape(
+                    topEnd = dimensionResource(id = R.dimen.cornerRadius_login_loginTextField),
+                    bottomStart = dimensionResource(id = R.dimen.cornerRadius_login_loginTextField)
+                )
             )
             .padding(end = dimensionResource(id = R.dimen.paddingEnd_login_loginTextField)),
         value = password.value,
@@ -239,7 +245,7 @@ fun LoginPasswordEditText(
 //            onTextChange(it)
             password.value = it
         },
-        placeholder = {
+        label = {
             Text(
                 modifier = Modifier
                     .alpha(ContentAlpha.medium),
