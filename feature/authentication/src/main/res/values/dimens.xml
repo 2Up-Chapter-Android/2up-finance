@@ -59,5 +59,4 @@
     <dimen name="paddingTop_preOtp_button">38dp</dimen>
     <dimen name="paddingVertical_preOtp_textButton">8dp</dimen>
     <dimen name="textSize_preOtp_textButton">18sp</dimen>
-
 </resources>
