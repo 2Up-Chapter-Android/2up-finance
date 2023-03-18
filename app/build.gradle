@@ -39,11 +39,13 @@ android {
 
     buildTypes {
         release {
+            resValue "string", "app_name", "Finance2Up"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
         debug {
+            resValue "string", "app_name", "Finance2Up dbg"
             applicationIdSuffix ".debug"
         }
     }
@@ -105,9 +107,9 @@ dependencies {
     implementation Libraries.firebaseCrashlytics
     implementation Libraries.firebaseAnalytics
 
-    implementation Libraries.material
+    implementation Compose.composeMaterial
 
-    implementation Libraries.navigation
+    implementation Compose.navigation
 
     implementation project(Route.trans)
     implementation project(Route.stats)
