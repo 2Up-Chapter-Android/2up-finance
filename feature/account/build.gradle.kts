@@ -51,6 +51,8 @@ dependencies {
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.material)
 
+    implementation(project(Modules.common))
+
     implementation(Libraries.daggerHilt)
     implementation(Libraries.hiltCompiler)
     implementation(Libraries.hiltNavigationCompose)

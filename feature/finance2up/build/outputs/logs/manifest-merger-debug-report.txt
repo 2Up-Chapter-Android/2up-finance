@@ -1,0 +1,25 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml:2:1-4:12
+INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml:2:1-4:12
+INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml:2:1-4:12
+	package
+		INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+		ADDED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml:2:1-4:12
+		INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml:2:11-69
+uses-sdk
+INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+		ADDED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+		INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+		ADDED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
+		INJECTED from /home/lenhathuy/Android/2up-finance/feature/finance2up/src/main/AndroidManifest.xml
