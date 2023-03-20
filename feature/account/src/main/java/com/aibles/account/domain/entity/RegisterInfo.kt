@@ -6,12 +6,12 @@ data class RegisterInfo(
     val statusMessage: String? = "",
     val timestamp: String? = "",
     val data: AccountInformation? = null
-)
-
-data class AccountInformation(
-    val id: String? = "",
-    val email: String? = "",
-    val username: String? = "",
-    val fullName: String? = "",
-    val activated: String? = ""
-)
+) {
+    data class AccountInformation(
+        val id: String? = "",
+        val email: String? = "",
+        val username: String? = "",
+        val fullName: String? = "",
+        val activated: String? = ""
+    )
+}

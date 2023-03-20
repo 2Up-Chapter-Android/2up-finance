@@ -18,7 +18,7 @@ class RegisterRepositoryImpl @Inject constructor(private val registerDataSource:
         }
 
         return request.map {
-            it?.mapToDomain() ?: RegisterInfo()
+            it.mapToDomain()
         }
     }
 }

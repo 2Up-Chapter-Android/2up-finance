@@ -11,18 +11,19 @@ data class RegisterResponse(
     val timestamp: String? = "",
     @SerializedName("data")
     val data: Data?
+) {
+    data class Data(
+        @SerializedName("id")
+        val id: String? = "",
+        @SerializedName("email")
+        val email: String? = "",
+        @SerializedName("username")
+        val username: String? = "",
+        @SerializedName("full_name")
+        val fullName: String? = "",
+        @SerializedName("activated")
+        val activated: String? = "",
+    )
+}
 
-)
 
-data class Data(
-    @SerializedName("id")
-    val id: String? = "",
-    @SerializedName("email")
-    val email: String? = "",
-    @SerializedName("username")
-    val username: String? = "",
-    @SerializedName("full_name")
-    val fullName: String? = "",
-    @SerializedName("activated")
-    val activated: String? = "",
-)

@@ -15,7 +15,7 @@ class RegisterViewModel @Inject constructor(private var registerUseCase: Registe
 
     fun register(){
         viewModelScope.launch(Dispatchers.Main) {
-            val response = registerUseCase.invoke(
+            val response = registerUseCase(
                 RegisterRequest(
                     username = "huyle",
                     email = "huyle@gmail.com",
