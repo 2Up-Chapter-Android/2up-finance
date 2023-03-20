@@ -1,4 +1,4 @@
-package com.aibles.account.data.remote.dto
+package com.aibles.account.domain.entity
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,9 +9,9 @@ data class RegisterRequest(
     val email: String? = "",
     @SerializedName("password")
     val password: String? = "",
-    @SerializedName("fullname")
-    val fullname: String? = "",
+    @SerializedName("full_name")
+    val fullName: String? = "",
     @SerializedName("confirm_password")
-    val confirm_password: String? = "",
+    val confirmPassword: String? = "",
 ) {
 }
