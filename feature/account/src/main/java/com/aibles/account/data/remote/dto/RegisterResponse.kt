@@ -6,7 +6,7 @@ data class RegisterResponse(
     @SerializedName("status")
     val status: Int? = 0,
     @SerializedName("status_message")
-    val status_message: String? = "",
+    val statusMessage: String? = "",
     @SerializedName("timestamp")
     val timestamp: String? = "",
     @SerializedName("data")
@@ -22,7 +22,7 @@ data class Data(
     @SerializedName("username")
     val username: String? = "",
     @SerializedName("full_name")
-    val full_name: String? = "",
+    val fullName: String? = "",
     @SerializedName("activated")
     val activated: String? = "",
 )
