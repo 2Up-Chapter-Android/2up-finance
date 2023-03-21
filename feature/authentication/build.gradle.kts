@@ -51,6 +51,7 @@ dependencies {
     implementation(Compose.composeMaterial)
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.material)
+    implementation(Compose.composeLifeCycleRuntime)
 
     implementation(Libraries.daggerHilt)
     kapt(Libraries.hiltCompiler)
@@ -64,4 +65,7 @@ dependencies {
     testImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.ext)
     androidTestImplementation(TestLibraries.espresso)
+
+    implementation(project(Modules.common))
+    implementation(project(Modules.navigation))
 }

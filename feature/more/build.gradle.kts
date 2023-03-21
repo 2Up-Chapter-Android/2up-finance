@@ -50,6 +50,7 @@ dependencies {
     implementation(Compose.composeMaterial3)
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.material)
+
     testImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.ext)
     androidTestImplementation(TestLibraries.espresso)

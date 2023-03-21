@@ -29,6 +29,7 @@ object Versions {
     const val material3 = "1.1.0-alpha05"
 
     const val lifecycleRuntime = "2.5.1"
+    const val composeLifecycleRuntime = "2.6.0"
 
     const val activityCompose = "1.6.1"
 
@@ -116,6 +117,8 @@ object Compose {
     const val composeUiPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.material3}"
+
+    const val composeLifeCycleRuntime = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.composeLifecycleRuntime}"
 
     // Navigation
     const val navigation = "androidx.navigation:navigation-compose:2.6.0-alpha05"
