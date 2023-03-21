@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.track.account.presentation.AccountScreen
+import com.aibles.account.presentation.AccountScreen
 import com.track.more.presentation.MoreScreen
 import com.track.stats.presentation.StatsScreen
 import com.track.trans.presentation.TransScreen
