@@ -11,4 +11,28 @@
     <string name="login_error_incorrectPassword">Incorrect password</string>
     <string name="login_forgotPassword">Forgot Password?</string>
     <string name="login_dontHaveAccount">Don\'t have account?</string>
+
+    <!--    Register-->
+    <string name="register_title_two">An Account </string>
+    <string name="register_content_description_floating_icon">next</string>
+    <string name="register_Already_have_an_account">Already have an account?</string>
+    <string name="spaceeee">" "</string>
+    <string name="clear">clear</string>
+    <string name="show_password">show password</string>
+    <string name="hide_password">hide password</string>
+    <string name="register_name">Name</string>
+    <string name="register_phone">Phone</string>
+    <string name="register_email">Email</string>
+    <string name="register_hint_username">UserName</string>
+    <string name="register_hint_phone">PhoneNumber</string>
+    <string name="register_hint_email">Email address</string>
+    <string name="register_hint_password">Password</string>
+    <string name="register_hint_confirm_passWord">Confirm password</string>
+    <string name="register_error_incorrect_userName">Please enter valid username</string>
+    <string name="register_error_incorrect_phone_number">Please enter valid phone number</string>
+    <string name="register_error_incorrect_email">Please enter valid email</string>
+    <string name="register_error_incorrect_password">Please enter valid password</string>
+    <string name="register_error_incorrect_confirm_password">Please enter valid confirm password</string>
+
+
 </resources>

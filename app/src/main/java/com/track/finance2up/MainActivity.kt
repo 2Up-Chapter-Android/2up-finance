@@ -24,8 +24,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 //                    MainScreen()
-                    LoginScreen()
-//                    AccountScreen()
+//                    LoginScreen()
+                    AccountScreen()
                 }
             }
         }

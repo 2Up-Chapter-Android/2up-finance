@@ -31,4 +31,6 @@
     <dimen name="cornerRadius_login_loginTextField">16dp</dimen>
 
     <dimen name="progressBarStrokeWidth_login">5dp</dimen>
+
+    <dimen name="textSize_register_login">16sp</dimen>
 </resources>

@@ -26,8 +26,6 @@ fun AccountScreen(viewModel: RegisterViewModel = hiltViewModel()){
             Text(text = "click")
         }
     }
-
-
 }
 
 @Preview(showBackground = true)
