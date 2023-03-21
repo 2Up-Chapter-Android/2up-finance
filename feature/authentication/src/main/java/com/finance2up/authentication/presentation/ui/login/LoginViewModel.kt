@@ -31,38 +31,31 @@ class LoginViewModel @Inject constructor(
     private val _loginState = MutableStateFlow<Resource<LoginResponseEntity>>(Resource.loading())
     val loginState: StateFlow<Resource<LoginResponseEntity>> get() = _loginState
 
-    private val _isLoggingIn = MutableStateFlow(false)
-    val isLoggingIn: StateFlow<Boolean> get() = _isLoggingIn
-
-    private val _usernameError = MutableStateFlow("")
-    val usernameError: StateFlow<String> get() = _usernameError
-
-    private val _passwordError = MutableStateFlow("")
-    val passwordError: StateFlow<String> get() = _passwordError
+    private val _loginUiState = MutableStateFlow(LoginUIState())
+    val loginUiState: StateFlow<LoginUIState> get() = _loginUiState
 
     fun login() {
-        _usernameError.value = ""
-        _passwordError.value = ""
         if (!validateInput()) return
-        _isLoggingIn.value = true
+        _loginUiState.value = loginUiState.value.copy(isLoading = true)
         viewModelScope.launch {
             delay(200)
             val loginResponse = loginUseCase(usernameInput.value, passwordInput.value)
-            _isLoggingIn.tryEmit(loginResponse.isLoading())
+//            _loginUiState.tryEmit(loginResponse.isLoading())
+            _loginUiState.value = loginUiState.value.copy(isLoading = loginResponse.isLoading())
             _loginState.tryEmit(loginResponse)
-
         }
     }
 
     private fun validateInput(): Boolean {
+        _loginUiState.value = loginUiState.value.copy(usernameError = "", passwordError = "")
         var isValid = true
         if (!usernameInput.value.isValidUsername()) {
-            _usernameError.value = resourcesProvider.getString(R.string.login_error_notExistAccount)
+            _loginUiState.value = loginUiState.value.copy(usernameError = resourcesProvider.getString(R.string.login_error_notExistAccount))
             isValid = false
         }
 
         if (!passwordInput.value.isValidPassword()) {
-            _passwordError.value = resourcesProvider.getString(R.string.login_error_incorrectPassword)
+            _loginUiState.value = loginUiState.value.copy(passwordError = resourcesProvider.getString(R.string.login_error_incorrectPassword))
             isValid = false
         }
         return isValid
@@ -70,9 +63,11 @@ class LoginViewModel @Inject constructor(
 
     fun onUsernameValueChange(text: String) {
         _usernameInput.value = text
+        _loginUiState.value = loginUiState.value.copy(isNullUsername = text.isEmpty())
     }
 
     fun onPasswordValueChange(text: String) {
         _passwordInput.value = text
+        _loginUiState.value = loginUiState.value.copy(isNullPassword = text.isEmpty())
     }
 }
