@@ -20,11 +20,11 @@ fun RegisterResponse?.mapToDomain(): RegisterInfo {
 fun RegisterResponse.Data?.mapToDomain(): RegisterInfo.AccountInformation {
     return this?.let {
         RegisterInfo.AccountInformation(
-            id,
-            email,
-            username,
-            fullName,
-            activated
+            id = id,
+            email = email,
+            username = username,
+            fullName = fullName,
+            activated = activated
         )
     } ?: RegisterInfo.AccountInformation()
 }

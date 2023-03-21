@@ -47,9 +47,7 @@ fun LoginScreen() {
     val usernameInput = viewModel.usernameInput.collectAsStateWithLifecycle()
     val passwordInput = viewModel.passwordInput.collectAsStateWithLifecycle()
     val loginState = viewModel.loginState.collectAsStateWithLifecycle()
-    val isLoggingIn = viewModel.isLoggingIn.collectAsStateWithLifecycle()
-    val usernameError = viewModel.usernameError.collectAsStateWithLifecycle()
-    val passwordError = viewModel.passwordError.collectAsStateWithLifecycle()
+    val loginUIState = viewModel.loginUiState.collectAsStateWithLifecycle()
 
     if (loginState.value.isSuccessful()) Toast.makeText(
         context,
@@ -103,7 +101,7 @@ fun LoginScreen() {
                     },
                     hint = stringResource(id = R.string.login_hint_username)
                 )
-                AnimatedVisibility(visible = usernameError.value.isNotEmpty()) { LoginErrorText(text = usernameError.value) }
+                AnimatedVisibility(visible = loginUIState.value.visibilityUsernameError) { LoginErrorText(text = loginUIState.value.usernameError) }
 
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_passwordTextField)))
                 LoginPasswordEditText(
@@ -111,7 +109,7 @@ fun LoginScreen() {
                     onTextChange = { viewModel.onPasswordValueChange(it) },
                     imeAction = ImeAction.Done
                 )
-                AnimatedVisibility(visible = passwordError.value.isNotEmpty()) { LoginErrorText(text = passwordError.value) }
+                AnimatedVisibility(visible = loginUIState.value.visibilityPasswordError) { LoginErrorText(text = loginUIState.value.passwordError) }
 
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_forgotPassTextButton)))
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
@@ -138,7 +136,7 @@ fun LoginScreen() {
                         .height(dimensionResource(id = R.dimen.height_login_loginButton)),
                     shape = RoundedCornerShape(dimensionResource(id = R.dimen.cornerRadius_login_loginButton)),
                     colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.login_loginButton)),
-                    enabled = !isLoggingIn.value && usernameInput.value.isNotEmpty() && passwordInput.value.isNotEmpty(),
+                    enabled = loginUIState.value.enableLoginButton
                 ) {
                     Text(
                         text = stringResource(id = R.string.all_login),
@@ -169,7 +167,7 @@ fun LoginScreen() {
             }
         }
     }
-    AnimatedVisibility(visible = isLoggingIn.value, enter = fadeIn(), exit = fadeOut()) {
+    AnimatedVisibility(visible = loginUIState.value.isLoading, enter = fadeIn(), exit = fadeOut()) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
