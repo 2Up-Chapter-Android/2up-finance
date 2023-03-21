@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id ("com.google.dagger.hilt.android")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -50,9 +51,10 @@ dependencies {
     implementation(Compose.composeMaterial)
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.material)
+    implementation(Compose.composeLifeCycleRuntime)
 
     implementation(Libraries.daggerHilt)
-    implementation(Libraries.hiltCompiler)
+    kapt(Libraries.hiltCompiler)
     implementation(Libraries.hiltNavigationCompose)
 
     implementation(AndroidLibraries.retrofit)
@@ -63,4 +65,7 @@ dependencies {
     testImplementation(TestLibraries.junit)
     androidTestImplementation(TestLibraries.ext)
     androidTestImplementation(TestLibraries.espresso)
+
+    implementation(project(Modules.common))
+    implementation(project(Modules.navigation))
 }

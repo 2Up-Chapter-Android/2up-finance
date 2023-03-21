@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -17,7 +18,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"Your dev api endpoint\"")
+            buildConfigField("String", "BASE_URL", "\"http:192.168.2.1:3000/api/v1/\"")
         }
 
         release {
@@ -47,7 +48,7 @@ dependencies {
     androidTestImplementation TestLibraries.espresso
 
     implementation Libraries.daggerHilt
-    implementation Libraries.hiltCompiler
+    kapt Libraries.hiltCompiler
 
     implementation AndroidLibraries.hawk
 
