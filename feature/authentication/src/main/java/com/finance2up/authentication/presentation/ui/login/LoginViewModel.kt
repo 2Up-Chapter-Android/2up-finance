@@ -2,13 +2,12 @@ package com.finance2up.authentication.presentation.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aibles.finance.AppDispatchers
 import com.aibles.finance.data.remote.util.Resource
 import com.aibles.finance.presentation.utils.ResourcesProvider
 import com.aibles.finance.utils.isValidPassword
 import com.aibles.finance.utils.isValidUsername
 import com.finance2up.authentication.R
-import com.finance2up.authentication.data.remote.dto.login.LoginResponse
+import com.finance2up.authentication.domain.entity.login.LoginResponseEntity
 import com.finance2up.authentication.domain.usecase.LoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -29,8 +28,8 @@ class LoginViewModel @Inject constructor(
     private val _passwordInput = MutableStateFlow("")
     val passwordInput: StateFlow<String> get() = _passwordInput
 
-    private val _loginState = MutableStateFlow<Resource<LoginResponse>>(Resource.loading())
-    val loginState: StateFlow<Resource<LoginResponse>> get() = _loginState
+    private val _loginState = MutableStateFlow<Resource<LoginResponseEntity>>(Resource.loading())
+    val loginState: StateFlow<Resource<LoginResponseEntity>> get() = _loginState
 
     private val _isLoggingIn = MutableStateFlow(false)
     val isLoggingIn: StateFlow<Boolean> get() = _isLoggingIn

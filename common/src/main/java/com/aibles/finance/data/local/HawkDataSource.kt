@@ -3,9 +3,9 @@ package com.aibles.finance.data.local
 import com.orhanobut.hawk.Hawk
 
 object HawkDataSource {
-    fun getAccessToken(): String = Hawk.get(HawkKey.ACCESS_TOKEN, "null")
+    fun getAccessToken(): String = Hawk.get(HawkKey.ACCESS_TOKEN, "nothing")
 
-    fun getRefreshToken(): String = Hawk.get(HawkKey.REFRESH_TOKEN, "null")
+    fun getRefreshToken(): String = Hawk.get(HawkKey.REFRESH_TOKEN, "nothing")
 
     fun saveAccessToken(token: String)  {
         Hawk.put(HawkKey.ACCESS_TOKEN, token)
