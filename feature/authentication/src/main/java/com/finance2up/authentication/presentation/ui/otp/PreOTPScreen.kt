@@ -11,6 +11,9 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
@@ -18,6 +21,8 @@ import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
 @Composable
 fun PreOTPScreen(navController: NavController) {
+    val otpViewModel: OTPViewModel = hiltViewModel()
+
     Column(
         modifier = Modifier
             .padding(horizontal = dimensionResource(id = R.dimen.paddingHorizontal_login_parentView))
@@ -28,15 +33,15 @@ fun PreOTPScreen(navController: NavController) {
         ) {
 
             var emailUser by remember { mutableStateOf(TextFieldValue("")) }
-            var isEmailValid by remember { mutableStateOf(false) }
+//            var isEmailValid by remember { mutableStateOf(false) }
 
             TextField(
                 value = emailUser,
                 onValueChange = { newValue ->
                     emailUser = newValue
-                    isEmailValid = isValidEmail(newValue.text)
+//                    isEmailValid = isValidEmail(newValue.text)
                 },
-                isError = !isEmailValid,
+//                isError = !isEmailValid,
                 label = {
                     Text(
                         modifier = Modifier
@@ -50,8 +55,9 @@ fun PreOTPScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(top = dimensionResource(id = R.dimen.paddingTop_preOtp_textField))
             )
-
-            if (emailUser.toString() != "" && !isEmailValid) AnimatedVisibility(visible = true) {
+            otpViewModel.displayEmailError(emailUser.toString())
+            //
+            AnimatedVisibility(visible = true) {
                 EmailErrorText(
                     text = stringResource(R.string.otp_error_entermail)
                 )
@@ -59,7 +65,9 @@ fun PreOTPScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    if (isEmailValid) navController.navigate(route = "OTPScreen/${emailUser.text}")
+//                    if (otpViewModel.emailError){
+                        navController.navigate(route = "OTPScreen/${emailUser.text}")
+//                    }
                 }, modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = dimensionResource(id = R.dimen.paddingTop_preOtp_button))
@@ -75,12 +83,6 @@ fun PreOTPScreen(navController: NavController) {
             }
         }
     }
-}
-
-private fun isValidEmail(email: String): Boolean {
-    val emailRegex =
-        Regex("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})\$")
-    return emailRegex.matches(email)
 }
 
 @Composable

@@ -18,12 +18,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
 @Composable
 fun OTPScreen(navController: NavController, emailUser: String?) {
+    val otpViewModel: OTPViewModel = hiltViewModel()
+
     Column(
         modifier = Modifier
             .padding(horizontal = dimensionResource(id = R.dimen.paddingHorizontal_login_parentView))
@@ -75,7 +78,7 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                     )
                 )
             )
-
+            val otpValue = remember { mutableStateOf("") }
             val (firstText, onFirstTextChange) = remember { mutableStateOf("") }
             val (secondText, onSecondTextChange) = remember { mutableStateOf("") }
             val (thirdText, onThirdTextChange) = remember { mutableStateOf("") }
@@ -106,10 +109,23 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                     fourthText, onFourthTextChange, focusRequester4, focusRequester4
                 )
             }
-            if (firstText == "" || secondText == "" || thirdText == "" || fourthText == "") ErrorText(
-                text = stringResource(R.string.otp_error_fill)
-            )
-            else {
+//            Row(horizontalArrangement = Arrangement.Center) {
+//                repeat(4) { index ->
+//                    var char = when {
+//                        index >=otpValue.length ->""
+//                        else -> otpValue[index].toString()
+//
+//                    }
+//
+//                }
+//            }
+            otpViewModel.checkTextFieldEmpty(firstText, secondText, thirdText, fourthText)
+            //
+            if (firstText == "" || secondText == "" || thirdText == "" || fourthText == "") {
+                ErrorText(
+                    text = stringResource(R.string.otp_error_fill)
+                )
+            } else {
                 Button(
                     onClick = {
                         navController.navigate("LoginScreen")
