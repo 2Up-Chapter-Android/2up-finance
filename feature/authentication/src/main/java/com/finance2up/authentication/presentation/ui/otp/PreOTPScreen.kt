@@ -24,16 +24,15 @@ import androidx.navigation.NavController
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
-
 @Composable
 fun PreOTPScreen(navController: NavController) {
     val otpViewModel: OTPViewModel = hiltViewModel()
     val emailInput = otpViewModel.emailInput.collectAsStateWithLifecycle()
-    val emailError = otpViewModel.emailError.collectAsStateWithLifecycle()
+    val oTPUIState = otpViewModel.oTPUIState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
-            .padding(horizontal = dimensionResource(id = R.dimen.paddingHorizontal_login_parentView))
+            .padding( dimensionResource(id = R.dimen.padding_preotp_parentView))
             .fillMaxSize()
     ) {
         Column(
@@ -45,12 +44,11 @@ fun PreOTPScreen(navController: NavController) {
                 keyboardOption = KeyboardOptions(imeAction = ImeAction.Next),
                 hint = stringResource(id = R.string.preotp_hint_email)
             )
-            AnimatedVisibility(visible = emailError.value.isNotEmpty()) { ErrorText(text = emailError.value) }
+            AnimatedVisibility(visible = oTPUIState.value.visibilityEmailError) { ErrorText(text = oTPUIState.value.emailError) }
 
             Button(
                 onClick = {
-//                    otpViewModel.sendEmail()
-                    navController.navigate(route = "OTPScreen/${emailInput.value}")
+                    otpViewModel.sendEmail(navController)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

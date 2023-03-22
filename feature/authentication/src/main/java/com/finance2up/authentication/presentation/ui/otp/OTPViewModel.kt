@@ -1,6 +1,7 @@
 package com.finance2up.authentication.presentation.ui.otp
 
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
 import com.aibles.finance.presentation.utils.ResourcesProvider
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.isValidEmail
@@ -13,8 +14,6 @@ import javax.inject.Inject
 class OTPViewModel @Inject constructor(
     private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
-    private val _emailError = MutableStateFlow("")
-    val emailError: StateFlow<String> get() = _emailError
 
     private val _emailInput = MutableStateFlow("")
     val emailInput: StateFlow<String> get() = _emailInput
@@ -22,11 +21,16 @@ class OTPViewModel @Inject constructor(
     private val _otpNotFull = MutableStateFlow("")
     val otpNotFull: StateFlow<String> get() = _otpNotFull
 
+    private val _otpUiState = MutableStateFlow(OTPUIState())
+    val oTPUIState: StateFlow<OTPUIState> get() = _otpUiState
 
-    fun validateEmail(): Boolean {
+    private fun validateEmail(): Boolean {
+        _otpUiState.value = oTPUIState.value.copy(emailError = "")
+
         var isValid = true
         if (!emailInput.value.isValidEmail()) {
-            _emailError.value = resourcesProvider.getString(R.string.otp_error_entermail)
+            _otpUiState.value =
+                oTPUIState.value.copy(emailError = resourcesProvider.getString(R.string.otp_error_entermail))
             isValid = false
         }
         return isValid
@@ -36,7 +40,11 @@ class OTPViewModel @Inject constructor(
         _emailInput.value = text
     }
 
-    fun sendEmail() {
+    fun sendEmail(navController:NavController) {
+        if (!validateEmail()) {
+            return
+        }
+        navController.navigate(route = "OTPScreen/${emailInput.value}")
     }
 
     fun checkTextFieldEmpty(

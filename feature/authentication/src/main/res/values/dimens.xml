@@ -54,6 +54,7 @@
     <dimen name="textSize_otp_textButton">18sp</dimen>
 
     <!--    PREOTP-->
+    <dimen name="padding_preotp_parentView">28dp</dimen>
     <dimen name="paddingTop_preOtp_textField">30dp</dimen>
     <dimen name="marginTop_preotp_errorText">6dp</dimen>
     <dimen name="textSize_preOtp_errorText">18sp</dimen>
