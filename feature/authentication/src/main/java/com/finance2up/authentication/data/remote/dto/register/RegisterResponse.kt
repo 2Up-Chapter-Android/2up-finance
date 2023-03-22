@@ -1,4 +1,4 @@
-package com.aibles.account.data.remote.dto
+package com.finance2up.authentication.data.remote.dto.register
 
 import com.google.gson.annotations.SerializedName
 

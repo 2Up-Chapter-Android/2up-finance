@@ -36,8 +36,8 @@ object CommonModule {
     @Provides
     fun provideClient(httpLoggingInterceptor: HttpLoggingInterceptor) =
         OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(HeaderAuthorizationInterceptor())
+            .addInterceptor(httpLoggingInterceptor)
             .callTimeout(1, TimeUnit.MINUTES)
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(1, TimeUnit.MINUTES)

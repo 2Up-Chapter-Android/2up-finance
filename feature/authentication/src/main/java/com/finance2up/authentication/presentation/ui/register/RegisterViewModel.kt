@@ -1,10 +1,10 @@
-package com.aibles.account.presentation
+package com.finance2up.authentication.presentation.ui.register
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aibles.account.domain.entity.RegisterRequest
-import com.aibles.account.domain.usecase.RegisterUseCase
+import com.finance2up.authentication.domain.entity.register.RegisterRequest
+import com.finance2up.authentication.domain.usecase.RegisterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

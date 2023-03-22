@@ -1,4 +1,4 @@
-package com.aibles.account.domain.entity
+package com.finance2up.authentication.domain.entity.register
 
 
 data class RegisterInfo(
