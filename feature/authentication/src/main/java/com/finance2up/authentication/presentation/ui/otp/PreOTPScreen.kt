@@ -15,10 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.finance2up.authentication.R
@@ -28,23 +25,27 @@ import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 fun PreOTPScreen(navController: NavController) {
     val otpViewModel: OTPViewModel = hiltViewModel()
     val emailInput = otpViewModel.emailInput.collectAsStateWithLifecycle()
-    val oTPUIState = otpViewModel.oTPUIState.collectAsStateWithLifecycle()
+    val preOtpUIState = otpViewModel.preOtpUIState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
-            .padding( dimensionResource(id = R.dimen.padding_preotp_parentView))
+            .padding(dimensionResource(id = R.dimen.padding_preotp_parentView))
             .fillMaxSize()
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            OTPEditText(
+            PreOTPEditText(
                 text = emailInput.value,
                 onTextChange = { otpViewModel.changeEmailValue(it) },
                 keyboardOption = KeyboardOptions(imeAction = ImeAction.Next),
                 hint = stringResource(id = R.string.preotp_hint_email)
             )
-            AnimatedVisibility(visible = oTPUIState.value.visibilityEmailError) { ErrorText(text = oTPUIState.value.emailError) }
+            AnimatedVisibility(visible = preOtpUIState.value.visibilityEmailError) {
+                EmailErrorText(
+                    text = preOtpUIState.value.emailError
+                )
+            }
 
             Button(
                 onClick = {
@@ -70,31 +71,27 @@ fun PreOTPScreen(navController: NavController) {
 }
 
 @Composable
-fun OTPEditText(
-    text: String,
-    onTextChange: (String) -> Unit,
-    keyboardOption: KeyboardOptions,
-    hint: String
+fun PreOTPEditText(
+    text: String, onTextChange: (String) -> Unit, keyboardOption: KeyboardOptions, hint: String
 ) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(
-            topEnd = dimensionResource(id = R.dimen.cornerRadius_login_loginTextField),
-            bottomStart = dimensionResource(id = R.dimen.cornerRadius_login_loginTextField)
+            topEnd = dimensionResource(id = R.dimen.cornerRadius_preotp_textField),
+            bottomStart = dimensionResource(id = R.dimen.cornerRadius_preotp_textField)
         ),
         value = text,
         onValueChange = { onTextChange(it) },
         label = {
             Text(
-                modifier = Modifier
-                    .alpha(ContentAlpha.medium),
+                modifier = Modifier.alpha(ContentAlpha.medium),
                 text = hint,
                 color = Color.Black,
-                fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_loginTextField)
+                fontSize = fontSizeDimensionResource(id = R.dimen.textSize_preotp_textField)
             )
         },
         textStyle = TextStyle(
-            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_loginTextField)
+            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_preotp_textField)
         ),
         singleLine = true,
         keyboardOptions = keyboardOption,
@@ -110,15 +107,14 @@ fun OTPEditText(
 @Composable
 fun EmailErrorText(text: String) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = Modifier.fillMaxWidth()
     ) {
         Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_preotp_errorText)))
 
         Text(
             text = text,
             fontSize = fontSizeDimensionResource(id = R.dimen.textSize_preOtp_errorText),
-            color = colorResource(id = R.color.login_errorText)
+            color = Color.Red
         )
     }
 }

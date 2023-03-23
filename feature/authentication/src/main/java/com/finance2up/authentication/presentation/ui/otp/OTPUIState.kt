@@ -1,7 +1,7 @@
 package com.finance2up.authentication.presentation.ui.otp
 
 data class OTPUIState(
-    val emailError: String = "",
+    val textFieldError: String = "",
 ) {
-    val visibilityEmailError get() = emailError.isNotEmpty()
+    val visibilityError get() = textFieldError.isNotEmpty()
 }

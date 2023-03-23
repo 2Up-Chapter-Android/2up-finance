@@ -30,6 +30,8 @@
     <dimen name="progressBarStrokeWidth_login">5dp</dimen>
 
     <!--    OTP-->
+    <dimen name="padding_otp_parentView">28dp</dimen>
+
     <dimen name="textSize_otp_title">30sp</dimen>
 
     <dimen name="textSize_otp_checkEmail">20sp</dimen>
@@ -48,8 +50,9 @@
     <dimen name="height_otp_textField">50dp</dimen>
 
     <dimen name="paddingTop_otp_errorText">10dp</dimen>
+    <dimen name="marginTop_otp_errorText">6dp</dimen>
 
-    <dimen name="paddingTop_otp_button">38dp</dimen>
+    <dimen name="paddingTop_otp_button">28dp</dimen>
     <dimen name="paddingVertical_otp_textButton">8dp</dimen>
     <dimen name="textSize_otp_textButton">18sp</dimen>
 
@@ -59,6 +62,8 @@
     <dimen name="marginTop_preotp_errorText">6dp</dimen>
     <dimen name="textSize_preOtp_errorText">18sp</dimen>
 
+    <dimen name="textSize_preotp_textField">13sp</dimen>
+    <dimen name="cornerRadius_preotp_textField">16dp</dimen>
     <dimen name="paddingTop_preOtp_button">38dp</dimen>
     <dimen name="paddingVertical_preOtp_textButton">8dp</dimen>
     <dimen name="textSize_preOtp_textButton">18sp</dimen>
