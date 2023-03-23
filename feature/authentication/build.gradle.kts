@@ -49,6 +49,7 @@ dependencies {
     implementation(Compose.composeUi)
     implementation(Compose.composeUiPreview)
     implementation(Compose.composeMaterial)
+    implementation(Compose.composeIcon)
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.material)
 

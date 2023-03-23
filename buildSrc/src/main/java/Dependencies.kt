@@ -117,6 +117,7 @@ object Compose {
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.material3}"
 
+    const val composeIcon = "androidx.compose.material:material-icons-extended:1.3.1"
     // Navigation
     const val navigation = "androidx.navigation:navigation-compose:2.6.0-alpha05"
 }
