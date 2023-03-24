@@ -19,11 +19,11 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http:192.168.2.1:3000/api/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"http:192.168.1.4:3000/api/v1/\"")
         }
 
         release {
-            buildConfigField("String", "BASE_URL", "\"http:192.168.2.1:3000/api/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"http:192.168.1.4:3000/api/v1/\"")
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

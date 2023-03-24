@@ -49,11 +49,13 @@ dependencies {
     implementation(Compose.composeUi)
     implementation(Compose.composeUiPreview)
     implementation(Compose.composeMaterial)
+    implementation(Compose.composeIcon)
     implementation(AndroidLibraries.appCompat)
     implementation(AndroidLibraries.material)
     implementation(Compose.composeLifeCycleRuntime)
 
     implementation(Libraries.daggerHilt)
+    implementation(project(mapOf("path" to ":common")))
     kapt(Libraries.hiltCompiler)
     implementation(Libraries.hiltNavigationCompose)
 
