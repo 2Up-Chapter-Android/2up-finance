@@ -49,7 +49,8 @@ fun PreOTPScreen(navController: NavController) {
 
             Button(
                 onClick = {
-                    otpViewModel.sendEmail(navController)
+                    otpViewModel.sendEmail()
+                    navController.navigate(route = "OTPScreen/${emailInput.value}")
                 },
                 modifier = Modifier
                     .fillMaxWidth()

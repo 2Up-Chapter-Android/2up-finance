@@ -13,3 +13,6 @@ fun String.isValidPassword(): Boolean{
     val pattern = Pattern.compile(passwordPattern)
     return this.isNotEmpty() && pattern.matcher(this).matches()
 }
+fun String.isValidEmail(): Boolean{
+    return this.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+}

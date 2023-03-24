@@ -3,8 +3,8 @@ package com.finance2up.authentication.presentation.ui.otp
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.aibles.finance.presentation.utils.ResourcesProvider
+import com.aibles.finance.utils.isValidEmail
 import com.finance2up.authentication.R
-import com.finance2up.authentication.presentation.util.isValidEmail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,11 +18,11 @@ class OTPViewModel @Inject constructor(
     private val _emailInput = MutableStateFlow("")
     val emailInput: StateFlow<String> get() = _emailInput
 
-    private val _preOtpUiState = MutableStateFlow(PreOTPUIState())
-    val preOtpUIState: StateFlow<PreOTPUIState> get() = _preOtpUiState
+    private val _preotpUIState = MutableStateFlow(PreOTPUIState())
+    val preOtpUIState: StateFlow<PreOTPUIState> get() = _preotpUIState
 
-    private val _otpUiState = MutableStateFlow(OTPUIState())
-    val oTPUIState: StateFlow<OTPUIState> get() = _otpUiState
+    private val _otpUIState = MutableStateFlow(OTPUIState())
+    val otpUIState: StateFlow<OTPUIState> get() = _otpUIState
 
     private val _firstText = MutableStateFlow("")
     val firstText: StateFlow<String> get() = _firstText
@@ -34,11 +34,11 @@ class OTPViewModel @Inject constructor(
     val forthText: StateFlow<String> get() = _forthText
 
     private fun validateEmail(): Boolean {
-        _preOtpUiState.value = preOtpUIState.value.copy(emailError = "")
+        _preotpUIState.value = preOtpUIState.value.copy(emailError = "")
 
         var isValid = true
         if (!emailInput.value.isValidEmail()) {
-            _preOtpUiState.value =
+            _preotpUIState.value =
                 preOtpUIState.value.copy(emailError = resourcesProvider.getString(R.string.otp_error_entermail))
             isValid = false
         }
@@ -49,11 +49,11 @@ class OTPViewModel @Inject constructor(
         _emailInput.value = text
     }
 
-    fun sendEmail(navController: NavController) {
-        if (!validateEmail()) {
-            return
+    fun sendEmail() {
+        if (!validateEmail()) return
+        else {
+            //call api
         }
-        navController.navigate(route = "OTPScreen/${emailInput.value}")
     }
 
     fun changeOTPFirstTextValue(text: String) {
@@ -73,22 +73,22 @@ class OTPViewModel @Inject constructor(
     }
 
     private fun validateOTP(): Boolean {
-        _otpUiState.value = oTPUIState.value.copy(textFieldError = "")
+        _otpUIState.value = otpUIState.value.copy(textFieldError = "")
         var isValid = true
 
         if (_firstText.value.isEmpty() || _secondText.value.isEmpty() || _thirdText.value.isEmpty() || _forthText.value.isEmpty()) {
-            _otpUiState.value =
-                oTPUIState.value.copy(textFieldError = resourcesProvider.getString(R.string.otp_error_fill))
+            _otpUIState.value =
+                otpUIState.value.copy(textFieldError = resourcesProvider.getString(R.string.otp_error_fill))
             isValid = false
         }
         return isValid
     }
 
-    fun sendOTP(navController: NavController) {
-        if (!validateOTP()) {
-            return
+    fun sendOTP() {
+        if (validateOTP()) {
+
+            //call api
         }
-        navController.navigate("LoginScreen")
     }
 }
 

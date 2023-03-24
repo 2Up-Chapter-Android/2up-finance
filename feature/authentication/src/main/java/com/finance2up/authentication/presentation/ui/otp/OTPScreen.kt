@@ -1,21 +1,17 @@
 package com.finance2up.authentication.presentation.ui.otp
 
+import android.R.attr.*
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -23,11 +19,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
+
 
 @Composable
 fun OTPScreen(navController: NavController, emailUser: String?) {
@@ -37,7 +35,7 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
     val secondText = otpViewModel.secondText.collectAsStateWithLifecycle()
     val thirdText = otpViewModel.thirdText.collectAsStateWithLifecycle()
     val forthText = otpViewModel.forthText.collectAsStateWithLifecycle()
-    val oTPUIState = otpViewModel.oTPUIState.collectAsStateWithLifecycle()
+    val otpUIState = otpViewModel.otpUIState.collectAsStateWithLifecycle()
     Column(
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_otp_parentView))
@@ -61,9 +59,10 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                 modifier = Modifier.padding(top = dimensionResource(id = R.dimen.paddingTop_otp_checkEmail))
             )
 
-            val painter: Painter = painterResource(id = R.drawable.logo_otp)
             Image(
-                painter = painter, contentDescription = "My Image", modifier = Modifier
+                painter = painterResource(id = R.drawable.logo_otp),
+                contentDescription = "My Image",
+                modifier = Modifier
                     .width(
                         dimensionResource(id = R.dimen.width_otp_imageOTP)
                     )
@@ -89,10 +88,10 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                 )
             )
 
-            val focusRequester1 = remember { FocusRequester() }
-            val focusRequester2 = remember { FocusRequester() }
-            val focusRequester3 = remember { FocusRequester() }
-            val focusRequester4 = remember { FocusRequester() }
+            val listenRequestFirstTextField = remember { FocusRequester() }
+            val listenRequestSecondTextField = remember { FocusRequester() }
+            val listenRequestThirdTextField = remember { FocusRequester() }
+            val listenRequestForthTextField = remember { FocusRequester() }
 
             Row(
                 modifier = Modifier
@@ -101,48 +100,50 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                         top = dimensionResource(id = R.dimen.paddingTop_otp_textField)
                     ), horizontalArrangement = Arrangement.Center
             ) {
-                TextFieldForOTP1(
-                    firstText.value,
-                    { otpViewModel.changeOTPFirstTextValue(it) },
-                    focusRequester1,
-                    focusRequester2
+                TextFieldForOTP(
+                    value = firstText.value,
+                    onValueChange = { otpViewModel.changeOTPFirstTextValue(it) },
+                    focusRequester = listenRequestFirstTextField,
+                    nextFocusRequester = listenRequestSecondTextField
                 )
-                TextFieldForOTP1(
+                TextFieldForOTP(
                     secondText.value,
-                    { otpViewModel.changeOTPSecondTextValue(it) },
-                    focusRequester2,
-                    focusRequester3
+                    onValueChange = { otpViewModel.changeOTPSecondTextValue(it) },
+                    focusRequester = listenRequestSecondTextField,
+                    nextFocusRequester = listenRequestThirdTextField
                 )
-                TextFieldForOTP1(
-                    thirdText.value,
-                    { otpViewModel.changeOTPThirdTextValue(it) },
-                    focusRequester3,
-                    focusRequester4
+                TextFieldForOTP(
+                    value = thirdText.value,
+                    onValueChange = { otpViewModel.changeOTPThirdTextValue(it) },
+                    focusRequester = listenRequestThirdTextField,
+                    nextFocusRequester = listenRequestForthTextField
                 )
-                TextFieldForOTP1(
+                TextFieldForOTP(
                     value = forthText.value,
                     onValueChange = { otpViewModel.changeOTPForthTextValue(it) },
-                    focusRequester = focusRequester4,
-                    nextFocusRequester = focusRequester4,
+                    focusRequester = listenRequestForthTextField,
+                    nextFocusRequester = listenRequestForthTextField,
                     imeAction = ImeAction.Done
                 )
             }
             AnimatedVisibility(
-                visible = oTPUIState.value.visibilityError
+                visible = otpUIState.value.visibilityError
             ) {
                 ErrorText(
-                    text = oTPUIState.value.textFieldError
+                    text = otpUIState.value.textFieldError
                 )
             }
             Button(
                 onClick = {
-                    otpViewModel.sendOTP(navController)
-                }, modifier = Modifier
+                    otpViewModel.sendOTP()
+                    navController.navigate("LoginScreen")
+                },
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(
                         top = dimensionResource(id = R.dimen.paddingTop_otp_button)
                     ),
-//                enabled = oTPUIState.value.visibilityError
+//                enabled = otpUIState.value.visibilityError
             ) {
                 Text(
                     stringResource(R.string.otp_submit), modifier = Modifier.padding(
@@ -172,16 +173,8 @@ fun ErrorText(text: String) {
     }
 }
 
-fun onTextChange(newValue: String, onValueChange: (String) -> Unit) {
-    if (newValue.length <= 1) {
-        if (newValue.all { it.isDigit() }) {
-            onValueChange(newValue)
-        }
-    }
-}
-
 @Composable
-fun TextFieldForOTP1(
+fun TextFieldForOTP(
     value: String,
     onValueChange: (String) -> Unit,
     focusRequester: FocusRequester,
@@ -190,8 +183,12 @@ fun TextFieldForOTP1(
 ) {
     TextField(
         value = value,
-        onValueChange = {it: String ->
-            onTextChange(it, onValueChange)
+        onValueChange = { it: String ->
+            if (it.length <= 1) {
+                if (it.all { it.isDigit() }) {
+                    onValueChange(it)
+                }
+            }
         },
         modifier = Modifier
             .padding(
@@ -204,10 +201,10 @@ fun TextFieldForOTP1(
 
             .focusRequester(focusRequester),
         keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = imeAction
+            keyboardType = KeyboardType.Number, imeAction = imeAction
         ),
-        maxLines = 1,
+        singleLine = true,
+        textStyle = TextStyle(fontWeight = FontWeight.Bold)
     )
     LaunchedEffect(value) {
         if (value.length == 1) {
