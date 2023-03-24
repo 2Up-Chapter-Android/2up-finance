@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    Login-->
+    <!--    Login-->
     <dimen name="textSize_login_welcomeTitle">24sp</dimen>
     <dimen name="textSize_login_forgotPasswordTextButton">14sp</dimen>
     <dimen name="textSize_login_loginButton">16sp</dimen>
@@ -28,4 +28,36 @@
     <dimen name="cornerRadius_login_loginTextField">16dp</dimen>
 
     <dimen name="progressBarStrokeWidth_login">5dp</dimen>
+
+    <!--    OTP-->
+    <dimen name="textSize_otp_title">30sp</dimen>
+
+    <dimen name="textSize_otp_checkEmail">20sp</dimen>
+    <dimen name="paddingTop_otp_checkEmail">15dp</dimen>
+
+    <dimen name="paddingTop_otp_imageOTP">28dp</dimen>
+    <dimen name="width_otp_imageOTP">200dp</dimen>
+    <dimen name="height_otp_imageOTP">200dp</dimen>
+
+    <dimen name="paddingTop_otp_email">28dp</dimen>
+    <dimen name="textSize_otp_email">15sp</dimen>
+
+    <dimen name="paddingTop_otp_textField">28dp</dimen>
+    <dimen name="paddingStart_otp_textField">16dp</dimen>
+    <dimen name="width_otp_textField">50dp</dimen>
+    <dimen name="height_otp_textField">50dp</dimen>
+
+    <dimen name="paddingTop_otp_errorText">10dp</dimen>
+
+    <dimen name="paddingTop_otp_button">38dp</dimen>
+    <dimen name="paddingVertical_otp_textButton">8dp</dimen>
+    <dimen name="textSize_otp_textButton">18sp</dimen>
+
+    <!--    PREOTP-->
+    <dimen name="paddingTop_preOtp_textField">30dp</dimen>
+
+    <dimen name="paddingTop_preOtp_button">38dp</dimen>
+    <dimen name="paddingVertical_preOtp_textButton">8dp</dimen>
+    <dimen name="textSize_preOtp_textButton">18sp</dimen>
+
 </resources>

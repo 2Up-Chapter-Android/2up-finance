@@ -11,4 +11,15 @@
     <string name="login_error_incorrectPassword">Incorrect password</string>
     <string name="login_forgotPassword">Forgot Password?</string>
     <string name="login_dontHaveAccount">Don\'t have account?</string>
+
+    <!--    OTP-->
+    <string name="otp_title">OTP Verification</string>
+    <string name="otp_checkEmail">Please check OTP in your email</string>
+    <string name="otp_submit">Submit</string>
+    <string name="otp_error_fill">Please fill 4 number</string>
+    <string name="otp_error_entermail">Please enter email again</string>
+
+    <!--    PREOTP-->
+    <string name="preotp_sendEmail">Send email</string>
+    <string name="preotp_hint_email">abc@gmail.com</string>
 </resources>
