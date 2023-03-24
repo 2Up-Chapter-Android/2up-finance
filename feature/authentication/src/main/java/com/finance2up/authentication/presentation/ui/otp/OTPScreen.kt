@@ -120,10 +120,11 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                     focusRequester4
                 )
                 TextFieldForOTP1(
-                    forthText.value,
-                    { otpViewModel.changeOTPForthTextValue(it) },
-                    focusRequester4,
-                    focusRequester4
+                    value = forthText.value,
+                    onValueChange = { otpViewModel.changeOTPForthTextValue(it) },
+                    focusRequester = focusRequester4,
+                    nextFocusRequester = focusRequester4,
+                    imeAction = ImeAction.Done
                 )
             }
             AnimatedVisibility(
@@ -140,7 +141,8 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                     .fillMaxWidth()
                     .padding(
                         top = dimensionResource(id = R.dimen.paddingTop_otp_button)
-                    )
+                    ),
+//                enabled = oTPUIState.value.visibilityError
             ) {
                 Text(
                     stringResource(R.string.otp_submit), modifier = Modifier.padding(
@@ -183,11 +185,14 @@ fun TextFieldForOTP1(
     value: String,
     onValueChange: (String) -> Unit,
     focusRequester: FocusRequester,
-    nextFocusRequester: FocusRequester
+    nextFocusRequester: FocusRequester,
+    imeAction: ImeAction = ImeAction.Default
 ) {
     TextField(
         value = value,
-        onValueChange = { onTextChange(it, onValueChange) },
+        onValueChange = {it: String ->
+            onTextChange(it, onValueChange)
+        },
         modifier = Modifier
             .padding(
                 start = dimensionResource(id = R.dimen.paddingStart_otp_textField)
@@ -198,7 +203,10 @@ fun TextFieldForOTP1(
             .height(dimensionResource(id = R.dimen.height_otp_textField))
 
             .focusRequester(focusRequester),
-        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number,
+            imeAction = imeAction
+        ),
         maxLines = 1,
     )
     LaunchedEffect(value) {
