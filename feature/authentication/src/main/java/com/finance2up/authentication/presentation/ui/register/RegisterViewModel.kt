@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aibles.finance.data.remote.util.Resource
+import com.aibles.finance.presentation.utils.ResourcesProvider
 import com.aibles.finance.utils.*
 import com.finance2up.authentication.R
 import com.finance2up.authentication.domain.entity.register.RegisterInfo
@@ -20,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private var registerUseCase: RegisterUseCase,
-    private val resourcesProvider: com.aibles.finance.presentation.utils.ResourcesProvider,
+    private val resourcesProvider: ResourcesProvider,
 ) :
     ViewModel() {
 
@@ -47,10 +48,22 @@ class RegisterViewModel @Inject constructor(
 
     fun register() {
 
-        if (!validateInput()) return
-        _registerUiState.value = registerUiState.value.copy(isLoading = true)
+        if (!isValidateInput()) return
+
+        _registerUiState.value =
+            registerUiState.value.copy(
+                isLoading = true,
+                usernameInput = usernameInput.value,
+                fullNameInput = fullNameInput.value,
+                emailAddressInput = emailAddressInput.value,
+                passwordInput = passwordInput.value,
+                passwordConfirmInput = passwordConfirmInput.value
+            )
+
         viewModelScope.launch(Dispatchers.Main) {
+
             delay(200)
+
             val registerResponse = registerUseCase(
                 RegisterRequest(
                     usernameInput.value,
@@ -60,20 +73,28 @@ class RegisterViewModel @Inject constructor(
                     passwordConfirmInput.value
                 )
             )
+
             _registerUiState.value =
                 registerUiState.value.copy(isLoading = registerResponse.isLoading())
             _registerState.tryEmit(registerResponse)
+
             Log.d("check_response", "--- $registerResponse")
         }
     }
 
-    private fun validateInput(): Boolean {
-        _registerUiState.value = registerUiState.value.copy(usernameError = "", passwordError = "")
+    private fun isValidateInput(): Boolean {
+        _registerUiState.value = registerUiState.value.copy(
+            usernameError = "",
+            fullNameError = "",
+            passwordError = "",
+            emailAddressError = "",
+            passwordConfirmError = "",
+        )
         var isValid = true
         if (!usernameInput.value.isValidUsername()) {
             _registerUiState.value = registerUiState.value.copy(
                 usernameError = resourcesProvider.getString(
-                    R.string.register_error_incorrect_userName
+                    R.string.register_incorrect_userName
                 )
             )
             isValid = false
@@ -82,7 +103,7 @@ class RegisterViewModel @Inject constructor(
         if (!fullNameInput.value.isValidFullName()) {
             _registerUiState.value =
                 registerUiState.value.copy(
-                    fullNameError = resourcesProvider.getString(R.string.register_error_incorrect_full_name)
+                    fullNameError = resourcesProvider.getString(R.string.register_incorrect_full_name)
                 )
             isValid = false
         }
@@ -90,7 +111,7 @@ class RegisterViewModel @Inject constructor(
         if (!emailAddressInput.value.isValidEmail()) {
             _registerUiState.value = registerUiState.value.copy(
                 emailAddressError = resourcesProvider.getString(
-                    R.string.register_error_incorrect_email
+                    R.string.register_incorrect_email
                 )
             )
             isValid = false
@@ -99,7 +120,7 @@ class RegisterViewModel @Inject constructor(
         if (!passwordInput.value.isValidPassword()) {
             _registerUiState.value = registerUiState.value.copy(
                 passwordError = resourcesProvider.getString(
-                    R.string.register_error_incorrect_password
+                    R.string.register_incorrect_password
                 )
             )
             isValid = false
@@ -108,7 +129,7 @@ class RegisterViewModel @Inject constructor(
         if (!passwordConfirmInput.value.isValidPassword()) {
             _registerUiState.value = registerUiState.value.copy(
                 passwordConfirmError = resourcesProvider.getString(
-                    R.string.register_error_incorrect_confirm_password
+                    R.string.register_incorrect_confirm_password
                 )
             )
             isValid = false

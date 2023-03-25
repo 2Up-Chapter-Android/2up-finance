@@ -24,15 +24,15 @@
     <string name="register_full_name">FullName</string>
     <string name="register_email">Email</string>
     <string name="register_hint_username">UserName</string>
-    <string name="register_hint_full_name">FullNamex</string>
+    <string name="register_hint_full_name">FullName</string>
     <string name="register_hint_email">Email address</string>
     <string name="register_hint_password">Password</string>
     <string name="register_hint_confirm_passWord">Confirm password</string>
-    <string name="register_error_incorrect_userName">Please enter valid username</string>
-    <string name="register_error_incorrect_full_name">Please enter valid full name</string>
-    <string name="register_error_incorrect_email">Please enter valid email</string>
-    <string name="register_error_incorrect_password">Please enter valid password</string>
-    <string name="register_error_incorrect_confirm_password">Please enter valid confirm password</string>
-    <string name="regsiter_hide_password">hide_password</string>
+    <string name="register_incorrect_userName">Please enter valid username</string>
+    <string name="register_incorrect_full_name">Please enter valid full name</string>
+    <string name="register_incorrect_email">Please enter valid email</string>
+    <string name="register_incorrect_password">Please enter valid password</string>
+    <string name="register_incorrect_confirm_password">Please enter valid confirm password</string>
+    <string name="register_hide_password">hide_password</string>
 
 </resources>

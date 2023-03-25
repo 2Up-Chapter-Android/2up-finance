@@ -28,4 +28,27 @@
     <dimen name="cornerRadius_login_loginTextField">16dp</dimen>
 
     <dimen name="progressBarStrokeWidth_login">5dp</dimen>
+    
+    <!--  register-->
+
+    <dimen name="marginBottom_title_register">70dp</dimen>
+    <dimen name="marginTop_title_register">40dp</dimen>
+    <dimen name="marginStart_column_register">50dp</dimen>
+    <dimen name="marginEnd_column_register">50dp</dimen>
+    <dimen name="marginTop_registerItem">8dp</dimen>
+    <dimen name="spacer_button_register">70dp</dimen>
+    <dimen name="RoundedCornerShape_button_register">30dp</dimen>
+    <dimen name="size_button_register">60dp</dimen>
+    <dimen name="margin_CircularProgressIndicator_register">30dp</dimen>
+    <dimen name="RoundedCornerShape_outLineTextField_register">16.dp</dimen>
+    <dimen name="height_registerErrorText">20dp</dimen>
+    <dimen name="start_text_registerErrorText">4dp</dimen>
+
+    <dimen name="textSize_register_registerTitle">40sp</dimen>
+    <dimen name="textSize_register_buttonRegister">30sp</dimen>
+
+    <dimen name="progressBarStrokeWidth_register">8dp</dimen>
+
+
+
 </resources>

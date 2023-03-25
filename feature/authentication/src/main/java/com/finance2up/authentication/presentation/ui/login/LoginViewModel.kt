@@ -3,6 +3,7 @@ package com.finance2up.authentication.presentation.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aibles.finance.data.remote.util.Resource
+import com.aibles.finance.presentation.utils.ResourcesProvider
 import com.aibles.finance.utils.isValidPassword
 import com.aibles.finance.utils.isValidUsername
 import com.finance2up.authentication.R
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val resourcesProvider: com.aibles.finance.presentation.utils.ResourcesProvider,
+    private val resourcesProvider: ResourcesProvider,
     private val loginUseCase: LoginUseCase,
 ) : ViewModel() {
 

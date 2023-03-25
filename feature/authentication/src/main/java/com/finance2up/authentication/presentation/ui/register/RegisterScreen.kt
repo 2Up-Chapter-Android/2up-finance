@@ -2,16 +2,15 @@ package com.finance2up.authentication.presentation.ui.register
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import com.finance2up.authentication.R
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
@@ -28,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -39,20 +39,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
-private val canvasDrawCircleTop = Color(0xFF6B3D88)
-private val canvasDrawRect = Color(0xFFFAADAD)
 
 @Composable
 fun RegisterScreen() {
 
     val focusManager = LocalFocusManager.current
     val interactionSource = remember { MutableInteractionSource() }
-    val temp by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
 
     val viewModel: RegisterViewModel = hiltViewModel()
@@ -65,9 +61,11 @@ fun RegisterScreen() {
     val registerState = viewModel.registerState.collectAsStateWithLifecycle()
     val registerUiState = viewModel.registerUiState.collectAsStateWithLifecycle()
 
+//    val uiState = remember { RegisterUiState() }
+
     if (registerState.value.isSuccessful()) Toast.makeText(
         context,
-        "Login Success",
+        "Register Success",
         Toast.LENGTH_SHORT
     ).show()
 
@@ -78,13 +76,13 @@ fun RegisterScreen() {
     ) {
         Canvas(modifier = Modifier.fillMaxSize(),
             onDraw = {
-                drawRect(color = canvasDrawRect)
+                drawRect(color = Color(0xFFFAADAD))
             }
         )
         Canvas(modifier = Modifier.fillMaxSize(),
             onDraw = {
                 drawCircle(
-                    color = canvasDrawCircleTop,
+                    color = Color(0xFF6B3D88),
                     center = Offset(
                         90.dp.toPx(),
                         -100.dp.toPx()
@@ -120,25 +118,32 @@ fun RegisterScreen() {
                 ) { focusManager.clearFocus() },
         ) {
 
-            Column(modifier = Modifier.padding(start = 50.dp, end = 50.dp)) {
-                Spacer(modifier = Modifier.padding(40.dp))
+            Column(
+                modifier = Modifier.padding(
+                    start = dimensionResource(id = R.dimen.marginStart_column_register),
+                    end = dimensionResource(id = R.dimen.marginEnd_column_register)
+                )
+            ) {
+                Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.marginTop_title_register)))
 
                 Text(
                     text = stringResource(id = R.string.all_signup),
                     color = Color.White,
-                    fontSize = 40.sp,
+                    fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_registerTitle),
                 )
                 Text(
                     text = stringResource(id = R.string.register_title_two),
                     color = Color.White,
-                    fontSize = 40.sp,
+                    fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_registerTitle),
                 )
 
-                Spacer(modifier = Modifier.padding(top = 70.dp))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginBottom_title_register)))
 
                 RegisterItem(
                     text = userNameInput.value,
                     onValueChange = { viewModel.onUsernameValueChange(it) },
+//                    text = uiState.usernameInput,
+//                    onValueChange = {uiState.usernameInput },
                     stringResource(id = R.string.register_hint_username),
                     stringResource(id = R.string.register_name),
                     trailingIcon = {
@@ -157,10 +162,12 @@ fun RegisterScreen() {
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginTop_registerItem)))
                 RegisterItem(
                     text = fullNameInput.value,
                     onValueChange = { viewModel.onFullNameValueChange(it) },
+//                    text = uiState.fullNameInput,
+//                    onValueChange = {uiState.fullNameInput},
                     stringResource(id = R.string.register_hint_full_name),
                     stringResource(id = R.string.register_full_name),
                     trailingIcon = {
@@ -179,11 +186,12 @@ fun RegisterScreen() {
                     )
                 }
 
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginTop_registerItem)))
                 RegisterItem(
                     text = emailAddressInput.value,
                     onValueChange = { viewModel.onEmailAddressValueChange(it) },
+//                    text = uiState.emailAddressInput,
+//                    onValueChange = {uiState.emailAddressInput},
                     stringResource(id = R.string.register_hint_email),
                     stringResource(id = R.string.register_email),
                     trailingIcon = {
@@ -202,10 +210,12 @@ fun RegisterScreen() {
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginTop_registerItem)))
                 RegisterPassword(
                     text = passwordInput.value,
                     onValueChange = { viewModel.onPasswordValueChange(it) },
+//                    text = uiState.passwordInput,
+//                    onValueChange = {uiState.passwordInput},
                     stringResource(id = R.string.register_hint_password),
                     stringResource(id = R.string.register_hint_password),
                     true
@@ -216,11 +226,12 @@ fun RegisterScreen() {
                     )
                 }
 
-
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginTop_registerItem)))
                 RegisterPassword(
                     text = passwordConfirmInput.value,
                     onValueChange = { viewModel.onPasswordConfirmValueChange(it) },
+//                    text = uiState.passwordConfirmInput,
+//                    onValueChange = {uiState.passwordConfirmInput},
                     stringResource(id = R.string.register_hint_confirm_passWord),
                     stringResource(id = R.string.register_hint_confirm_passWord),
                     false
@@ -230,8 +241,6 @@ fun RegisterScreen() {
                         text = registerUiState.value.passwordConfirmError
                     )
                 }
-
-                Spacer(modifier = Modifier.padding(top = 20.dp))
 
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -244,22 +253,28 @@ fun RegisterScreen() {
                         Text(
                             text = stringResource(id = R.string.all_signup),
                             color = Color.White,
-                            fontSize = 30.sp
+                            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_buttonRegister)
                         )
 
-                        Spacer(modifier = Modifier.padding(70.dp))
+                        Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.spacer_button_register)))
 
                         Button(
-                            onClick = { viewModel.register() },
+                            onClick = {
+                                if (!registerUiState.value.isNullUsername ||
+                                    !registerUiState.value.isNullFullNameInput ||
+                                    !registerUiState.value.isNullEmailAddress ||
+                                    !registerUiState.value.isNullPassword ||
+                                    !registerUiState.value.isNullPasswordConfirm
+                                ) {
+                                    viewModel.register()
+                                }
+                            },
                             enabled = registerUiState.value.enableLoginButton,
                             shape = RoundedCornerShape(
-                                topEnd = 30.dp,
-                                topStart = 30.dp,
-                                bottomStart = 30.dp,
-                                bottomEnd = 30.dp
+                                size = dimensionResource(id = R.dimen.RoundedCornerShape_button_register)
                             ),
-                            modifier = Modifier.size(60.dp),
-                            colors = ButtonDefaults.buttonColors(canvasDrawCircleTop),
+                            modifier = Modifier.size(dimensionResource(id = R.dimen.size_button_register)),
+                            colors = ButtonDefaults.buttonColors(Color(0xFF6B3D88)),
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.ArrowForward,
@@ -269,13 +284,17 @@ fun RegisterScreen() {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(30.dp))
+                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.margin_CircularProgressIndicator_register)))
 
-                    AnimatedVisibility(visible = temp) {
+                    AnimatedVisibility(
+                        visible = registerUiState.value.isLoading,
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(80.dp),
                             color = Color.Blue,
-                            strokeWidth = 8.dp
+                            strokeWidth = dimensionResource(id = R.dimen.progressBarStrokeWidth_register)
                         )
                     }
                     Text(
@@ -293,7 +312,7 @@ fun RegisterScreen() {
                                 indication = null
                             ) { }
                     )
-                    Spacer(modifier = Modifier.padding(top = 30.dp))
+                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.margin_CircularProgressIndicator_register)))
                 }
             }
         }
@@ -315,7 +334,10 @@ fun RegisterItem(
         OutlinedTextField(
             value = text, onValueChange = { onValueChange(it) },
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(topEnd = 16.dp, bottomStart = 16.dp),
+            shape = RoundedCornerShape(
+                topEnd = dimensionResource(id = R.dimen.RoundedCornerShape_outLineTextField_register),
+                bottomStart = dimensionResource(id = R.dimen.RoundedCornerShape_outLineTextField_register)
+            ),
             label = {
                 Text(
                     textLabel,
@@ -366,7 +388,10 @@ fun RegisterPassword(
         OutlinedTextField(
             value = text, onValueChange = { onValueChange(it) },
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(topEnd = 16.dp, bottomStart = 16.dp),
+            shape = RoundedCornerShape(
+                topEnd = dimensionResource(id = R.dimen.RoundedCornerShape_outLineTextField_register),
+                bottomStart = dimensionResource(id = R.dimen.RoundedCornerShape_outLineTextField_register)
+            ),
             label = {
                 Text(
                     textLabel,
@@ -388,7 +413,7 @@ fun RegisterPassword(
                     IconButton(onClick = { passwordHidden = false }) {
                         Icon(
                             imageVector = Icons.Filled.Visibility,
-                            contentDescription = stringResource(R.string.regsiter_hide_password)
+                            contentDescription = stringResource(R.string.register_hint_password)
                         )
                     }
                 } else {
@@ -396,7 +421,7 @@ fun RegisterPassword(
                         onClick = { passwordHidden = true }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
-                            contentDescription = stringResource(R.string.regsiter_hide_password)
+                            contentDescription = stringResource(R.string.register_hint_password)
                         )
                     }
                 }
@@ -415,7 +440,7 @@ fun RegisterPassword(
 fun RegisterErrorText(text: String) {
     Row(
         Modifier
-            .height(20.dp)
+            .height(dimensionResource(id = R.dimen.height_registerErrorText))
             .wrapContentWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
@@ -424,7 +449,7 @@ fun RegisterErrorText(text: String) {
             text,
             color = MaterialTheme.colors.error,
             style = MaterialTheme.typography.caption,
-            modifier = Modifier.padding(start = 4.dp),
+            modifier = Modifier.padding(start = dimensionResource(id = R.dimen.start_text_registerErrorText)),
             textAlign = TextAlign.Left,
         )
     }

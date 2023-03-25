@@ -4,4 +4,8 @@
     <color name="login_loginButton">#FF5B5E</color>
     <color name="login_progressBar">#FF0000</color>
     <color name="login_errorText">#FF5B5E</color>
+
+    <color name="canvasDrawCircleTop_register">#FF5B5E</color>
+    private val canvasDrawCircleTop = Color(0xFF6B3D88)
+    private val canvasDrawRect = Color(0xFFFAADAD)
 </resources>
