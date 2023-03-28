@@ -14,25 +14,23 @@
 
     <!--    Register-->
     <string name="register_title_two">An Account </string>
-    <string name="register_content_description_floating_icon">next</string>
     <string name="register_Already_have_an_account">Already have an account?</string>
-    <string name="register_space">" "</string>
     <string name="register_clear">clear</string>
     <string name="show_password">show password</string>
     <string name="hide_password">hide password</string>
     <string name="register_name">Name</string>
     <string name="register_full_name">FullName</string>
     <string name="register_email">Email</string>
-    <string name="register_hint_username">UserName</string>
+    <string name="register_hint_username">Username</string>
     <string name="register_hint_full_name">FullName</string>
     <string name="register_hint_email">Email address</string>
     <string name="register_hint_password">Password</string>
     <string name="register_hint_confirm_passWord">Confirm password</string>
-    <string name="register_incorrect_userName">Please enter valid username</string>
-    <string name="register_incorrect_full_name">Please enter valid full name</string>
-    <string name="register_incorrect_email">Please enter valid email</string>
-    <string name="register_incorrect_password">Please enter valid password</string>
-    <string name="register_incorrect_confirm_password">Please enter valid confirm password</string>
+    <string name="register_incorrect_userName">Please enter a valid username</string>
+    <string name="register_incorrect_full_name">Please enter a valid full name</string>
+    <string name="register_incorrect_email">Please enter a valid email</string>
+    <string name="register_incorrect_password">Please enter a valid password</string>
+    <string name="register_incorrect_confirm_password">Please enter a valid confirm password</string>
     <string name="register_hide_password">hide_password</string>
 
 </resources>

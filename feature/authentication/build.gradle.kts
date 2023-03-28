@@ -55,7 +55,6 @@ dependencies {
     implementation(Compose.composeLifeCycleRuntime)
 
     implementation(Libraries.daggerHilt)
-//    implementation(project(mapOf("path" to ":common")))
     kapt(Libraries.hiltCompiler)
     implementation(Libraries.hiltNavigationCompose)
 

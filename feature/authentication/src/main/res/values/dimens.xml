@@ -31,23 +31,24 @@
     
     <!--  register-->
 
-    <dimen name="marginBottom_title_register">70dp</dimen>
-    <dimen name="marginTop_title_register">40dp</dimen>
+    <dimen name="marginBottom_spacer_title_register">70dp</dimen>
+    <dimen name="marginTop_spacer_title_register">40dp</dimen>
+    <dimen name="margin_spacer_CircularProgressIndicator_register">30dp</dimen>
+    <dimen name="marginTop_spacer_registerItem">8dp</dimen>
+    <dimen name="button_spacer_register">70dp</dimen>
+
     <dimen name="marginStart_column_register">50dp</dimen>
     <dimen name="marginEnd_column_register">50dp</dimen>
-    <dimen name="marginTop_registerItem">8dp</dimen>
-    <dimen name="spacer_button_register">70dp</dimen>
-    <dimen name="RoundedCornerShape_button_register">30dp</dimen>
+    <dimen name="radius_button_register">30dp</dimen>
     <dimen name="size_button_register">60dp</dimen>
-    <dimen name="margin_CircularProgressIndicator_register">30dp</dimen>
-    <dimen name="RoundedCornerShape_outLineTextField_register">16.dp</dimen>
+    <dimen name="radius_outLineTextField_register">16.dp</dimen>
     <dimen name="height_registerErrorText">20dp</dimen>
-    <dimen name="start_text_registerErrorText">4dp</dimen>
+    <dimen name="CircularProgressIndicator_register">80dp</dimen>
 
     <dimen name="textSize_register_registerTitle">40sp</dimen>
     <dimen name="textSize_register_buttonRegister">30sp</dimen>
 
-    <dimen name="progressBarStrokeWidth_register">8dp</dimen>
+    <dimen name="strokeWidth_register_progressBar">8dp</dimen>
 
 
 

@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,39 +26,20 @@ class RegisterViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private val _usernameInput = MutableStateFlow("")
-    val usernameInput: StateFlow<String> get() = _usernameInput
-
-    private val _fullNameInput = MutableStateFlow("")
-    val fullNameInput: StateFlow<String> get() = _fullNameInput
-
-    private val _emailAddressInput = MutableStateFlow("")
-    val emailAddressInput: StateFlow<String> get() = _emailAddressInput
-
-    private val _passwordInput = MutableStateFlow("")
-    val passwordInput: StateFlow<String> get() = _passwordInput
-
-    private val _passwordConfirmInput = MutableStateFlow("")
-    val passwordConfirmInput: StateFlow<String> get() = _passwordConfirmInput
-
     private val _registerState = MutableStateFlow<Resource<RegisterInfo>>(Resource.loading())
     val registerState: StateFlow<Resource<RegisterInfo>> get() = _registerState
 
     private val _registerUiState = MutableStateFlow(RegisterUiState())
-    val registerUiState: StateFlow<RegisterUiState> get() = _registerUiState
+    val registerUiState: StateFlow<RegisterUiState>  = _registerUiState.asStateFlow()
 
-    fun register() {
+
+    fun registerRequest() {
 
         if (!isValidateInput()) return
 
         _registerUiState.value =
             registerUiState.value.copy(
-                isLoading = true,
-                usernameInput = usernameInput.value,
-                fullNameInput = fullNameInput.value,
-                emailAddressInput = emailAddressInput.value,
-                passwordInput = passwordInput.value,
-                passwordConfirmInput = passwordConfirmInput.value
+                isLoading = true
             )
 
         viewModelScope.launch(Dispatchers.Main) {
@@ -66,14 +48,14 @@ class RegisterViewModel @Inject constructor(
 
             val registerResponse = registerUseCase(
                 RegisterRequest(
-                    usernameInput.value,
-                    fullNameInput.value,
-                    emailAddressInput.value,
-                    passwordInput.value,
-                    passwordConfirmInput.value
+                    username = registerUiState.value.usernameInput,
+                    fullName = registerUiState.value.fullNameInput,
+                    email =  registerUiState.value.emailAddressInput,
+                    password = registerUiState.value.passwordInput,
+                    confirmPassword = registerUiState.value.confirmPasswordInput
+
                 )
             )
-
             _registerUiState.value =
                 registerUiState.value.copy(isLoading = registerResponse.isLoading())
             _registerState.tryEmit(registerResponse)
@@ -83,6 +65,7 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun isValidateInput(): Boolean {
+
         _registerUiState.value = registerUiState.value.copy(
             usernameError = "",
             fullNameError = "",
@@ -91,7 +74,7 @@ class RegisterViewModel @Inject constructor(
             passwordConfirmError = "",
         )
         var isValid = true
-        if (!usernameInput.value.isValidUsername()) {
+        if (!registerUiState.value.usernameInput.isValidUsername()) {
             _registerUiState.value = registerUiState.value.copy(
                 usernameError = resourcesProvider.getString(
                     R.string.register_incorrect_userName
@@ -100,7 +83,7 @@ class RegisterViewModel @Inject constructor(
             isValid = false
         }
 
-        if (!fullNameInput.value.isValidFullName()) {
+        if (!registerUiState.value.fullNameInput.isValidFullName()) {
             _registerUiState.value =
                 registerUiState.value.copy(
                     fullNameError = resourcesProvider.getString(R.string.register_incorrect_full_name)
@@ -108,7 +91,7 @@ class RegisterViewModel @Inject constructor(
             isValid = false
         }
 
-        if (!emailAddressInput.value.isValidEmail()) {
+        if (!registerUiState.value.emailAddressInput.isValidEmail()) {
             _registerUiState.value = registerUiState.value.copy(
                 emailAddressError = resourcesProvider.getString(
                     R.string.register_incorrect_email
@@ -117,7 +100,7 @@ class RegisterViewModel @Inject constructor(
             isValid = false
         }
 
-        if (!passwordInput.value.isValidPassword()) {
+        if (!registerUiState.value.passwordInput.isValidPassword()) {
             _registerUiState.value = registerUiState.value.copy(
                 passwordError = resourcesProvider.getString(
                     R.string.register_incorrect_password
@@ -126,7 +109,7 @@ class RegisterViewModel @Inject constructor(
             isValid = false
         }
 
-        if (!passwordConfirmInput.value.isValidPassword()) {
+        if (!registerUiState.value.confirmPasswordInput.isValidPassword()) {
             _registerUiState.value = registerUiState.value.copy(
                 passwordConfirmError = resourcesProvider.getString(
                     R.string.register_incorrect_confirm_password
@@ -138,28 +121,37 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun onUsernameValueChange(text: String) {
-        _usernameInput.value = text
-        _registerUiState.value = registerUiState.value.copy(isNullUsername = text.isEmpty())
+        _registerUiState.value = registerUiState.value.copy(
+            usernameInput = text,
+            isNullUsername = text.isEmpty()
+        )
     }
 
     fun onFullNameValueChange(text: String) {
-        _fullNameInput.value = text
-        _registerUiState.value = registerUiState.value.copy(isNullFullName = text.isEmpty())
+        _registerUiState.value = registerUiState.value.copy(
+            fullNameInput = text,
+            isNullFullName = text.isEmpty()
+        )
     }
 
     fun onEmailAddressValueChange(text: String) {
-        _emailAddressInput.value = text
-        _registerUiState.value = registerUiState.value.copy(isNullEmailAddress = text.isEmpty())
+        _registerUiState.value = registerUiState.value.copy(
+            emailAddressInput = text,
+            isNullEmailAddress = text.isEmpty()
+        )
     }
 
     fun onPasswordValueChange(text: String) {
-        _passwordInput.value = text
-        _registerUiState.value = registerUiState.value.copy(isNullPassword = text.isEmpty())
+        _registerUiState.value = registerUiState.value.copy(
+            passwordInput = text,
+            isNullPassword = text.isEmpty()
+        )
     }
 
     fun onPasswordConfirmValueChange(text: String) {
-        _passwordConfirmInput.value = text
-        _registerUiState.value = registerUiState.value.copy(isNullPasswordConfirm = text.isEmpty())
+        _registerUiState.value = registerUiState.value.copy(
+            confirmPasswordInput = text,
+            isNullPasswordConfirm = text.isEmpty()
+        )
     }
-
 }
