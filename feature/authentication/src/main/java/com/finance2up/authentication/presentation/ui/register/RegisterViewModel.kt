@@ -123,35 +123,30 @@ class RegisterViewModel @Inject constructor(
     fun onUsernameValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             usernameInput = text,
-            isNullUsername = text.isBlank()
         )
     }
 
     fun onFullNameValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             fullNameInput = text,
-            isNullFullName = text.isBlank()
         )
     }
 
     fun onEmailAddressValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             emailAddressInput = text,
-            isNullEmailAddress = text.isBlank()
         )
     }
 
     fun onPasswordValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             passwordInput = text,
-            isNullPassword = text.isBlank()
         )
     }
 
     fun onPasswordConfirmValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             confirmPasswordInput = text,
-            isNullPasswordConfirm = text.isBlank()
         )
     }
 }

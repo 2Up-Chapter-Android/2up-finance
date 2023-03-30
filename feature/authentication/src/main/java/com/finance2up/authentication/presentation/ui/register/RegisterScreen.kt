@@ -111,7 +111,7 @@ fun RegisterScreen() {
 
             Column(
                 modifier = Modifier.padding(
-                    start = dimensionResource(id = R.dimen.margin_end_register_column),
+                    start = dimensionResource(id = R.dimen.margin_start_register_column),
                     end = dimensionResource(id = R.dimen.margin_end_register_column)
                 )
             ) {
@@ -241,7 +241,7 @@ fun RegisterScreen() {
 
                         Button(
                             onClick = { viewModel.registerRequest() },
-                            enabled = registerUiState.value.enableLoginButton,
+                            enabled = registerUiState.value.enableRegisterButton,
                             shape = RoundedCornerShape(
                                 size = dimensionResource(id = R.dimen.radius_register_button)
                             ),
@@ -256,7 +256,6 @@ fun RegisterScreen() {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.margin_register_progress)))
 
                     AnimatedVisibility(
                         visible = registerUiState.value.isLoading,
@@ -269,6 +268,8 @@ fun RegisterScreen() {
                             strokeWidth = dimensionResource(id = R.dimen.strokeWidth_register_progressBar)
                         )
                     }
+                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.margin_register_progress)))
+
                     Text(
                         text = buildAnnotatedString {
                             append(stringResource(id = R.string.register_already_have_account))
@@ -356,9 +357,9 @@ fun RegisterPassword(
     val passwordHidden = rememberSaveable { mutableStateOf(showOrHide) }
 
     val icon = if (passwordHidden.value)
-        painterResource(id = R.drawable.ic_hide_password)
-    else
         painterResource(id = R.drawable.ic_show_password)
+    else
+        painterResource(id = R.drawable.ic_hide_password)
 
     Column(horizontalAlignment = Alignment.Start) {
         OutlinedTextField(

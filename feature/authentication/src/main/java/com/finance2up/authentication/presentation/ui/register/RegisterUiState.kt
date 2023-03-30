@@ -1,4 +1,5 @@
 package com.finance2up.authentication.presentation.ui.register
+
 data class RegisterUiState(
 
     val isLoading: Boolean = false,
@@ -9,19 +10,20 @@ data class RegisterUiState(
     val passwordError: String = "",
     val passwordConfirmError: String = "",
 
-    val isNullUsername: Boolean = true,
-    val isNullFullName: Boolean = true,
-    val isNullEmailAddress: Boolean = true,
-    val isNullPassword: Boolean = true,
-    val isNullPasswordConfirm: Boolean = true,
+    val usernameInput: String = "",
+    val fullNameInput: String = "",
+    val emailAddressInput: String = "",
+    val passwordInput: String = "",
+    val confirmPasswordInput: String = "",
+) {
+    val enableRegisterButton
+        get() = !isLoading &&
+                usernameInput.isNotBlank() &&
+                fullNameInput.isNotBlank() &&
+                emailAddressInput.isNotBlank() &&
+                passwordInput.isNotBlank() &&
+                confirmPasswordInput.isNotBlank()
 
-    val usernameInput: String= "",
-    val fullNameInput: String= "",
-    val emailAddressInput: String= "",
-    val passwordInput: String= "",
-    val confirmPasswordInput: String= "",
-    ) {
-    val enableLoginButton get() = !isLoading && !isNullUsername && !isNullFullName && !isNullEmailAddress && !isNullPassword && !isNullPasswordConfirm
     val visibilityUsernameError get() = usernameError.isNotBlank()
     val visibilityFullNameError get() = fullNameError.isNotBlank()
     val visibilityEmailAddressError get() = emailAddressError.isNotBlank()
