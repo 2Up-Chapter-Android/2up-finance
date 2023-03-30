@@ -77,7 +77,7 @@ class RegisterViewModel @Inject constructor(
         if (!registerUiState.value.usernameInput.isValidUsername()) {
             _registerUiState.value = registerUiState.value.copy(
                 usernameError = resourcesProvider.getString(
-                    R.string.register_incorrect_userName
+                    R.string.register_error_invalid_username
                 )
             )
             isValid = false
@@ -86,7 +86,7 @@ class RegisterViewModel @Inject constructor(
         if (!registerUiState.value.fullNameInput.isValidFullName()) {
             _registerUiState.value =
                 registerUiState.value.copy(
-                    fullNameError = resourcesProvider.getString(R.string.register_incorrect_full_name)
+                    fullNameError = resourcesProvider.getString(R.string.register_error_invalid_full_name)
                 )
             isValid = false
         }
@@ -94,7 +94,7 @@ class RegisterViewModel @Inject constructor(
         if (!registerUiState.value.emailAddressInput.isValidEmail()) {
             _registerUiState.value = registerUiState.value.copy(
                 emailAddressError = resourcesProvider.getString(
-                    R.string.register_incorrect_email
+                    R.string.register_error_invalid_email
                 )
             )
             isValid = false
@@ -103,7 +103,7 @@ class RegisterViewModel @Inject constructor(
         if (!registerUiState.value.passwordInput.isValidPassword()) {
             _registerUiState.value = registerUiState.value.copy(
                 passwordError = resourcesProvider.getString(
-                    R.string.register_incorrect_password
+                    R.string.register_error_invalid_password
                 )
             )
             isValid = false
@@ -112,7 +112,7 @@ class RegisterViewModel @Inject constructor(
         if (!registerUiState.value.confirmPasswordInput.isValidPassword()) {
             _registerUiState.value = registerUiState.value.copy(
                 passwordConfirmError = resourcesProvider.getString(
-                    R.string.register_incorrect_confirm_password
+                    R.string.register_error_invalid_confirm_password
                 )
             )
             isValid = false
@@ -123,35 +123,35 @@ class RegisterViewModel @Inject constructor(
     fun onUsernameValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             usernameInput = text,
-            isNullUsername = text.isEmpty()
+            isNullUsername = text.isBlank()
         )
     }
 
     fun onFullNameValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             fullNameInput = text,
-            isNullFullName = text.isEmpty()
+            isNullFullName = text.isBlank()
         )
     }
 
     fun onEmailAddressValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             emailAddressInput = text,
-            isNullEmailAddress = text.isEmpty()
+            isNullEmailAddress = text.isBlank()
         )
     }
 
     fun onPasswordValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             passwordInput = text,
-            isNullPassword = text.isEmpty()
+            isNullPassword = text.isBlank()
         )
     }
 
     fun onPasswordConfirmValueChange(text: String) {
         _registerUiState.value = registerUiState.value.copy(
             confirmPasswordInput = text,
-            isNullPasswordConfirm = text.isEmpty()
+            isNullPasswordConfirm = text.isBlank()
         )
     }
 }

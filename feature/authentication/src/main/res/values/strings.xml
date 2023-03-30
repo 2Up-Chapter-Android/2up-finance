@@ -2,6 +2,11 @@
 <!--    All-->
     <string name="all_login">Login</string>
     <string name="all_signup">Register</string>
+    <string name="all_username">Username</string>
+    <string name="all_full_name">Full Name</string>
+    <string name="all_email">Email</string>
+    <string name="all_password">Password</string>
+    <string name="all_confirm_password">Confirm password</string>
 
     <!--    Login-->
     <string name="login_welcomeTitle">"Welcome to 2upFinance"</string>
@@ -14,23 +19,20 @@
 
     <!--    Register-->
     <string name="register_title_two">An Account </string>
-    <string name="register_Already_have_an_account">Already have an account?</string>
-    <string name="register_clear">clear</string>
-    <string name="show_password">show password</string>
-    <string name="hide_password">hide password</string>
-    <string name="register_name">Name</string>
-    <string name="register_full_name">FullName</string>
-    <string name="register_email">Email</string>
-    <string name="register_hint_username">Username</string>
-    <string name="register_hint_full_name">FullName</string>
-    <string name="register_hint_email">Email address</string>
-    <string name="register_hint_password">Password</string>
-    <string name="register_hint_confirm_passWord">Confirm password</string>
-    <string name="register_incorrect_userName">Please enter a valid username</string>
-    <string name="register_incorrect_full_name">Please enter a valid full name</string>
-    <string name="register_incorrect_email">Please enter a valid email</string>
-    <string name="register_incorrect_password">Please enter a valid password</string>
-    <string name="register_incorrect_confirm_password">Please enter a valid confirm password</string>
-    <string name="register_hide_password">hide_password</string>
+    <string name="register_already_have_account">Already have an account? </string>
+    <string name="register_clear">Clear</string>
+    <string name="register_show_password">Show Password</string>
+    <string name="register_hide_password">Hide Password</string>
 
+    <string name="register_hint_username">Enter your username</string>
+    <string name="register_hint_full_name">Enter your full name</string>
+    <string name="register_hint_email">Enter your email address</string>
+    <string name="register_hint_password">Enter your password</string>
+    <string name="register_hint_confirm_password">Confirm your password</string>
+
+    <string name="register_error_invalid_username">Please enter a valid username</string>
+    <string name="register_error_invalid_full_name">Please enter a valid full name</string>
+    <string name="register_error_invalid_email">Please enter a valid email</string>
+    <string name="register_error_invalid_password">Please enter a valid password</string>
+    <string name="register_error_invalid_confirm_password">Passwords do not match</string>
 </resources>

@@ -111,30 +111,30 @@ fun RegisterScreen() {
 
             Column(
                 modifier = Modifier.padding(
-                    start = dimensionResource(id = R.dimen.marginStart_column_register),
-                    end = dimensionResource(id = R.dimen.marginEnd_column_register)
+                    start = dimensionResource(id = R.dimen.margin_end_register_column),
+                    end = dimensionResource(id = R.dimen.margin_end_register_column)
                 )
             ) {
-                Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.marginTop_spacer_title_register)))
+                Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.margin_top_register_title)))
 
                 Text(
                     text = stringResource(id = R.string.all_signup),
                     color = Color.White,
-                    fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_registerTitle),
+                    fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_title),
                 )
                 Text(
                     text = stringResource(id = R.string.register_title_two),
                     color = Color.White,
-                    fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_registerTitle),
+                    fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_title),
                 )
 
-                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginBottom_spacer_title_register)))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.margin_bottom_register_button)))
 
                 RegisterItem(
                     text = registerUiState.value.usernameInput,
                     onValueChange = { viewModel.onUsernameValueChange(it) },
-                    textLabel = stringResource(id = R.string.register_hint_username),
-                    textPlaceholder = stringResource(id = R.string.register_name),
+                    textLabel = stringResource(id = R.string.all_username),
+                    textPlaceholder = stringResource(id = R.string.register_hint_username),
                     trailingIcon = {
                         IconButton(onClick = { viewModel.onUsernameValueChange("") }) {
                             Icon(
@@ -151,12 +151,12 @@ fun RegisterScreen() {
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginTop_spacer_registerItem)))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.margin_top_register_item)))
                 RegisterItem(
                     text = registerUiState.value.fullNameInput,
                     onValueChange = { viewModel.onFullNameValueChange(it) },
-                    textLabel = stringResource(id = R.string.register_hint_full_name),
-                    textPlaceholder = stringResource(id = R.string.register_full_name),
+                    textLabel = stringResource(id = R.string.all_full_name),
+                    textPlaceholder = stringResource(id = R.string.register_hint_full_name),
                     trailingIcon = {
                         IconButton(onClick = { viewModel.onFullNameValueChange("") }) {
                             Icon(
@@ -173,12 +173,12 @@ fun RegisterScreen() {
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginTop_spacer_registerItem)))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.margin_top_register_item)))
                 RegisterItem(
                     text = registerUiState.value.emailAddressInput,
                     onValueChange = { viewModel.onEmailAddressValueChange(it) },
-                    textLabel = stringResource(id = R.string.register_hint_email),
-                    textPlaceholder = stringResource(id = R.string.register_email),
+                    textLabel = stringResource(id = R.string.all_email),
+                    textPlaceholder = stringResource(id = R.string.register_hint_email),
                     trailingIcon = {
                         IconButton(onClick = { viewModel.onEmailAddressValueChange("") }) {
                             Icon(
@@ -195,11 +195,11 @@ fun RegisterScreen() {
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginTop_spacer_registerItem)))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.margin_top_register_item)))
                 RegisterPassword(
                     text = registerUiState.value.passwordInput,
                     onValueChange = { viewModel.onPasswordValueChange(it) },
-                    textLabel = stringResource(id = R.string.register_hint_password),
+                    textLabel = stringResource(id = R.string.all_password),
                     textPlaceholder = stringResource(id = R.string.register_hint_password),
                     showOrHide = true
                 )
@@ -209,12 +209,12 @@ fun RegisterScreen() {
                     )
                 }
 
-                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.marginTop_spacer_registerItem)))
+                Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.margin_top_register_item)))
                 RegisterPassword(
                     text = registerUiState.value.confirmPasswordInput,
                     onValueChange = { viewModel.onPasswordConfirmValueChange(it) },
-                    textLabel = stringResource(id = R.string.register_hint_confirm_passWord),
-                    textPlaceholder = stringResource(id = R.string.register_hint_confirm_passWord),
+                    textLabel = stringResource(id = R.string.all_confirm_password),
+                    textPlaceholder = stringResource(id = R.string.register_hint_confirm_password),
                     showOrHide = false
                 )
                 AnimatedVisibility(visible = registerUiState.value.visibilityConfirmPasswordError) {
@@ -234,18 +234,18 @@ fun RegisterScreen() {
                         Text(
                             text = stringResource(id = R.string.all_signup),
                             color = Color.White,
-                            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_buttonRegister)
+                            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_register_button)
                         )
 
-                        Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.button_spacer_register)))
+                        Spacer(modifier = Modifier.padding(dimensionResource(id = R.dimen.margin_bottom_register_button)))
 
                         Button(
                             onClick = { viewModel.registerRequest() },
                             enabled = registerUiState.value.enableLoginButton,
                             shape = RoundedCornerShape(
-                                size = dimensionResource(id = R.dimen.radius_button_register)
+                                size = dimensionResource(id = R.dimen.radius_register_button)
                             ),
-                            modifier = Modifier.size(dimensionResource(id = R.dimen.size_button_register)),
+                            modifier = Modifier.size(dimensionResource(id = R.dimen.size_register_button)),
                             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.float_button_register)),
                         ) {
                             Icon(
@@ -256,7 +256,7 @@ fun RegisterScreen() {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.margin_spacer_CircularProgressIndicator_register)))
+                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.margin_register_progress)))
 
                     AnimatedVisibility(
                         visible = registerUiState.value.isLoading,
@@ -264,14 +264,14 @@ fun RegisterScreen() {
                         exit = fadeOut()
                     ) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(dimensionResource(id = R.dimen.CircularProgressIndicator_register)),
+                            modifier = Modifier.size(dimensionResource(id = R.dimen.size_register_progress)),
                             color = Color.Blue,
                             strokeWidth = dimensionResource(id = R.dimen.strokeWidth_register_progressBar)
                         )
                     }
                     Text(
                         text = buildAnnotatedString {
-                            append(stringResource(id = R.string.register_Already_have_an_account))
+                            append(stringResource(id = R.string.register_already_have_account))
                             append("")
                             withStyle(SpanStyle(color = Color.Blue)) {
                                 append(stringResource(id = R.string.all_login))
@@ -284,7 +284,7 @@ fun RegisterScreen() {
                                 indication = null
                             ) { }
                     )
-                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.margin_spacer_CircularProgressIndicator_register)))
+                    Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.margin_register_progress)))
                 }
             }
         }
@@ -307,8 +307,8 @@ fun RegisterItem(
             value = text, onValueChange = { onValueChange(it) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(
-                topEnd = dimensionResource(id = R.dimen.radius_outLineTextField_register),
-                bottomStart = dimensionResource(id = R.dimen.radius_outLineTextField_register)
+                topEnd = dimensionResource(id = R.dimen.radius_register_outlineTextField),
+                bottomStart = dimensionResource(id = R.dimen.radius_register_outlineTextField)
             ),
             label = {
                 Text(
@@ -365,8 +365,8 @@ fun RegisterPassword(
             value = text, onValueChange = { onValueChange(it) },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(
-                topEnd = dimensionResource(id = R.dimen.radius_outLineTextField_register),
-                bottomStart = dimensionResource(id = R.dimen.radius_outLineTextField_register)
+                topEnd = dimensionResource(id = R.dimen.radius_register_outlineTextField),
+                bottomStart = dimensionResource(id = R.dimen.radius_register_outlineTextField)
             ),
             label = {
                 Text(
@@ -411,7 +411,7 @@ fun RegisterPassword(
 fun RegisterErrorText(text: String) {
     Row(
         Modifier
-            .height(dimensionResource(id = R.dimen.height_registerErrorText))
+            .height(dimensionResource(id = R.dimen.error_register_text_height))
             .wrapContentWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
@@ -420,7 +420,7 @@ fun RegisterErrorText(text: String) {
             text,
             color = MaterialTheme.colors.error,
             style = MaterialTheme.typography.caption,
-            modifier = Modifier.padding(start = 4.dp)
+            modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_register_error_text))
         )
     }
 }
