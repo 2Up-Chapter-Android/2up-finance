@@ -5,7 +5,6 @@ import com.finance2up.authentication.data.remote.dto.register.RegisterResponse
 import com.finance2up.authentication.domain.entity.login.LoginResponseEntity
 import com.finance2up.authentication.domain.entity.register.RegisterInfo
 
-
 fun RegisterResponse?.mapToDomain(): RegisterInfo {
     return this?.let {
         RegisterInfo(

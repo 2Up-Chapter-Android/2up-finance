@@ -118,6 +118,7 @@ object Compose {
     const val activityCompose = "androidx.activity:activity-compose:${Versions.activityCompose}"
     const val composeMaterial3 = "androidx.compose.material3:material3:${Versions.material3}"
 
+    const val composeIcon = "androidx.compose.material:material-icons-extended:${Versions.materialCompose}"
     const val composeLifeCycleRuntime = "androidx.lifecycle:lifecycle-runtime-compose:${Versions.composeLifecycleRuntime}"
 
     // Navigation
