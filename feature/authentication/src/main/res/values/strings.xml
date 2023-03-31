@@ -12,6 +12,25 @@
     <string name="login_forgotPassword">Forgot Password?</string>
     <string name="login_dontHaveAccount">Don\'t have account?</string>
 
+    <!--    Register-->
+    <string name="register_title_two">An Account </string>
+    <string name="register_already_have_account">Already have an account? </string>
+    <string name="register_clear">Clear</string>
+    <string name="register_show_password">Show Password</string>
+    <string name="register_hide_password">Hide Password</string>
+
+    <string name="register_hint_username">Enter your username</string>
+    <string name="register_hint_full_name">Enter your full name</string>
+    <string name="register_hint_email">Enter your email address</string>
+    <string name="register_hint_password">Enter your password</string>
+    <string name="register_hint_confirm_password">Confirm your password</string>
+
+    <string name="register_error_invalid_username">Please enter a valid username</string>
+    <string name="register_error_invalid_full_name">Please enter a valid full name</string>
+    <string name="register_error_invalid_email">Please enter a valid email</string>
+    <string name="register_error_invalid_password">Please enter a valid password</string>
+    <string name="register_error_invalid_confirm_password">Passwords do not match</string>
+
     <!--    OTP-->
     <string name="otp_title">OTP Verification</string>
     <string name="otp_checkEmail">Please check OTP in your email</string>

@@ -10,7 +10,6 @@ import com.finance2up.authentication.domain.entity.otp.PreOTPInfo
 import com.finance2up.authentication.domain.entity.otp.PreOTPRequest
 import com.finance2up.authentication.domain.entity.register.RegisterInfo
 
-
 fun RegisterResponse?.mapToDomain(): RegisterInfo {
     return this?.let {
         RegisterInfo(

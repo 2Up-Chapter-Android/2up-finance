@@ -8,7 +8,6 @@ import javax.inject.Inject
 
 class AuthenticationDataSource @Inject constructor(private val service: AuthenticationService) {
     suspend fun login(loginRequest: LoginRequest) = service.login(loginRequest)
-
     suspend fun register(registerRequest: RegisterRequest) = service.register(registerRequest)
     suspend fun sendEmail(preOTPRequest: PreOTPRequest) = service.sendEmail(preOTPRequest)
     suspend fun sendOTP(otpRequest: OTPRequest) = service.sendOTP(otpRequest)
