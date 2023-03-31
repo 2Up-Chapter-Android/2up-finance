@@ -138,6 +138,8 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                     otpViewModel.sendOTP()
                     if (!otpUIState.value.visibilityError) navController.navigate("LoginScreen")
                 },
+                enabled = otpUIState.value.enableSendOTPButton,
+
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(

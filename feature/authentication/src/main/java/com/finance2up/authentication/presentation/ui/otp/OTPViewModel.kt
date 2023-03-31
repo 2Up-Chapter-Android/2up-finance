@@ -1,13 +1,19 @@
 package com.finance2up.authentication.presentation.ui.otp
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.aibles.finance.data.remote.util.Resource
 import com.aibles.finance.presentation.utils.ResourcesProvider
 import com.aibles.finance.utils.isValidEmail
+import com.aibles.finance.utils.isValidUsername
 import com.finance2up.authentication.R
+import com.finance2up.authentication.domain.entity.otp.OTPInfo
 import com.finance2up.authentication.domain.entity.otp.OTPRequest
+import com.finance2up.authentication.domain.entity.otp.PreOTPInfo
 import com.finance2up.authentication.domain.entity.otp.PreOTPRequest
+import com.finance2up.authentication.domain.entity.register.RegisterInfo
 import com.finance2up.authentication.domain.entity.register.RegisterRequest
 import com.finance2up.authentication.domain.usecase.LoginUseCase
 import com.finance2up.authentication.domain.usecase.OTPUseCase
@@ -28,11 +34,18 @@ class OTPViewModel @Inject constructor(
 
 ) : ViewModel() {
 
-    private val _emailInput = MutableStateFlow("")
-    val emailInput: StateFlow<String> get() = _emailInput
+    private val _preOTPState = MutableStateFlow<Resource<PreOTPInfo>>(Resource.loading())
+    val preOTPState: StateFlow<Resource<PreOTPInfo>> get() = _preOTPState
+
 
     private val _preotpUIState = MutableStateFlow(PreOTPUIState())
-    val preOtpUIState: StateFlow<PreOTPUIState> get() = _preotpUIState
+    val preotpUIState: StateFlow<PreOTPUIState> get() = _preotpUIState
+
+    private val _checkValidEmail = MutableStateFlow(false)
+    val checkValidEmail: StateFlow<Boolean> get() = _checkValidEmail
+
+    private val _otpState = MutableStateFlow<Resource<OTPInfo>>(Resource.loading())
+    val otpState: StateFlow<Resource<OTPInfo>> get() = _otpState
 
     private val _otpUIState = MutableStateFlow(OTPUIState())
     val otpUIState: StateFlow<OTPUIState> get() = _otpUIState
@@ -47,31 +60,43 @@ class OTPViewModel @Inject constructor(
     val forthText: StateFlow<String> get() = _forthText
 
     private fun validateEmail(): Boolean {
-        _preotpUIState.value = preOtpUIState.value.copy(emailError = "")
+        _preotpUIState.value = preotpUIState.value.copy(emailError = "")
 
         var isValid = true
-        if (!emailInput.value.isValidEmail()) {
+        if (!preotpUIState.value.email.isValidEmail()) {
             _preotpUIState.value =
-                preOtpUIState.value.copy(emailError = resourcesProvider.getString(R.string.otp_error_entermail))
+                preotpUIState.value.copy(emailError = resourcesProvider.getString(R.string.otp_error_entermail))
             isValid = false
         }
         return isValid
     }
 
     fun changeEmailValue(text: String) {
-        _emailInput.value = text
+        _preotpUIState.value = preotpUIState.value.copy(
+            email = text,
+        )
     }
 
     fun sendEmail() {
         if (!validateEmail()) return
-        else {
-            viewModelScope.launch(Dispatchers.Main) {
-                val response = preOTPUseCase(
-                    PreOTPRequest(
-                        email = "ngoc123@gmail.com"
-                    )
+        _checkValidEmail.value = true
+        _preotpUIState.value = preotpUIState.value.copy(isLoading = true)
+
+        viewModelScope.launch(Dispatchers.Main) {
+
+            delay(200)
+
+            val preOTPResponse = preOTPUseCase(
+                PreOTPRequest(
+                    email = preotpUIState.value.email
                 )
-            }
+            )
+            _preotpUIState.value =
+                preotpUIState.value.copy(isLoading = preOTPResponse.isLoading())
+
+            _preOTPState.tryEmit(preOTPResponse)
+
+            Log.d("check_response", "--- $preOTPResponse")
         }
     }
 

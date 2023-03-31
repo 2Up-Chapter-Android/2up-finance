@@ -1,5 +1,6 @@
 package com.finance2up.authentication.presentation.ui.otp
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -25,8 +27,15 @@ import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 @Composable
 fun PreOTPScreen(navController: NavController) {
     val otpViewModel: OTPViewModel = hiltViewModel()
-    val emailInput = otpViewModel.emailInput.collectAsStateWithLifecycle()
-    val preOtpUIState = otpViewModel.preOtpUIState.collectAsStateWithLifecycle()
+    val preotpUIState = otpViewModel.preotpUIState.collectAsStateWithLifecycle()
+    val preotpState = otpViewModel.preOTPState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+
+    if (preotpState.value.isSuccessful()) Toast.makeText(
+        context,
+        "Send email Success",
+        Toast.LENGTH_SHORT
+    ).show()
 
     Column(
         modifier = Modifier
@@ -37,7 +46,7 @@ fun PreOTPScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth(),
         ) {
             PreOTPEditText(
-                text = emailInput.value,
+                text = preotpUIState.value.email,
                 onTextChange = { otpViewModel.changeEmailValue(it) },
                 keyboardOption = KeyboardOptions(imeAction = ImeAction.Next),
                 hint = stringResource(id = R.string.preotp_hint_email),
@@ -51,21 +60,24 @@ fun PreOTPScreen(navController: NavController) {
                     }
                 },
             )
-            AnimatedVisibility(visible = preOtpUIState.value.visibilityEmailError) {
+            AnimatedVisibility(visible = preotpUIState.value.visibilityEmailError) {
                 EmailErrorText(
-                    text = preOtpUIState.value.emailError
+                    text = preotpUIState.value.emailError
                 )
             }
 
             Button(
                 onClick = {
                     otpViewModel.sendEmail()
-                    if (!preOtpUIState.value.visibilityEmailError) navController.navigate(route = "OTPScreen/${emailInput.value}")
+//                    if (otpViewModel.checkValidEmail.value) {
+                    if (preotpState.value.isSuccessful()) {
+                        navController.navigate(route = "OTPScreen/${otpViewModel.preotpUIState.value.email}")
+                    }
                 },
+                enabled = preotpUIState.value.enableSendEmailButton,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = dimensionResource(id = R.dimen.paddingTop_preOtp_button)),
-                enabled = emailInput.value.isNotEmpty(),
 
                 ) {
                 Text(

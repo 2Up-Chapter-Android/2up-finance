@@ -2,6 +2,12 @@
 <!--    All-->
     <string name="all_login">Login</string>
     <string name="all_signup">Register</string>
+    <string name="all_username">Username</string>
+    <string name="all_full_name">Full Name</string>
+    <string name="all_email">Email</string>
+    <string name="all_password">Password</string>
+    <string name="all_confirm_password">Confirm password</string>
+
 
     <!--    Login-->
     <string name="login_welcomeTitle">"Welcome to 2upFinance"</string>
