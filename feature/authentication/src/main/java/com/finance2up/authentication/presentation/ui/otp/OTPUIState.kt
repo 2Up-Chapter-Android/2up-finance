@@ -4,5 +4,5 @@ data class OTPUIState(
     val textFieldError: String = "",
 ) {
     val visibilityError get() = textFieldError.isNotEmpty()
-    val checkNavigate get() = textFieldError.isEmpty()
+//    val checkNavigate get() = textFieldError.isEmpty()
 }

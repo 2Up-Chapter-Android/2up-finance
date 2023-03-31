@@ -1,18 +1,31 @@
 package com.finance2up.authentication.presentation.ui.otp
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.aibles.finance.presentation.utils.ResourcesProvider
 import com.aibles.finance.utils.isValidEmail
 import com.finance2up.authentication.R
+import com.finance2up.authentication.domain.entity.otp.OTPRequest
+import com.finance2up.authentication.domain.entity.otp.PreOTPRequest
+import com.finance2up.authentication.domain.entity.register.RegisterRequest
+import com.finance2up.authentication.domain.usecase.LoginUseCase
+import com.finance2up.authentication.domain.usecase.OTPUseCase
+import com.finance2up.authentication.domain.usecase.PreOTPUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class OTPViewModel @Inject constructor(
-    private val resourcesProvider: ResourcesProvider
+    private val resourcesProvider: ResourcesProvider,
+    private val preOTPUseCase: PreOTPUseCase,
+    private val otpUseCase: OTPUseCase
+
 ) : ViewModel() {
 
     private val _emailInput = MutableStateFlow("")
@@ -52,7 +65,13 @@ class OTPViewModel @Inject constructor(
     fun sendEmail() {
         if (!validateEmail()) return
         else {
-            //call api
+            viewModelScope.launch(Dispatchers.Main) {
+                val response = preOTPUseCase(
+                    PreOTPRequest(
+                        email = "ngoc123@gmail.com"
+                    )
+                )
+            }
         }
     }
 
@@ -86,8 +105,14 @@ class OTPViewModel @Inject constructor(
 
     fun sendOTP() {
         if (validateOTP()) {
-
-            //call api
+            viewModelScope.launch(Dispatchers.Main) {
+                val response = otpUseCase(
+                    OTPRequest(
+                        email = "ngoc123@gmail.com",
+                        "0786"
+                    )
+                )
+            }
         }
     }
 }

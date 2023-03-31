@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,7 +40,16 @@ fun PreOTPScreen(navController: NavController) {
                 text = emailInput.value,
                 onTextChange = { otpViewModel.changeEmailValue(it) },
                 keyboardOption = KeyboardOptions(imeAction = ImeAction.Next),
-                hint = stringResource(id = R.string.preotp_hint_email)
+                hint = stringResource(id = R.string.preotp_hint_email),
+                trailingIcon = {
+                    IconButton(onClick = { otpViewModel.changeEmailValue("") }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_clear),
+                            contentDescription = "",
+                            tint = LocalContentColor.current.copy(alpha = 1f),
+                        )
+                    }
+                },
             )
             AnimatedVisibility(visible = preOtpUIState.value.visibilityEmailError) {
                 EmailErrorText(
@@ -50,7 +60,7 @@ fun PreOTPScreen(navController: NavController) {
             Button(
                 onClick = {
                     otpViewModel.sendEmail()
-                    navController.navigate(route = "OTPScreen/${emailInput.value}")
+                    if (!preOtpUIState.value.visibilityEmailError) navController.navigate(route = "OTPScreen/${emailInput.value}")
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -73,7 +83,8 @@ fun PreOTPScreen(navController: NavController) {
 
 @Composable
 fun PreOTPEditText(
-    text: String, onTextChange: (String) -> Unit, keyboardOption: KeyboardOptions, hint: String
+    text: String, onTextChange: (String) -> Unit, keyboardOption: KeyboardOptions, hint: String,
+    trailingIcon: @Composable () -> Unit
 ) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
@@ -94,6 +105,11 @@ fun PreOTPEditText(
         textStyle = TextStyle(
             fontSize = fontSizeDimensionResource(id = R.dimen.textSize_preotp_textField)
         ),
+        trailingIcon = {
+            if (text.isNotEmpty()) {
+                trailingIcon()
+            }
+        },
         singleLine = true,
         keyboardOptions = keyboardOption,
         colors = TextFieldDefaults.textFieldColors(
