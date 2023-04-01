@@ -5,6 +5,4 @@ data class OTPInfo(
     val status: Int? = 0,
     val statusMessage: String? = "",
     val timestamp: String? = "",
-    val data: String? = ""
-) {
-}
+)

@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,12 +30,15 @@ fun PreOTPScreen(navController: NavController) {
     val preotpState = otpViewModel.preOTPState.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
-    if (preotpState.value.isSuccessful()) Toast.makeText(
-        context,
-        "Send email Success",
-        Toast.LENGTH_SHORT
-    ).show()
+    SideEffect {
+        if (preotpState.value.isSuccessful()) Toast.makeText(
+            context, "Send email success", Toast.LENGTH_SHORT
+        ).show()
+//        else Toast.makeText(
+//            context, preotpState.value.error?.message, Toast.LENGTH_SHORT
+//        ).show()
 
+    }
     Column(
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_preotp_parentView))
@@ -65,14 +67,9 @@ fun PreOTPScreen(navController: NavController) {
                     text = preotpUIState.value.emailError
                 )
             }
-
             Button(
                 onClick = {
                     otpViewModel.sendEmail()
-//                    if (otpViewModel.checkValidEmail.value) {
-                    if (preotpState.value.isSuccessful()) {
-                        navController.navigate(route = "OTPScreen/${otpViewModel.preotpUIState.value.email}")
-                    }
                 },
                 enabled = preotpUIState.value.enableSendEmailButton,
                 modifier = Modifier
@@ -89,15 +86,22 @@ fun PreOTPScreen(navController: NavController) {
                     )
                 )
             }
+            if (preotpState.value.isSuccessful()) {
+                navController.navigate(route = "OTPScreen/${preotpUIState.value.email}")
+            }
         }
     }
 }
 
 @Composable
 fun PreOTPEditText(
-    text: String, onTextChange: (String) -> Unit, keyboardOption: KeyboardOptions, hint: String,
-    trailingIcon: @Composable () -> Unit
-) {
+    text: String,
+    onTextChange: (String) -> Unit,
+    keyboardOption: KeyboardOptions,
+    hint: String,
+    trailingIcon: @Composable () -> Unit,
+
+    ) {
     OutlinedTextField(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(

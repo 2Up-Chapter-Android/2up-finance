@@ -61,7 +61,6 @@ fun PreOTPResponse?.mapToDomain(): PreOTPInfo {
             status = status,
             statusMessage = statusMessage,
             timestamp = timestamp,
-            data = data
         )
     } ?: PreOTPInfo()
 }
@@ -73,7 +72,6 @@ fun OTPResponse?.mapToDomain(): OTPInfo {
             status = status,
             statusMessage = statusMessage,
             timestamp = timestamp,
-            data = data
         )
     } ?: OTPInfo()
 }

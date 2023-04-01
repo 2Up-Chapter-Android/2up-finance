@@ -1,6 +1,5 @@
 package com.finance2up.authentication.presentation.ui.otp
 
-import android.R.attr.*
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -19,7 +18,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -28,14 +26,12 @@ import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
 
 @Composable
-fun OTPScreen(navController: NavController, emailUser: String?) {
+fun OTPScreen(navController: NavController, emailUser: String) {
     val otpViewModel: OTPViewModel = hiltViewModel()
 
-    val firstText = otpViewModel.firstText.collectAsStateWithLifecycle()
-    val secondText = otpViewModel.secondText.collectAsStateWithLifecycle()
-    val thirdText = otpViewModel.thirdText.collectAsStateWithLifecycle()
-    val forthText = otpViewModel.forthText.collectAsStateWithLifecycle()
     val otpUIState = otpViewModel.otpUIState.collectAsStateWithLifecycle()
+    val otpState = otpViewModel.otpState.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_otp_parentView))
@@ -101,29 +97,28 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                     ), horizontalArrangement = Arrangement.Center
             ) {
                 TextFieldForOTP(
-                    value = firstText.value,
+                    value = otpUIState.value.firstText,
                     onValueChange = { otpViewModel.changeOTPFirstTextValue(it) },
                     focusRequester = listenRequestFirstTextField,
                     nextFocusRequester = listenRequestSecondTextField
                 )
                 TextFieldForOTP(
-                    secondText.value,
+                    value = otpUIState.value.secondText,
                     onValueChange = { otpViewModel.changeOTPSecondTextValue(it) },
                     focusRequester = listenRequestSecondTextField,
                     nextFocusRequester = listenRequestThirdTextField
                 )
                 TextFieldForOTP(
-                    value = thirdText.value,
+                    value = otpUIState.value.thirdText,
                     onValueChange = { otpViewModel.changeOTPThirdTextValue(it) },
                     focusRequester = listenRequestThirdTextField,
                     nextFocusRequester = listenRequestForthTextField
                 )
                 TextFieldForOTP(
-                    value = forthText.value,
+                    value = otpUIState.value.forthText,
                     onValueChange = { otpViewModel.changeOTPForthTextValue(it) },
                     focusRequester = listenRequestForthTextField,
                     nextFocusRequester = listenRequestForthTextField,
-                    imeAction = ImeAction.Done
                 )
             }
             AnimatedVisibility(
@@ -135,17 +130,15 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
             }
             Button(
                 onClick = {
-                    otpViewModel.sendOTP()
-                    if (!otpUIState.value.visibilityError) navController.navigate("LoginScreen")
+                    otpViewModel.sendOTP(emailUser)
                 },
-                enabled = otpUIState.value.enableSendOTPButton,
+                enabled = otpUIState.value.enableSubmitButton,
 
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
                         top = dimensionResource(id = R.dimen.paddingTop_otp_button)
                     ),
-//                enabled = otpUIState.value.visibilityError
             ) {
                 Text(
                     stringResource(R.string.otp_submit), modifier = Modifier.padding(
@@ -157,8 +150,10 @@ fun OTPScreen(navController: NavController, emailUser: String?) {
                     )
                 )
             }
+            if (otpState.value.isSuccessful()) {
+                navController.navigate("LoginScreen")
+            }
         }
-
     }
 }
 
@@ -181,18 +176,15 @@ fun TextFieldForOTP(
     onValueChange: (String) -> Unit,
     focusRequester: FocusRequester,
     nextFocusRequester: FocusRequester,
-    imeAction: ImeAction = ImeAction.Default
 ) {
     TextField(
-        value = value,
-        onValueChange = { it: String ->
+        value = value, onValueChange = { it: String ->
             if (it.length <= 1) {
                 if (it.all { it.isDigit() }) {
                     onValueChange(it)
                 }
             }
-        },
-        modifier = Modifier
+        }, modifier = Modifier
             .padding(
                 start = dimensionResource(id = R.dimen.paddingStart_otp_textField)
             )
@@ -201,12 +193,9 @@ fun TextFieldForOTP(
             )
             .height(dimensionResource(id = R.dimen.height_otp_textField))
 
-            .focusRequester(focusRequester),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number, imeAction = imeAction
-        ),
-        singleLine = true,
-        textStyle = TextStyle(fontWeight = FontWeight.Bold)
+            .focusRequester(focusRequester), keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number
+        ), singleLine = true, textStyle = TextStyle(fontWeight = FontWeight.Bold)
     )
     LaunchedEffect(value) {
         if (value.length == 1) {

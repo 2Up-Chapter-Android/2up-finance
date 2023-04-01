@@ -8,7 +8,5 @@ data class OTPResponse(
     @SerializedName("status_message")
     val statusMessage: String? = "",
     @SerializedName("timestamp")
-    val timestamp: String? = "",
-    @SerializedName("data")
-    val data: String? = ""
+    val timestamp: String? = ""
 )

@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
                             })
                         ) { backStackEntry ->
                             val emailUser = backStackEntry.arguments?.getString("emailUser")
-                            OTPScreen(navController, emailUser)
+                            OTPScreen(navController, emailUser!!)
                         }
                         composable("LoginScreen") {
                             LoginScreen()

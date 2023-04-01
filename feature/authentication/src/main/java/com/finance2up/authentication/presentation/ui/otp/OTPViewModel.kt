@@ -3,19 +3,14 @@ package com.finance2up.authentication.presentation.ui.otp
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavController
 import com.aibles.finance.data.remote.util.Resource
 import com.aibles.finance.presentation.utils.ResourcesProvider
 import com.aibles.finance.utils.isValidEmail
-import com.aibles.finance.utils.isValidUsername
 import com.finance2up.authentication.R
 import com.finance2up.authentication.domain.entity.otp.OTPInfo
 import com.finance2up.authentication.domain.entity.otp.OTPRequest
 import com.finance2up.authentication.domain.entity.otp.PreOTPInfo
 import com.finance2up.authentication.domain.entity.otp.PreOTPRequest
-import com.finance2up.authentication.domain.entity.register.RegisterInfo
-import com.finance2up.authentication.domain.entity.register.RegisterRequest
-import com.finance2up.authentication.domain.usecase.LoginUseCase
 import com.finance2up.authentication.domain.usecase.OTPUseCase
 import com.finance2up.authentication.domain.usecase.PreOTPUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,27 +32,15 @@ class OTPViewModel @Inject constructor(
     private val _preOTPState = MutableStateFlow<Resource<PreOTPInfo>>(Resource.loading())
     val preOTPState: StateFlow<Resource<PreOTPInfo>> get() = _preOTPState
 
-
     private val _preotpUIState = MutableStateFlow(PreOTPUIState())
     val preotpUIState: StateFlow<PreOTPUIState> get() = _preotpUIState
 
-    private val _checkValidEmail = MutableStateFlow(false)
-    val checkValidEmail: StateFlow<Boolean> get() = _checkValidEmail
 
     private val _otpState = MutableStateFlow<Resource<OTPInfo>>(Resource.loading())
     val otpState: StateFlow<Resource<OTPInfo>> get() = _otpState
 
     private val _otpUIState = MutableStateFlow(OTPUIState())
     val otpUIState: StateFlow<OTPUIState> get() = _otpUIState
-
-    private val _firstText = MutableStateFlow("")
-    val firstText: StateFlow<String> get() = _firstText
-    private val _secondText = MutableStateFlow("")
-    val secondText: StateFlow<String> get() = _secondText
-    private val _thirdText = MutableStateFlow("")
-    val thirdText: StateFlow<String> get() = _thirdText
-    private val _forthText = MutableStateFlow("")
-    val forthText: StateFlow<String> get() = _forthText
 
     private fun validateEmail(): Boolean {
         _preotpUIState.value = preotpUIState.value.copy(emailError = "")
@@ -79,20 +62,16 @@ class OTPViewModel @Inject constructor(
 
     fun sendEmail() {
         if (!validateEmail()) return
-        _checkValidEmail.value = true
         _preotpUIState.value = preotpUIState.value.copy(isLoading = true)
 
         viewModelScope.launch(Dispatchers.Main) {
-
             delay(200)
-
             val preOTPResponse = preOTPUseCase(
                 PreOTPRequest(
                     email = preotpUIState.value.email
                 )
             )
-            _preotpUIState.value =
-                preotpUIState.value.copy(isLoading = preOTPResponse.isLoading())
+            _preotpUIState.value = preotpUIState.value.copy(isLoading = preOTPResponse.isLoading())
 
             _preOTPState.tryEmit(preOTPResponse)
 
@@ -101,26 +80,34 @@ class OTPViewModel @Inject constructor(
     }
 
     fun changeOTPFirstTextValue(text: String) {
-        _firstText.value = text
+        _otpUIState.value = otpUIState.value.copy(
+            firstText = text
+        )
     }
 
     fun changeOTPSecondTextValue(text: String) {
-        _secondText.value = text
+        _otpUIState.value = otpUIState.value.copy(
+            secondText = text
+        )
     }
 
     fun changeOTPThirdTextValue(text: String) {
-        _thirdText.value = text
+        _otpUIState.value = otpUIState.value.copy(
+            thirdText = text
+        )
     }
 
     fun changeOTPForthTextValue(text: String) {
-        _forthText.value = text
+        _otpUIState.value = otpUIState.value.copy(
+            forthText = text
+        )
     }
 
     private fun validateOTP(): Boolean {
         _otpUIState.value = otpUIState.value.copy(textFieldError = "")
         var isValid = true
 
-        if (_firstText.value.isEmpty() || _secondText.value.isEmpty() || _thirdText.value.isEmpty() || _forthText.value.isEmpty()) {
+        if (_otpUIState.value.firstText.isEmpty() || _otpUIState.value.secondText.isEmpty() || _otpUIState.value.thirdText.isEmpty() || _otpUIState.value.forthText.isEmpty()) {
             _otpUIState.value =
                 otpUIState.value.copy(textFieldError = resourcesProvider.getString(R.string.otp_error_fill))
             isValid = false
@@ -128,18 +115,30 @@ class OTPViewModel @Inject constructor(
         return isValid
     }
 
-    fun sendOTP() {
-        if (validateOTP()) {
+    fun sendOTP(email: String) {
+        if (!validateOTP()) return
+        else {
+//            _otpUIState.value = otpUIState.value.copy(isLoading = true)
+
             viewModelScope.launch(Dispatchers.Main) {
+                delay(200)
+
                 val response = otpUseCase(
                     OTPRequest(
-                        email = "ngoc123@gmail.com",
-                        "0786"
+                        email = email,
+                        otp = otpUIState.value.firstText + otpUIState.value.secondText + otpUIState.value.thirdText + otpUIState.value.forthText
                     )
+                )
+//                _otpUIState.value = otpUIState.value.copy(isLoading = response.isLoading())
+                _otpState.tryEmit(response)
+
+                Log.d(
+                    "check_response", "--- $response"
                 )
             }
         }
     }
+
 }
 
 
