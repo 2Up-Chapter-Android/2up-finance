@@ -37,15 +37,8 @@ class MainActivity : ComponentActivity() {
                         composable(route = "PreOTPScreen") {
                             PreOTPScreen(navController = navController)
                         }
-                        composable(
-                            route = "OTPScreen/{emailUser}",
-                            arguments = listOf(navArgument("emailUser") {
-                                type = NavType.StringType
-                                nullable = false
-                            })
-                        ) { backStackEntry ->
-                            val emailUser = backStackEntry.arguments?.getString("emailUser")
-                            OTPScreen(navController, emailUser!!)
+                        composable(route = "OTPScreen") {
+                            OTPScreen(navController = navController)
                         }
                         composable("LoginScreen") {
                             LoginScreen()

@@ -74,9 +74,12 @@ class OTPViewModel @Inject constructor(
             _preotpUIState.value = preotpUIState.value.copy(isLoading = preOTPResponse.isLoading())
 
             _preOTPState.tryEmit(preOTPResponse)
-
             Log.d("check_response", "--- $preOTPResponse")
         }
+    }
+
+    fun clearStatePreOTP() {
+        _preOTPState.value = Resource.loading()
     }
 
     fun changeOTPFirstTextValue(text: String) {
@@ -118,7 +121,7 @@ class OTPViewModel @Inject constructor(
     fun sendOTP(email: String) {
         if (!validateOTP()) return
         else {
-//            _otpUIState.value = otpUIState.value.copy(isLoading = true)
+            _otpUIState.value = otpUIState.value.copy(isLoading = true)
 
             viewModelScope.launch(Dispatchers.Main) {
                 delay(200)
@@ -129,7 +132,7 @@ class OTPViewModel @Inject constructor(
                         otp = otpUIState.value.firstText + otpUIState.value.secondText + otpUIState.value.thirdText + otpUIState.value.forthText
                     )
                 )
-//                _otpUIState.value = otpUIState.value.copy(isLoading = response.isLoading())
+                _otpUIState.value = otpUIState.value.copy(isLoading = response.isLoading())
                 _otpState.tryEmit(response)
 
                 Log.d(
@@ -139,6 +142,9 @@ class OTPViewModel @Inject constructor(
         }
     }
 
+    fun clearStateOTP() {
+        _otpState.value = Resource.loading()
+    }
 }
 
 

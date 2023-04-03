@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import com.aibles.finance.data.remote.util.Resource
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
@@ -27,18 +28,9 @@ import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 fun PreOTPScreen(navController: NavController) {
     val otpViewModel: OTPViewModel = hiltViewModel()
     val preotpUIState = otpViewModel.preotpUIState.collectAsStateWithLifecycle()
-    val preotpState = otpViewModel.preOTPState.collectAsStateWithLifecycle()
+    val preotpState = otpViewModel.preOTPState.collectAsState()
     val context = LocalContext.current
 
-    SideEffect {
-        if (preotpState.value.isSuccessful()) Toast.makeText(
-            context, "Send email success", Toast.LENGTH_SHORT
-        ).show()
-//        else Toast.makeText(
-//            context, preotpState.value.error?.message, Toast.LENGTH_SHORT
-//        ).show()
-
-    }
     Column(
         modifier = Modifier
             .padding(dimensionResource(id = R.dimen.padding_preotp_parentView))
@@ -86,9 +78,22 @@ fun PreOTPScreen(navController: NavController) {
                     )
                 )
             }
-            if (preotpState.value.isSuccessful()) {
-                navController.navigate(route = "OTPScreen/${preotpUIState.value.email}")
-            }
+
+        }
+    }
+    SideEffect {
+        if (preotpState.value.isSuccessful()) {
+            navController.navigate(route = "OTPScreen")
+            otpViewModel.clearStatePreOTP()
+            Toast.makeText(
+                context, "Send email success", Toast.LENGTH_SHORT
+            ).show()
+
+        }
+        else if (preotpState.value.isError() && preotpState.value.error != null) {
+            Toast.makeText(
+                context, preotpState.value.error?.message, Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }

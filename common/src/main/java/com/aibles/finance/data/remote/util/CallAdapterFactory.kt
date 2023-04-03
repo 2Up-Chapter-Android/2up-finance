@@ -1,5 +1,6 @@
 package com.aibles.finance.data.remote.util
 
+import android.util.Log
 import com.aibles.finance.data.remote.util.*
 import com.google.gson.Gson
 import okhttp3.Request
@@ -70,13 +71,13 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
                 override fun onFailure(call: Call<S>, t: Throwable) {
                     val apiResponse = when (t) {
                         is IOException, is SSLHandshakeException -> Resource.error(
-                            NoNetworkException(null, "No network connection"),
+                            NoNetworkException("No network connection"),
                             null
                         )
                         //SSLHandshakeException is thrown when user's internet connection is disconnected
                         //before the server can return response
                         else -> {
-                            Resource.error(UnknownException(null, "Unknown exception"), null)
+                            Resource.error(UnknownException("Unknown exception"), null)
                         }
                     }
                     callback.onResponse(this@ResourceCall, Response.success(apiResponse))
@@ -95,8 +96,8 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
                         ))
                     } else {
                         val gson = Gson()
-                        val error: Error? = try {
-                            gson.fromJson(errorBody, BaseErrorResponse::class.java).errors[0]
+                        val error: String? = try {
+                            gson.fromJson(errorBody, BaseErrorResponse::class.java).data.detail
                         } catch (e: Exception) {
                             null
                         }
@@ -106,7 +107,7 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
                             404 -> NetworkResourceNotFoundException(error)
                             408 -> RequestTimeoutException(error)
                             500 -> NetworkServerException(error)
-                            in 400..499 -> UnknownException(error, null)
+                            in 400..499 -> UnknownException(error)
                             else -> NetworkException(error)
                         }
 

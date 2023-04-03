@@ -1,5 +1,8 @@
 package com.finance2up.authentication.presentation.ui.otp
 
+import android.annotation.SuppressLint
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -11,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -18,19 +22,25 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
-fun OTPScreen(navController: NavController, emailUser: String) {
+fun OTPScreen(navController: NavController) {
     val otpViewModel: OTPViewModel = hiltViewModel()
 
     val otpUIState = otpViewModel.otpUIState.collectAsStateWithLifecycle()
-    val otpState = otpViewModel.otpState.collectAsStateWithLifecycle()
+    val preotpUIState = otpViewModel.preotpUIState.collectAsStateWithLifecycle()
+    val otpState = otpViewModel.otpState.collectAsState()
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -72,7 +82,7 @@ fun OTPScreen(navController: NavController, emailUser: String) {
             )
 
             Text(
-                text = "($emailUser)",
+                text = preotpUIState.value.email,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = dimensionResource(id = R.dimen.width_otp_textField))
@@ -130,7 +140,7 @@ fun OTPScreen(navController: NavController, emailUser: String) {
             }
             Button(
                 onClick = {
-                    otpViewModel.sendOTP(emailUser)
+                    otpViewModel.sendOTP("ngoc@gmail.com")
                 },
                 enabled = otpUIState.value.enableSubmitButton,
 
@@ -150,9 +160,20 @@ fun OTPScreen(navController: NavController, emailUser: String) {
                     )
                 )
             }
-            if (otpState.value.isSuccessful()) {
-                navController.navigate("LoginScreen")
-            }
+        }
+    }
+    SideEffect {
+        if (otpState.value.isSuccessful()) {
+            Toast.makeText(
+                context, otpState.value.data?.statusMessage, Toast.LENGTH_SHORT
+            ).show()
+            otpViewModel.clearStateOTP()
+            navController.navigate(route = "LoginScreen")
+        } else if (otpState.value.isError() && otpState.value.error != null) {
+            Log.d("OTPScreenLog", "else: ${otpState.value.error?.message}")
+            Toast.makeText(
+                context, otpState.value.error?.message, Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
