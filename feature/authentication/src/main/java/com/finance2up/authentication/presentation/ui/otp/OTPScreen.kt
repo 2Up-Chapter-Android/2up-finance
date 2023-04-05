@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -47,6 +48,32 @@ fun OTPScreen(navController: NavController) {
     val emailSendState = otpViewModel.emailSendState.collectAsState()
 
     val context = LocalContext.current
+
+    val isVisibleResendButton = remember {
+        mutableStateOf(false)
+    }
+//    Đây là cách viết count down timer trong compose, cần để trong khối remember để nó vẫn giữ giá trị khi recompose
+    val countDownTimer = remember{
+        object : CountDownTimer(61_000, 1000) {
+
+            // Callback function, fired on regular interval
+            override fun onTick(millisUntilFinished: Long) {
+                Log.d("OTPTImer", millisUntilFinished.toString())
+            }
+
+            // Callback function, fired when the time is up
+            override fun onFinish() {
+                isVisibleResendButton.value = true
+            }
+        }
+    }
+
+//    Vừa vào màn nhập OTP thì timer chạy
+//    Lưu ý LaunchEffect mới khiến hàm bên trong gọi 1 lần, không phải SideEffect.
+//    Trước đây em nói code trong SideEffect chỉ gọi 1 lần là sai. Code trong Launched Effect mới được gọi 1 lần
+    LaunchedEffect(key1 = Unit) {
+        countDownTimer.start()
+    }
 
     Column(
         modifier = Modifier
@@ -149,20 +176,7 @@ fun OTPScreen(navController: NavController) {
                 )
             }
 
-            var time by remember { mutableStateOf(60000L) }
-//            AnimatedVisibility(
-//                visible =
-//                    private val countDownTimer = object : CountDownTimer(181_000, 1000) {
-//
-//                    override fun onTick(millisUntilFinished: Long) {
-//                    }
-//
-//                    override fun onFinish() {
-//                        bleScanner?.stopScan(leScanCallback)
-//                    }
-//                }
-
-//            ) {
+            AnimatedVisibility(visible = isVisibleResendButton.value) {
                 Text(stringResource(R.string.otp_resendOTP),
                     style = MaterialTheme.typography.h5.copy(
                         fontWeight = FontWeight.Bold,
@@ -174,13 +188,18 @@ fun OTPScreen(navController: NavController) {
                     modifier = Modifier
                         .padding(top = dimensionResource(id = R.dimen.paddingTop_otp_resendOTP))
                         .clickable {
+                            Log.d("OTPTImer", "Click Resend")
                             otpViewModel.resendEmail()
+//                            Ấn resend thì lại phải ẩn nút resend và timer phải đếm lại
+                            isVisibleResendButton.value = false
+                            countDownTimer.start()
                         })
-//            }
-
+            }
             Button(
                 onClick = {
                     otpViewModel.sendOTP()
+//                    Cancel để khi chuyển màn timer không đếm nữa, tránh memory leak
+                    countDownTimer.cancel()
                 },
                 enabled = otpUIState.value.enableActiveButton,
 
@@ -202,6 +221,8 @@ fun OTPScreen(navController: NavController) {
             }
         }
     }
+
+//    Đoạn này nên đổi thành LaunchEffect, vì lý do em nói ở trên
     SideEffect {
         if (otpSendState.value.isSuccessful()) {
             Toast.makeText(
@@ -210,6 +231,9 @@ fun OTPScreen(navController: NavController) {
             otpViewModel.clearStateOTP()
             navController.navigate(route = "LoginScreen")
         } else if (otpSendState.value.isError() && otpSendState.value.error != null) {
+//            TODO: Đây là cách lấy ra error message và error code
+            val msg = emailSendState.value.error?.errorData?.detail ?: "nothing"
+            val errorCode = emailSendState.value.error?.errorData?.code ?: "nothing"
             val errorMessage = emailSendState.value.error?.message
 
             Log.d("OTPScreenLog", "else: $errorMessage")
