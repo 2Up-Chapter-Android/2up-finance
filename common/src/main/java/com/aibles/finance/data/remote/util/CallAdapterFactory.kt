@@ -29,9 +29,10 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
             return null
         }
 
-        check (returnType is ParameterizedType) {
+        check(returnType is ParameterizedType) {
             throw IllegalStateException(
-                "Response return type must be parameterized as Call<Resource<Foo>> or Call<Resource<out Foo>>")
+                "Response return type must be parameterized as Call<Resource<Foo>> or Call<Resource<out Foo>>"
+            )
         }
 
         val responseType = getParameterUpperBound(0, returnType)
@@ -40,13 +41,14 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
             return null
         }
 
-        check (responseType is ParameterizedType) {
+        check(responseType is ParameterizedType) {
             "Response must be parameterized as Resource<Foo> or Resource<out Foo>"
         }
 
         val successBodyType = getParameterUpperBound(0, responseType)
 
-        val converter = retrofit.nextResponseBodyConverter<Resource<Any>>(null, successBodyType, annotations)
+        val converter =
+            retrofit.nextResponseBodyConverter<Resource<Any>>(null, successBodyType, annotations)
 
         return BodyCallAdapter(successBodyType, converter)
     }
@@ -56,14 +58,17 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
         private val converter: Converter<ResponseBody, Resource<T>>
     ) : CallAdapter<T, Call<Resource<T>>> {
 
-        override fun responseType() : Type = responseType
+        override fun responseType(): Type = responseType
 
         override fun adapt(call: Call<T>): Call<Resource<T>> {
             return ResourceCall(call, converter)
         }
     }
 
-    internal class ResourceCall<S: Any>(private val delegate: Call<S>, private val converter: Converter<ResponseBody, Resource<S>>) :
+    internal class ResourceCall<S : Any>(
+        private val delegate: Call<S>,
+        private val converter: Converter<ResponseBody, Resource<S>>
+    ) :
         Call<Resource<S>> {
         override fun enqueue(callback: Callback<Resource<S>>) {
 
@@ -71,13 +76,13 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
                 override fun onFailure(call: Call<S>, t: Throwable) {
                     val apiResponse = when (t) {
                         is IOException, is SSLHandshakeException -> Resource.error(
-                            NoNetworkException("No network connection"),
+                            NoNetworkException(null, "No network connection"),
                             null
                         )
                         //SSLHandshakeException is thrown when user's internet connection is disconnected
                         //before the server can return response
                         else -> {
-                            Resource.error(UnknownException("Unknown exception"), null)
+                            Resource.error(UnknownException(null, "Unknown exception"), null)
                         }
                     }
                     callback.onResponse(this@ResourceCall, Response.success(apiResponse))
@@ -89,55 +94,65 @@ class CallAdapterFactory private constructor() : CallAdapter.Factory() {
                     val errorBody = response.errorBody()?.string().orEmpty()
 
                     if (response.isSuccessful && response.body() != null) {
-                        callback.onResponse(this@ResourceCall, Response.success(
-                            Resource.success(
-                                body!!
+                        callback.onResponse(
+                            this@ResourceCall, Response.success(
+                                Resource.success(
+                                    body!!
+                                )
                             )
-                        ))
+                        )
                     } else {
                         val gson = Gson()
-                        val error: String? = try {
-                            gson.fromJson(errorBody, BaseErrorResponse::class.java).data.detail
+                        val error: BaseErrorResponse.Data? = try {
+                            gson.fromJson(errorBody, BaseErrorResponse::class.java).data
                         } catch (e: Exception) {
                             null
                         }
+                        val errorCode: String? = error?.code
+                        val errorMsg: String? = error?.detail
+
                         val exception = when (code) {
                             400 -> BadRequestException(error)
-                            401, 403 -> NetworkAuthenticationException(error)
-                            404 -> NetworkResourceNotFoundException(error)
-                            408 -> RequestTimeoutException(error)
-                            500 -> NetworkServerException(error)
-                            in 400..499 -> UnknownException(error)
-                            else -> NetworkException(error)
-                        }
+                                val exception = when (code) {
+                                400 -> BadRequestException(error)
+                                401, 403 -> NetworkAuthenticationException(error)
+                                404 -> NetworkResourceNotFoundException(error)
+                                408 -> RequestTimeoutException(error)
+                                500 -> NetworkServerException(error)
+                                in 400..499 -> UnknownException(error)
+                                else -> NetworkException(error)
+                            }
 
-                        callback.onResponse(this@ResourceCall, Response.success(
-                            Resource.error(
-                                exception,
-                                null
+                            callback.onResponse(
+                                this@ResourceCall, Response.success(
+                                    Resource.error(
+                                        exception,
+                                        null
+                                    )
+                                )
                             )
-                        ))
+                        }
                     }
+                })
+            }
+
+                    override fun isExecuted(): Boolean = delegate.isExecuted
+
+                    override fun timeout(): Timeout {
+                return delegate.timeout()
+            }
+
+                    override fun clone(): Call<Resource<S>> =
+                ResourceCall(delegate.clone(), converter)
+
+                        override fun isCanceled(): Boolean = delegate.isCanceled
+
+                        override fun cancel() = delegate.cancel()
+
+                        override fun execute(): Response<Resource<S>> {
+                    throw UnsupportedOperationException("NetworkResponseCall doesn't support execute")
                 }
-            })
+
+                        override fun request(): Request = delegate.request()
         }
-
-        override fun isExecuted(): Boolean = delegate.isExecuted
-
-        override fun timeout(): Timeout {
-            return delegate.timeout()
-        }
-
-        override fun clone(): Call<Resource<S>> = ResourceCall(delegate.clone(), converter)
-
-        override fun isCanceled(): Boolean = delegate.isCanceled
-
-        override fun cancel() = delegate.cancel()
-
-        override fun execute(): Response<Resource<S>> {
-            throw UnsupportedOperationException("NetworkResponseCall doesn't support execute")
-        }
-
-        override fun request(): Request = delegate.request()
     }
-}

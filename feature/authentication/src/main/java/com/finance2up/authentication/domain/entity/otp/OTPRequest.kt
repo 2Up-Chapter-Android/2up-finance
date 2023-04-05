@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class OTPRequest(
     @SerializedName("email")
-    val email: String? = "",
+    val email: String = "",
     @SerializedName("otp")
-    val otp: String? = "",
+    val otp: String = ""
 )

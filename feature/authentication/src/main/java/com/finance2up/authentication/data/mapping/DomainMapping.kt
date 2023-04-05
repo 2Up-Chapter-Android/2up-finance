@@ -2,12 +2,11 @@ package com.finance2up.authentication.data.mapping
 
 import com.finance2up.authentication.data.remote.dto.login.LoginResponse
 import com.finance2up.authentication.data.remote.dto.otp.OTPResponse
-import com.finance2up.authentication.data.remote.dto.otp.PreOTPResponse
+import com.finance2up.authentication.data.remote.dto.otp.EmailResponse
 import com.finance2up.authentication.data.remote.dto.register.RegisterResponse
 import com.finance2up.authentication.domain.entity.login.LoginResponseEntity
 import com.finance2up.authentication.domain.entity.otp.OTPInfo
-import com.finance2up.authentication.domain.entity.otp.PreOTPInfo
-import com.finance2up.authentication.domain.entity.otp.PreOTPRequest
+import com.finance2up.authentication.domain.entity.otp.EmailInfo
 import com.finance2up.authentication.domain.entity.register.RegisterInfo
 
 fun RegisterResponse?.mapToDomain(): RegisterInfo {
@@ -55,14 +54,14 @@ private fun LoginResponse.LoginResponseData?.mapToDomain(): LoginResponseEntity.
     } ?: LoginResponseEntity.LoginResponseData()
 }
 
-fun PreOTPResponse?.mapToDomain(): PreOTPInfo {
+fun EmailResponse?.mapToDomain(): EmailInfo {
     return this?.let {
-        PreOTPInfo(
+        EmailInfo(
             status = status,
             statusMessage = statusMessage,
             timestamp = timestamp,
         )
-    } ?: PreOTPInfo()
+    } ?: EmailInfo()
 }
 
 

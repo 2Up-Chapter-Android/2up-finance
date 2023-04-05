@@ -1,16 +1,20 @@
 package com.finance2up.authentication.presentation.ui.otp
 
 import android.annotation.SuppressLint
+import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -22,14 +26,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
+import com.finance2up.authentication.presentation.util.formatDuration
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 
 @SuppressLint("UnrememberedMutableState")
@@ -38,8 +42,10 @@ fun OTPScreen(navController: NavController) {
     val otpViewModel: OTPViewModel = hiltViewModel()
 
     val otpUIState = otpViewModel.otpUIState.collectAsStateWithLifecycle()
-    val preotpUIState = otpViewModel.preotpUIState.collectAsStateWithLifecycle()
-    val otpState = otpViewModel.otpState.collectAsState()
+    val otpSendState = otpViewModel.otpSendState.collectAsState()
+
+    val emailSendState = otpViewModel.emailSendState.collectAsState()
+
     val context = LocalContext.current
 
     Column(
@@ -58,7 +64,7 @@ fun OTPScreen(navController: NavController) {
                 )
             )
             Text(
-                stringResource(R.string.otp_checkEmail),
+                stringResource(R.string.otp_enterInput),
                 style = MaterialTheme.typography.h5.copy(
                     fontSize = fontSizeDimensionResource(id = R.dimen.textSize_otp_checkEmail)
                 ),
@@ -79,19 +85,24 @@ fun OTPScreen(navController: NavController) {
                         top = dimensionResource(id = R.dimen.paddingTop_otp_imageOTP)
                     )
                     .align(Alignment.CenterHorizontally)
+                    .padding(
+                        bottom = dimensionResource(id = R.dimen.paddingBottom_otp_image)
+                    ),
             )
-
-            Text(
-                text = preotpUIState.value.email,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = dimensionResource(id = R.dimen.width_otp_textField))
-                    .wrapContentWidth(align = Alignment.CenterHorizontally),
-                style = MaterialTheme.typography.h5.copy(
-                    fontWeight = FontWeight.Bold, fontSize = fontSizeDimensionResource(
-                        id = R.dimen.textSize_otp_email
-                    )
-                )
+            TextFieldEnterEmail(
+                text = otpUIState.value.email,
+                onTextChange = { otpViewModel.changeEmailValue(it) },
+                keyboardOption = KeyboardOptions(imeAction = ImeAction.Next),
+                hint = stringResource(id = R.string.otp_hint_email),
+                trailingIcon = {
+                    IconButton(onClick = { otpViewModel.changeEmailValue("") }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_clear),
+                            contentDescription = "",
+                            tint = LocalContentColor.current.copy(alpha = 1f),
+                        )
+                    }
+                },
             )
 
             val listenRequestFirstTextField = remember { FocusRequester() }
@@ -106,43 +117,72 @@ fun OTPScreen(navController: NavController) {
                         top = dimensionResource(id = R.dimen.paddingTop_otp_textField)
                     ), horizontalArrangement = Arrangement.Center
             ) {
-                TextFieldForOTP(
+                TextFieldEnterOTP(
                     value = otpUIState.value.firstText,
                     onValueChange = { otpViewModel.changeOTPFirstTextValue(it) },
                     focusRequester = listenRequestFirstTextField,
                     nextFocusRequester = listenRequestSecondTextField
                 )
-                TextFieldForOTP(
+                TextFieldEnterOTP(
                     value = otpUIState.value.secondText,
                     onValueChange = { otpViewModel.changeOTPSecondTextValue(it) },
                     focusRequester = listenRequestSecondTextField,
                     nextFocusRequester = listenRequestThirdTextField
                 )
-                TextFieldForOTP(
+                TextFieldEnterOTP(
                     value = otpUIState.value.thirdText,
                     onValueChange = { otpViewModel.changeOTPThirdTextValue(it) },
                     focusRequester = listenRequestThirdTextField,
                     nextFocusRequester = listenRequestForthTextField
                 )
-                TextFieldForOTP(
+                TextFieldEnterOTP(
                     value = otpUIState.value.forthText,
                     onValueChange = { otpViewModel.changeOTPForthTextValue(it) },
                     focusRequester = listenRequestForthTextField,
                     nextFocusRequester = listenRequestForthTextField,
                 )
             }
-            AnimatedVisibility(
-                visible = otpUIState.value.visibilityError
-            ) {
+
+            AnimatedVisibility(visible = otpUIState.value.visibilityEmailError) {
                 ErrorText(
-                    text = otpUIState.value.textFieldError
+                    text = otpUIState.value.emailError
                 )
             }
+
+            var time by remember { mutableStateOf(60000L) }
+//            AnimatedVisibility(
+//                visible =
+//                    private val countDownTimer = object : CountDownTimer(181_000, 1000) {
+//
+//                    override fun onTick(millisUntilFinished: Long) {
+//                    }
+//
+//                    override fun onFinish() {
+//                        bleScanner?.stopScan(leScanCallback)
+//                    }
+//                }
+
+//            ) {
+                Text(stringResource(R.string.otp_resendOTP),
+                    style = MaterialTheme.typography.h5.copy(
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Magenta,
+                        fontSize = fontSizeDimensionResource(
+                            id = R.dimen.textSize_otp_resendOTP
+                        )
+                    ),
+                    modifier = Modifier
+                        .padding(top = dimensionResource(id = R.dimen.paddingTop_otp_resendOTP))
+                        .clickable {
+                            otpViewModel.resendEmail()
+                        })
+//            }
+
             Button(
                 onClick = {
-                    otpViewModel.sendOTP("ngoc@gmail.com")
+                    otpViewModel.sendOTP()
                 },
-                enabled = otpUIState.value.enableSubmitButton,
+                enabled = otpUIState.value.enableActiveButton,
 
                 modifier = Modifier
                     .fillMaxWidth()
@@ -151,7 +191,7 @@ fun OTPScreen(navController: NavController) {
                     ),
             ) {
                 Text(
-                    stringResource(R.string.otp_submit), modifier = Modifier.padding(
+                    stringResource(R.string.otp_active), modifier = Modifier.padding(
                         vertical = dimensionResource(id = R.dimen.paddingVertical_otp_textButton)
                     ), style = MaterialTheme.typography.h5.copy(
                         fontWeight = FontWeight.Bold, fontSize = fontSizeDimensionResource(
@@ -163,19 +203,83 @@ fun OTPScreen(navController: NavController) {
         }
     }
     SideEffect {
-        if (otpState.value.isSuccessful()) {
+        if (otpSendState.value.isSuccessful()) {
             Toast.makeText(
-                context, otpState.value.data?.statusMessage, Toast.LENGTH_SHORT
+                context, otpSendState.value.data?.statusMessage, Toast.LENGTH_SHORT
             ).show()
             otpViewModel.clearStateOTP()
             navController.navigate(route = "LoginScreen")
-        } else if (otpState.value.isError() && otpState.value.error != null) {
-            Log.d("OTPScreenLog", "else: ${otpState.value.error?.message}")
+        } else if (otpSendState.value.isError() && otpSendState.value.error != null) {
+            val errorMessage = emailSendState.value.error?.message
+
+            Log.d("OTPScreenLog", "else: $errorMessage")
             Toast.makeText(
-                context, otpState.value.error?.message, Toast.LENGTH_SHORT
+                context, errorMessage, Toast.LENGTH_SHORT
             ).show()
+            if (errorMessage == "OTP has expired") {
+                otpUIState.value.visibilityOTPExpiredError = true
+            }
+        }
+        if (emailSendState.value.isSuccessful()) {
+            Toast.makeText(
+                context, emailSendState.value.data?.statusMessage, Toast.LENGTH_SHORT
+            ).show()
+            otpViewModel.clearStateEmail()
+        } else if (emailSendState.value.isError() && emailSendState.value.error != null) {
+            val errorMessage = emailSendState.value.error?.message
+            Log.d("OTPScreenLog", "else: $errorMessage")
+            Toast.makeText(
+                context, errorMessage, Toast.LENGTH_SHORT
+            ).show()
+//            if (emailSendState.value.error?.) { case user activated
+//                navController.navigate(route = "LoginScreen")
+//            }
         }
     }
+}
+
+@Composable
+fun TextFieldEnterEmail(
+    text: String,
+    onTextChange: (String) -> Unit,
+    keyboardOption: KeyboardOptions,
+    hint: String,
+    trailingIcon: @Composable () -> Unit,
+
+    ) {
+    OutlinedTextField(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(
+            topEnd = dimensionResource(id = R.dimen.cornerRadius_otp_textField),
+            bottomStart = dimensionResource(id = R.dimen.cornerRadius_otp_textField)
+        ),
+        value = text,
+        onValueChange = { onTextChange(it) },
+        label = {
+            Text(
+                modifier = Modifier.alpha(ContentAlpha.medium),
+                text = hint,
+                color = Color.Black,
+                fontSize = fontSizeDimensionResource(id = R.dimen.textSize_otp_textField)
+            )
+        },
+        textStyle = TextStyle(
+            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_otp_textField)
+        ),
+        trailingIcon = {
+            if (text.isNotEmpty()) {
+                trailingIcon()
+            }
+        },
+        singleLine = true,
+        keyboardOptions = keyboardOption,
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = Color.Transparent,
+            cursorColor = Color.Black,
+            focusedIndicatorColor = Color.Black,
+            unfocusedIndicatorColor = Color.Black
+        )
+    )
 }
 
 @Composable
@@ -183,7 +287,11 @@ fun ErrorText(text: String) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_otp_errorText)))
+        Spacer(
+            modifier = Modifier
+                .height(dimensionResource(id = R.dimen.marginTop_otp_errorText))
+                .padding(top = dimensionResource(id = R.dimen.paddingTop_otp_errorText))
+        )
 
         Text(
             text = text, color = Color.Red
@@ -192,7 +300,7 @@ fun ErrorText(text: String) {
 }
 
 @Composable
-fun TextFieldForOTP(
+fun TextFieldEnterOTP(
     value: String,
     onValueChange: (String) -> Unit,
     focusRequester: FocusRequester,

@@ -39,12 +39,10 @@
 
     <!--    OTP-->
     <string name="otp_title">OTP Verification</string>
-    <string name="otp_checkEmail">Please check OTP in your email</string>
-    <string name="otp_submit">Submit</string>
-    <string name="otp_error_fill">Please fill 4 number</string>
+    <string name="otp_enterInput">Please enter email and OTP</string>
+    <string name="otp_resendOTP">Resend OTP</string>
+    <string name="otp_active">Active</string>
+    <string name="otp_error_fill">OTP is wrong. Please enter OTP again</string>
     <string name="otp_error_entermail">Please enter a valid email</string>
-
-    <!--    PREOTP-->
-    <string name="preotp_sendEmail">Send email</string>
-    <string name="preotp_hint_email">Email</string>
+    <string name="otp_hint_email">Email</string>
 </resources>
