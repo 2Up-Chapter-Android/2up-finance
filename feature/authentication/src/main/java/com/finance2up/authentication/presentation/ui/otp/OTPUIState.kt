@@ -5,15 +5,8 @@ data class OTPUIState(
     val firstText: String = "",
     val secondText: String = "",
     val thirdText: String = "",
-    val forthText: String = "",
-    val email: String = "",
-    var emailError: String = "",
-    var otpExpiredError: String = "",
-
-    ) {
+    val forthText: String = ""
+) {
     val enableActiveButton
-        get() = !isLoading && firstText.isNotBlank() && secondText.isNotBlank() && thirdText.isNotBlank() && forthText.isNotBlank() && email.isNotBlank()
-    var visibilityOTPExpiredError = false
-    val visibilityEmailError get() = emailError.isNotEmpty()
-
+        get() = !isLoading && firstText.isNotBlank() && secondText.isNotBlank() && thirdText.isNotBlank() && forthText.isNotBlank()
 }

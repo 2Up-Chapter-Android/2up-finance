@@ -52,25 +52,18 @@ fun OTPScreen(navController: NavController) {
     val isVisibleResendButton = remember {
         mutableStateOf(false)
     }
-//    Đây là cách viết count down timer trong compose, cần để trong khối remember để nó vẫn giữ giá trị khi recompose
-    val countDownTimer = remember{
+    val countDownTimer = remember {
         object : CountDownTimer(61_000, 1000) {
 
-            // Callback function, fired on regular interval
             override fun onTick(millisUntilFinished: Long) {
-                Log.d("OTPTImer", millisUntilFinished.toString())
             }
 
-            // Callback function, fired when the time is up
             override fun onFinish() {
                 isVisibleResendButton.value = true
             }
         }
     }
 
-//    Vừa vào màn nhập OTP thì timer chạy
-//    Lưu ý LaunchEffect mới khiến hàm bên trong gọi 1 lần, không phải SideEffect.
-//    Trước đây em nói code trong SideEffect chỉ gọi 1 lần là sai. Code trong Launched Effect mới được gọi 1 lần
     LaunchedEffect(key1 = Unit) {
         countDownTimer.start()
     }
@@ -112,24 +105,20 @@ fun OTPScreen(navController: NavController) {
                         top = dimensionResource(id = R.dimen.paddingTop_otp_imageOTP)
                     )
                     .align(Alignment.CenterHorizontally)
-                    .padding(
-                        bottom = dimensionResource(id = R.dimen.paddingBottom_otp_image)
-                    ),
+
             )
-            TextFieldEnterEmail(
-                text = otpUIState.value.email,
-                onTextChange = { otpViewModel.changeEmailValue(it) },
-                keyboardOption = KeyboardOptions(imeAction = ImeAction.Next),
-                hint = stringResource(id = R.string.otp_hint_email),
-                trailingIcon = {
-                    IconButton(onClick = { otpViewModel.changeEmailValue("") }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_clear),
-                            contentDescription = "",
-                            tint = LocalContentColor.current.copy(alpha = 1f),
-                        )
-                    }
-                },
+
+            Text(
+                text = "abc@gmail.com",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = dimensionResource(id = R.dimen.paddingTop_otp_email))
+                    .wrapContentWidth(align = Alignment.CenterHorizontally),
+                style = MaterialTheme.typography.h5.copy(
+                    fontWeight = FontWeight.Bold, fontSize = fontSizeDimensionResource(
+                        id = R.dimen.textSize_otp_email
+                    )
+                )
             )
 
             val listenRequestFirstTextField = remember { FocusRequester() }
@@ -170,12 +159,6 @@ fun OTPScreen(navController: NavController) {
                 )
             }
 
-            AnimatedVisibility(visible = otpUIState.value.visibilityEmailError) {
-                ErrorText(
-                    text = otpUIState.value.emailError
-                )
-            }
-
             AnimatedVisibility(visible = isVisibleResendButton.value) {
                 Text(stringResource(R.string.otp_resendOTP),
                     style = MaterialTheme.typography.h5.copy(
@@ -188,9 +171,7 @@ fun OTPScreen(navController: NavController) {
                     modifier = Modifier
                         .padding(top = dimensionResource(id = R.dimen.paddingTop_otp_resendOTP))
                         .clickable {
-                            Log.d("OTPTImer", "Click Resend")
                             otpViewModel.resendEmail()
-//                            Ấn resend thì lại phải ẩn nút resend và timer phải đếm lại
                             isVisibleResendButton.value = false
                             countDownTimer.start()
                         })
@@ -198,7 +179,6 @@ fun OTPScreen(navController: NavController) {
             Button(
                 onClick = {
                     otpViewModel.sendOTP()
-//                    Cancel để khi chuyển màn timer không đếm nữa, tránh memory leak
                     countDownTimer.cancel()
                 },
                 enabled = otpUIState.value.enableActiveButton,
@@ -222,26 +202,46 @@ fun OTPScreen(navController: NavController) {
         }
     }
 
-//    Đoạn này nên đổi thành LaunchEffect, vì lý do em nói ở trên
     SideEffect {
         if (otpSendState.value.isSuccessful()) {
             Toast.makeText(
                 context, otpSendState.value.data?.statusMessage, Toast.LENGTH_SHORT
             ).show()
+
             otpViewModel.clearStateOTP()
             navController.navigate(route = "LoginScreen")
-        } else if (otpSendState.value.isError() && otpSendState.value.error != null) {
-//            TODO: Đây là cách lấy ra error message và error code
-            val msg = emailSendState.value.error?.errorData?.detail ?: "nothing"
-            val errorCode = emailSendState.value.error?.errorData?.code ?: "nothing"
-            val errorMessage = emailSendState.value.error?.message
 
-            Log.d("OTPScreenLog", "else: $errorMessage")
-            Toast.makeText(
-                context, errorMessage, Toast.LENGTH_SHORT
-            ).show()
-            if (errorMessage == "OTP has expired") {
-                otpUIState.value.visibilityOTPExpiredError = true
+        } else if (otpSendState.value.isError() && otpSendState.value.error != null) {
+
+            when (otpSendState.value.error?.errorData?.code ?: "nothing") {
+                "org.up.finance.exception.OtpNotFoundException" -> {
+                    Toast.makeText(
+                        context, R.string.otp_error_expired, Toast.LENGTH_SHORT
+                    ).show()
+                    isVisibleResendButton.value = true
+                }
+                "org.up.finance.exception.OtpBadRequestException" -> {
+                    Toast.makeText(
+                        context, R.string.otp_error_fillOtp, Toast.LENGTH_SHORT
+                    ).show()
+                }
+                "org.up.finance.exception.EmailNotFoundException" -> {
+                    Toast.makeText(
+                        context, R.string.otp_error_email_existed, Toast.LENGTH_SHORT
+                    ).show()
+                }
+                "org.up.finance.exception.UserActivatedException" -> {
+                    Toast.makeText(
+                        context, R.string.otp_error_activated, Toast.LENGTH_SHORT
+                    ).show()
+                    otpViewModel.clearStateOTP()
+                    navController.navigate(route = "LoginScreen")
+                }
+                "org.up.finance.exception.xxx.MethodArgumentNotValidException" -> {
+                    Toast.makeText(
+                        context, R.string.otp_error_format, Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
         if (emailSendState.value.isSuccessful()) {
@@ -250,60 +250,28 @@ fun OTPScreen(navController: NavController) {
             ).show()
             otpViewModel.clearStateEmail()
         } else if (emailSendState.value.isError() && emailSendState.value.error != null) {
-            val errorMessage = emailSendState.value.error?.message
-            Log.d("OTPScreenLog", "else: $errorMessage")
-            Toast.makeText(
-                context, errorMessage, Toast.LENGTH_SHORT
-            ).show()
-//            if (emailSendState.value.error?.) { case user activated
-//                navController.navigate(route = "LoginScreen")
-//            }
+
+            when (emailSendState.value.error?.errorData?.code ?: "nothing") {
+                "org.up.finance.exception.UserActivatedException" -> {
+                    Toast.makeText(
+                        context, R.string.otp_error_activated, Toast.LENGTH_SHORT
+                    ).show()
+                    otpViewModel.clearStateEmail()
+                    navController.navigate(route = "LoginScreen")
+                }
+                "org.up.finance.exception.EmailNotFoundException" -> {
+                    Toast.makeText(
+                        context, R.string.otp_error_email_existed, Toast.LENGTH_SHORT
+                    ).show()
+                }
+                "org.up.finance.exception.xxx.MethodArgumentNotValidException" -> {
+                    Toast.makeText(
+                        context, R.string.otp_error_format, Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
-}
-
-@Composable
-fun TextFieldEnterEmail(
-    text: String,
-    onTextChange: (String) -> Unit,
-    keyboardOption: KeyboardOptions,
-    hint: String,
-    trailingIcon: @Composable () -> Unit,
-
-    ) {
-    OutlinedTextField(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(
-            topEnd = dimensionResource(id = R.dimen.cornerRadius_otp_textField),
-            bottomStart = dimensionResource(id = R.dimen.cornerRadius_otp_textField)
-        ),
-        value = text,
-        onValueChange = { onTextChange(it) },
-        label = {
-            Text(
-                modifier = Modifier.alpha(ContentAlpha.medium),
-                text = hint,
-                color = Color.Black,
-                fontSize = fontSizeDimensionResource(id = R.dimen.textSize_otp_textField)
-            )
-        },
-        textStyle = TextStyle(
-            fontSize = fontSizeDimensionResource(id = R.dimen.textSize_otp_textField)
-        ),
-        trailingIcon = {
-            if (text.isNotEmpty()) {
-                trailingIcon()
-            }
-        },
-        singleLine = true,
-        keyboardOptions = keyboardOption,
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
-            cursorColor = Color.Black,
-            focusedIndicatorColor = Color.Black,
-            unfocusedIndicatorColor = Color.Black
-        )
-    )
 }
 
 @Composable

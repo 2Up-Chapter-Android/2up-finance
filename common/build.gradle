@@ -11,6 +11,7 @@ android {
 
     defaultConfig {
         minSdk SdkVersions.minSdkVersion
+
         targetSdk SdkVersions.targetSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -19,7 +20,8 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"http:192.168.2.230:3000/api/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"http:10.20.132.64:3000/api/v1/\"")
+//            buildConfigField("String", "BASE_URL", "\"http:192.168.0.107:3000/api/v1/\"")
 //            buildConfigField("String", "BASE_URL", "\"http:192.168.0.107:3000/api/v1/\"")
         }
 

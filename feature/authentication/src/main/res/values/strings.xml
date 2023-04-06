@@ -39,10 +39,14 @@
 
     <!--    OTP-->
     <string name="otp_title">OTP Verification</string>
-    <string name="otp_enterInput">Please enter email and OTP</string>
+    <string name="otp_enterInput">Please check OTP in email</string>
     <string name="otp_resendOTP">Resend OTP</string>
+    <string name="otp_error_expired">OTP is expired. Please resend OTP</string>
+    <string name="otp_error_activated">User activated</string>
+    <string name="otp_error_format">Email and OTP has wrong format. Please check again</string>
     <string name="otp_active">Active</string>
-    <string name="otp_error_fill">OTP is wrong. Please enter OTP again</string>
-    <string name="otp_error_entermail">Please enter a valid email</string>
+    <string name="otp_error_fillOtp">OTP is wrong. Please enter OTP again</string>
+    <string name="otp_error_email_existed">Email is not existed. Please enter email again</string>
+    <string name="otp_error_fillEmail">Please enter a valid email</string>
     <string name="otp_hint_email">Email</string>
 </resources>
