@@ -52,4 +52,41 @@
     <dimen name="textSize_register_title">40sp</dimen>
     <dimen name="textSize_register_button">30sp</dimen>
 
+
+    <!--    OTP-->
+    <dimen name="padding_otp_parentView">28dp</dimen>
+
+    <dimen name="textSize_otp_title">30sp</dimen>
+    <dimen name="textSize_otp_timeout">15sp</dimen>
+
+    <dimen name="textSize_otp_checkEmail">20sp</dimen>
+    <dimen name="textSize_otp_resendOTP">15sp</dimen>
+
+    <dimen name="paddingTop_otp_checkEmail">15dp</dimen>
+    <dimen name="paddingTop_otp_resendOTP">15dp</dimen>
+
+    <dimen name="paddingTop_otp_imageOTP">28dp</dimen>
+    <dimen name="width_otp_imageOTP">200dp</dimen>
+    <dimen name="height_otp_imageOTP">200dp</dimen>
+
+    <dimen name="textSize_otp_email">15sp</dimen>
+
+    <dimen name="paddingTop_otp_textField">8dp</dimen>
+    <dimen name="paddingTop_otp_email">28dp</dimen>
+    <dimen name="paddingStart_otp_textField">16dp</dimen>
+    <dimen name="width_otp_textField">50dp</dimen>
+    <dimen name="height_otp_textField">50dp</dimen>
+    <dimen name="textSize_otp_textField">13sp</dimen>
+    <dimen name="textSize_otp_time">20sp</dimen>
+    <dimen name="cornerRadius_otp_textField">16dp</dimen>
+
+    <dimen name="paddingTop_otp_errorText">8dp</dimen>
+    <dimen name="marginTop_otp_errorText">8dp</dimen>
+    <dimen name="textSize_otp_errorText">18sp</dimen>
+
+    <dimen name="paddingTop_otp_button">28dp</dimen>
+    <dimen name="paddingVertical_otp_textButton">8dp</dimen>
+    <dimen name="textSize_otp_textButton">18sp</dimen>
+
+
 </resources>

@@ -1,11 +1,13 @@
 package com.aibles.finance.data.remote.util
 
-class NoNetworkException(error: Error?, message: String?) : CustomException(error)
-class NetworkAuthenticationException(error: Error?) : CustomException(error)
-class NetworkServerException(error: Error?) : CustomException(error)
-class NetworkResourceNotFoundException(error: Error?) : CustomException(error)
-class RequestTimeoutException(error: Error?) : CustomException(error)
-class BadRequestException(error: Error?) : CustomException(error)
-class UnknownException(error: Error?, message: String?) : CustomException(error)
-class NetworkException(error: Error?) : CustomException(error)
-sealed class CustomException(val error: Error?) : Exception()
+import com.aibles.finance.domain.entity.BaseErrorEntity
+
+class NoNetworkException(errorData: BaseErrorEntity.Data?, message: String = "") : CustomException(errorData, message)
+class NetworkAuthenticationException(errorData: BaseErrorEntity.Data?) : CustomException(errorData)
+class NetworkServerException(errorData: BaseErrorEntity.Data?) : CustomException(errorData)
+class NetworkResourceNotFoundException(errorData: BaseErrorEntity.Data?) : CustomException(errorData)
+class RequestTimeoutException(errorData: BaseErrorEntity.Data?) : CustomException(errorData)
+class BadRequestException(errorData: BaseErrorEntity.Data?) : CustomException(errorData)
+class UnknownException(errorData: BaseErrorEntity.Data?, message: String = "") : CustomException(errorData, message)
+class NetworkException(errorData: BaseErrorEntity.Data?) : CustomException(errorData)
+sealed class CustomException(val errorData: BaseErrorEntity.Data?, val msg: String = "") : Exception()

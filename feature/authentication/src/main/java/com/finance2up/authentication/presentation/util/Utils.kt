@@ -12,3 +12,8 @@ import androidx.compose.ui.unit.sp
 fun fontSizeDimensionResource(@DimenRes id: Int) = with(LocalContext.current.resources) {
     (getDimension(id) / displayMetrics.scaledDensity).sp
 }
+fun formatDuration(timeInSeconds: Int): String {
+    val minutes = timeInSeconds / 60
+    val seconds = timeInSeconds % 60
+    return "%02d:%02d".format(minutes, seconds)
+}
