@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.finance2up.authentication.presentation.ui.login.LoginScreen
 import com.finance2up.authentication.presentation.ui.otp.OTPScreen
+import com.finance2up.authentication.presentation.ui.register.RegisterScreen
 import com.track.finance2up.ui.theme.Finance2UpTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,6 +37,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("LoginScreen") {
                             LoginScreen()
+                        }
+                        composable("RegisterScreen") {
+                            RegisterScreen(navController = navController)
                         }
                     }
                 }
