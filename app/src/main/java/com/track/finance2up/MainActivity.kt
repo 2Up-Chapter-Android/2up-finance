@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    MainScreen()
 //                    LoginScreen()
-                    NavHost(navController = navController, startDestination = "OTPScreen") {
+                    NavHost(navController = navController, startDestination = "RegisterScreen") {
                         composable(route = "OTPScreen") {
                             OTPScreen(navController = navController)
                         }

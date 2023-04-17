@@ -56,13 +56,13 @@ fun RegisterScreen(navController: NavController) {
     val registerState = viewModel.registerState.collectAsStateWithLifecycle()
     val registerUiState = viewModel.registerUiState.collectAsStateWithLifecycle()
 
-    if (registerState.value.isSuccessful()){
+    if (registerState.value.isSuccessful()) {
         Toast.makeText(
             context,
             "Register Success",
             Toast.LENGTH_SHORT,
         ).show()
-        navController.navigate("LoginScreen")
+        navController.navigate("OTPScreen")
     }
 
     Box(
@@ -103,6 +103,7 @@ fun RegisterScreen(navController: NavController) {
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .fillMaxWidth()
+                .height(750.dp)
                 .padding(
                     start = dimensionResource(id = R.dimen.margin_start_register_column),
                     end = dimensionResource(id = R.dimen.margin_end_register_column)
@@ -127,7 +128,9 @@ fun RegisterScreen(navController: NavController) {
 
             Spacer(modifier = Modifier.padding(top = dimensionResource(id = R.dimen.margin_bottom_register_button)))
 
-            Column{
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+            ) {
                 RegisterItem(
                     text = registerUiState.value.usernameInput,
                     onValueChange = { viewModel.onUsernameValueChange(it) },
@@ -274,6 +277,7 @@ fun RegisterScreen(navController: NavController) {
                 }
             }
         }
+
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -281,7 +285,6 @@ fun RegisterScreen(navController: NavController) {
             Text(
                 text = buildAnnotatedString {
                     append(stringResource(id = R.string.register_already_have_account))
-                    append("")
                     withStyle(SpanStyle(color = Color.Blue)) {
                         append(stringResource(id = R.string.all_login))
                     }
