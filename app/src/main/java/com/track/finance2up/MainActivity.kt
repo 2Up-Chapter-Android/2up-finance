@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.finance2up.authentication.presentation.ui.login.LoginScreen
 import com.finance2up.authentication.presentation.ui.otp.OTPScreen
+import com.finance2up.authentication.presentation.ui.register.RegisterScreen
 import com.track.finance2up.ui.theme.Finance2UpTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,12 +31,15 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    MainScreen()
 //                    LoginScreen()
-                    NavHost(navController = navController, startDestination = "OTPScreen") {
+                    NavHost(navController = navController, startDestination = "RegisterScreen") {
                         composable(route = "OTPScreen") {
                             OTPScreen(navController = navController)
                         }
                         composable("LoginScreen") {
                             LoginScreen()
+                        }
+                        composable("RegisterScreen") {
+                            RegisterScreen(navController = navController)
                         }
                     }
                 }
