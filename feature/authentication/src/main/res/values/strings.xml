@@ -1,5 +1,5 @@
 <resources>
-<!--    All-->
+    <!--    All-->
     <string name="all_login">Login</string>
     <string name="all_signup">Register</string>
     <string name="all_username">Username</string>
@@ -39,7 +39,7 @@
 
     <!--    OTP-->
     <string name="otp_title">OTP Verification</string>
-    <string name="otp_enterInput">Please check OTP in email</string>
+    <string name="otp_enterInput">We have just sent OTP code in your email. Please check and enter OTP code.</string>
     <string name="otp_resendOTP">Resend OTP</string>
     <string name="otp_error_expired">OTP is expired. Please resend OTP</string>
     <string name="otp_error_activated">User activated</string>

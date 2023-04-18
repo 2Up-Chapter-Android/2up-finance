@@ -212,7 +212,6 @@ fun OTPScreen(navController: NavController) {
             navController.navigate(route = "LoginScreen")
 
         } else if (otpSendState.value.isError() && otpSendState.value.error != null) {
-
             when (otpSendState.value.error?.errorData?.code ?: "nothing") {
                 "org.up.finance.exception.OtpNotFoundException" -> {
                     Toast.makeText(
