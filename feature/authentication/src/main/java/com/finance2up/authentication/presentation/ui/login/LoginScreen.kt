@@ -4,13 +4,34 @@ import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.LocalContentColor
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,6 +56,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.aibles.finance.utils.toast
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
@@ -49,11 +71,14 @@ fun LoginScreen() {
     val loginState = viewModel.loginState.collectAsStateWithLifecycle()
     val loginUIState = viewModel.loginUiState.collectAsStateWithLifecycle()
 
-    if (loginState.value.isSuccessful()) Toast.makeText(
-        context,
-        "Login Success",
-        Toast.LENGTH_SHORT
-    ).show()
+    LaunchedEffect(key1 = loginState.value) {
+        with(loginState.value) {
+            when {
+                isSuccessful() -> context.toast("Login Success")
+                isError() -> context.toast(error?.errorData?.detail ?: "")
+            }
+        }
+    }
 
     Box {
         Column(
@@ -101,7 +126,11 @@ fun LoginScreen() {
                     },
                     hint = stringResource(id = R.string.login_hint_username)
                 )
-                AnimatedVisibility(visible = loginUIState.value.visibilityUsernameError) { LoginErrorText(text = loginUIState.value.usernameError) }
+                AnimatedVisibility(visible = loginUIState.value.visibilityUsernameError) {
+                    LoginErrorText(
+                        text = loginUIState.value.usernameError
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_passwordTextField)))
                 LoginPasswordEditText(
@@ -109,7 +138,11 @@ fun LoginScreen() {
                     onTextChange = { viewModel.onPasswordValueChange(it) },
                     imeAction = ImeAction.Done
                 )
-                AnimatedVisibility(visible = loginUIState.value.visibilityPasswordError) { LoginErrorText(text = loginUIState.value.passwordError) }
+                AnimatedVisibility(visible = loginUIState.value.visibilityPasswordError) {
+                    LoginErrorText(
+                        text = loginUIState.value.passwordError
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginTop_login_forgotPassTextButton)))
                 Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.TopEnd) {
@@ -118,7 +151,13 @@ fun LoginScreen() {
                             .clickable(
                                 interactionSource = interactionSource,
                                 indication = null
-                            ) { Toast.makeText(context, "Navigated to Forgot password", Toast.LENGTH_SHORT).show() },
+                            ) {
+                                Toast.makeText(
+                                    context,
+                                    "Navigated to Forgot password",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
                         text = stringResource(id = R.string.login_forgotPassword),
                         fontSize = fontSizeDimensionResource(id = R.dimen.textSize_login_forgotPasswordTextButton),
                         color = colorResource(id = R.color.login_textButton),
@@ -161,7 +200,10 @@ fun LoginScreen() {
                         .clickable(
                             interactionSource = interactionSource,
                             indication = null
-                        ) { Toast.makeText(context, "Navigated to register", Toast.LENGTH_SHORT).show() }
+                        ) {
+                            Toast.makeText(context, "Navigated to register", Toast.LENGTH_SHORT)
+                                .show()
+                        }
                 )
                 Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.marginBottom_login_registerTextButton)))
             }

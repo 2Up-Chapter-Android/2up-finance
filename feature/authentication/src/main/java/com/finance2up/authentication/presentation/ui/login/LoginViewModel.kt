@@ -40,7 +40,6 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             delay(200)
             val loginResponse = loginUseCase(usernameInput.value, passwordInput.value)
-//            _loginUiState.tryEmit(loginResponse.isLoading())
             _loginUiState.value = loginUiState.value.copy(isLoading = loginResponse.isLoading())
             _loginState.tryEmit(loginResponse)
 
@@ -64,11 +63,11 @@ class LoginViewModel @Inject constructor(
 
     fun onUsernameValueChange(text: String) {
         _usernameInput.value = text
-        _loginUiState.value = loginUiState.value.copy(isNullUsername = text.isEmpty())
+        _loginUiState.value = loginUiState.value.copy(isNullUsername = text.isBlank())
     }
 
     fun onPasswordValueChange(text: String) {
         _passwordInput.value = text
-        _loginUiState.value = loginUiState.value.copy(isNullPassword = text.isEmpty())
+        _loginUiState.value = loginUiState.value.copy(isNullPassword = text.isBlank())
     }
 }

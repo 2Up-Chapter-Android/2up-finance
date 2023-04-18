@@ -6,7 +6,7 @@ data class BaseErrorResponse(
     @SerializedName("status") val status: Int? = 0,
     @SerializedName("status_message") val statusMessage: String? = "",
     @SerializedName("timestamp") val timestamp: String? = "",
-    @SerializedName("data") val data: Data? = Data(),
+    @SerializedName("data") val data: Data?,
 ){
     data class Data(
         @SerializedName("code") val code: String? = "",

@@ -9,6 +9,6 @@ data class BaseErrorEntity(
 ){
     data class Data(
         val code: String? = "",
-        val detail: String? = "",
+        val detail: String? = "Unknown Exception",
     )
 }
