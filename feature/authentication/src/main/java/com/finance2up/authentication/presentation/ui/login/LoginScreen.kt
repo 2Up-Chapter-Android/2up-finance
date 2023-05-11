@@ -56,12 +56,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.aibles.finance.utils.toast
 import com.finance2up.authentication.R
 import com.finance2up.authentication.presentation.util.fontSizeDimensionResource
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavController) {
     val focusManager = LocalFocusManager.current
     val context = LocalContext.current
     val interactionSource = remember { MutableInteractionSource() }
@@ -74,7 +75,10 @@ fun LoginScreen() {
     LaunchedEffect(key1 = loginState.value) {
         with(loginState.value) {
             when {
-                isSuccessful() -> context.toast("Login Success")
+                isSuccessful() -> {
+                    context.toast("Login Success")
+                    navController.navigate("OTPScreen")
+                }
                 isError() -> context.toast(error?.errorData?.detail ?: "")
             }
         }

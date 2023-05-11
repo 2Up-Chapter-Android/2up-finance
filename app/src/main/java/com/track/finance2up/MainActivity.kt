@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                             OTPScreen(navController = navController)
                         }
                         composable("LoginScreen") {
-                            LoginScreen()
+                            LoginScreen(navController)
                         }
                         composable("RegisterScreen") {
                             RegisterScreen(navController = navController)
